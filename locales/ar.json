@@ -1986,6 +1986,55 @@
           "link_text": "تحديث هذه الصفحة",
           "suffix": "أو حاول مرة أخرى لاحقًا."
         }
+      },
+      "replacement_payment_method_title": "طريقة الدفع البديلة",
+      "title": "طرق الدفع",
+      "add_payment_method_button": "إضافة طريقة الدفع",
+      "bank_account": {
+        "loading_accessibility_message": "جاري تحميل زر حساب البنك",
+        "iframe_title_accessibility_label": "إعداد حساب مصرفي",
+        "display_name": "حساب بنكي"
+      },
+      "add_payment_method_banner": "أضف طريقة الدفع لتسريع عملية الدفع أو الحصول على خدمات معتمدة مسبقًا",
+      "no_payment_methods_banner": "لم تتم إضافة طرق الدفع",
+      "edit_payment_method_button_accessibility_label": "تعديل {{paymentMethodName}} الذي ينتهي بـ {{lastDigits}}",
+      "edit_payment_method_brand_button_accessibility_label": "تعديل {{paymentMethodName}}",
+      "delete_payment_method_button": "يمسح",
+      "delete_payment_method_button_accessibility_label": "حذف {{paymentMethodName}}",
+      "back_button": "خلف",
+      "back_button_accessibility_label": "العودة إلى {{paymentMethodStepTitle}}",
+      "default": "تقصير",
+      "generic_card": "بطاقة",
+      "expiration_warning_button_accessibility_label": "إظهار تحذير انتهاء الصلاحية لـ {{paymentMethodName}} الذي ينتهي بـ {{lastDigits}}",
+      "expires_soon": "هذه البطاقة ستنتهي صلاحيتها قريبًا",
+      "expired": "هذه البطاقة منتهية الصلاحية",
+      "expired_badge_label": "منتهي الصلاحية",
+      "card_update_consent": "سيتم حفظ طريقة الدفع هذه للمشتريات المستقبلية.",
+      "card_update_consent_subscriptions": "سيتم حفظ طريقة الدفع هذه للمشتريات المستقبلية ويمكن استخدامها لأي عملية شراء متكررة أو مؤجلة.",
+      "credit_or_debit_card_title": "بطاقة الائتمان أو الخصم",
+      "credit_card_title": "بطاقة إئتمان",
+      "additional_payment_methods": "طرق الدفع الإضافية",
+      "or": "أو",
+      "google_pay": {
+        "iframe_title_accessibility_label": "إضافة طريقة الدفع Google Pay",
+        "loading_accessibility_message": "تحميل Google Pay",
+        "loading": "تحميل Google Pay",
+        "errors": {
+          "generic": "حدثت مشكلة في Google Pay. حاول مرة أخرى أو استخدم طريقة دفع أخرى.",
+          "missing_billing_address": "يتطلب Google Pay عنوان إرسال فواتير. يُرجى إضافته إلى حسابك."
+        }
+      },
+      "pay_pal": {
+        "iframe_title_accessibility_label": "إضافة طريقة الدفع PayPal",
+        "loading_accessibility_message": "تحميل باي بال"
+      },
+      "apple_pay": {
+        "loading": "تحميل Apple Pay",
+        "errors": {
+          "generic": "حدثت مشكلة في Apple Pay. حاول مرة أخرى أو استخدم طريقة دفع أخرى.",
+          "not_available": "Apple Pay غير متاح على هذا الجهاز.",
+          "missing_billing_address": "يتطلب Apple Pay عنوان إرسال فواتير. يُرجى إضافته إلى حسابك."
+        }
       }
     },
     "payment_method_brands": {
@@ -2242,6 +2291,62 @@
         "pagination": {
           "load_more": "تحميل المزيد"
         }
+      },
+      "draft_order_details": {
+        "payment_status": {
+          "paid": {
+            "title": "مدفوع",
+            "title_with_date": "تم الدفع في {{date}}",
+            "description": "تم دفع طلبك بالكامل."
+          },
+          "refund": {
+            "title": "تم استرداد المبلغ",
+            "title_with_date": "تم استرداد المبلغ {{date}}",
+            "description_full_refund": "لقد تلقيت استردادًا كاملاً لهذا الطلب.",
+            "description_single_refund": "لقد تلقيت استردادًا جزئيًا لهذا الطلب.",
+            "description_multiple_refunds": "لقد تلقيت استردادًا جزئيًا لهذا الطلب."
+          },
+          "canceled": {
+            "title": "تم إلغاء الدفع",
+            "description": "لم يتم توجيه أي اتهام إليك."
+          },
+          "pay_now": "ادفع الآن",
+          "pay_now_accessibility_label": "ادفع الآن للطلب {{orderName}}",
+          "title": "حالة الدفع"
+        },
+        "order_timeline": {
+          "expand_events_label": "إظهار التفاصيل",
+          "expand_events_accessibility_label": "إظهار تفاصيل طلب المسودة",
+          "hide_events_label": "إخفاء التفاصيل",
+          "hide_events_accessibility_label": "إخفاء تفاصيل طلب المسودة"
+        },
+        "subtitle": "تم الإرسال في {{date}}",
+        "title": "الطلب {{name}}"
+      },
+      "payment_methods": {
+        "payment_delete": {
+          "description_without_replacement": "لن تكون طريقة الدفع هذه متاحة للمشتريات المستقبلية من هذا الموقع.",
+          "description_with_replacement": "سيؤدي حذف طريقة الدفع هذه إلى التأثير على المدفوعات المُصرّح بها مسبقًا لهذا الموقع. استبدلها بطريقة دفع بديلة لمواصلة استلام الطلبات القادمة."
+        },
+        "payment_details": {
+          "order_label": "الطلب {{name}}",
+          "draft_label": "مسودة الطلب {{name}}"
+        }
+      },
+      "purchase_order_number": {
+        "add_accessibility_label": "إضافة رقم الطلب",
+        "add_modal_title": "إضافة رقم الطلب",
+        "cancel": "يلغي",
+        "close_modal_accessibility_label": "إغلاق نموذج رقم الطلب",
+        "discard": "ينبذ",
+        "discard_changes_modal_title": "تجاهل التغييرات؟",
+        "edit_accessibility_label": "تعديل رقم الطلب",
+        "edit_modal_title": "تعديل رقم الطلب",
+        "empty_state": "لا يوجد رقم طلب شراء",
+        "modal_po_number_input_label": "رقم الطلب",
+        "modal_po_number_input_max_length_error": "تحتوي أرقام طلب الشراء على الحد الأقصى من {{maxLength}} حرف.",
+        "save": "يحفظ",
+        "title": "رقم الطلب {{poNumber}}"
       }
     },
     "active_inspector": {
@@ -2451,6 +2556,71 @@
       "manage_accessiblity_label": "إدارة الطلب {{orderId}}",
       "group_title_label": "جزء من: {{groupTitle}}",
       "group_title_label_with_parent": "لـ: {{groupTitle}}"
+    },
+    "errors": {
+      "address_deletion_error": {
+        "description": "حدثت مشكلة أثناء حذف هذا العنوان. حاول مرة أخرى أو حدّث الصفحة."
+      },
+      "addresses_loading_issue": {
+        "description": "خطأ في الاتصال. تحقق من اتصالك بالإنترنت وحاول مرة أخرى."
+      },
+      "banner_title": {
+        "one": "هناك خطأ {{count}}",
+        "other": "هناك {{count}} أخطاء"
+      },
+      "failed_address_creation": {
+        "description": "حدثت مشكلة أثناء إنشاء عنوانك. حاول تحديث هذه الصفحة أو التحقق من اتصالك بالإنترنت."
+      },
+      "failed_address_update": {
+        "description": "حدثت مشكلة أثناء تحديث عنوانك. حاول تحديث هذه الصفحة أو التحقق من اتصالك بالإنترنت."
+      },
+      "load_address_form_error": {
+        "refresh_button": "تحديث الصفحة"
+      },
+      "load_orders_error": {
+        "title": "غير قادر على تحميل الطلبات",
+        "description": "حاول مرة أخرى أو عد لاحقًا.",
+        "retry_button": "إعادة المحاولة"
+      },
+      "load_paypal_error": {
+        "description": "هناك مشكلة في تحميل باي بال. يُرجى المحاولة مرة أخرى."
+      },
+      "logout_everywhere": {
+        "description": "حدث خطأ أثناء تسجيل الخروج. يُرجى المحاولة مرة أخرى."
+      },
+      "no_access_to_locations": {
+        "description": "ليس لديك إمكانية الوصول إلى أي مواقع"
+      },
+      "not_found": {
+        "description": "تحقق من عنوان URL أو حاول مرة أخرى بعد بضع دقائق.",
+        "title": "هناك مشكلة في تحميل هذه الصفحة"
+      },
+      "order_not_found": {
+        "description": "هذا الطلب غير موجود أو ليس لديك الإذن لعرضه.",
+        "title": "لم يتم العثور على الطلب"
+      },
+      "profile_update_error": {
+        "description": "حدثت مشكلة أثناء تحديث ملفك الشخصي. حاول تحديث هذه الصفحة أو التحقق من اتصالك بالإنترنت."
+      },
+      "profile_name_update_error": {
+        "description": "حدثت مشكلة أثناء تحديث اسمك. حاول تحديث هذه الصفحة أو التحقق من اتصالك بالإنترنت."
+      },
+      "retry_action_label": "إعادة المحاولة",
+      "resend_link": {
+        "too_many_requests": "طلبات كثيرة جدًا. حاول مرة أخرى لاحقًا.",
+        "generic": "طلب فاشل"
+      },
+      "load_extension_error": {
+        "title": "خطأ",
+        "description": "قم بتحديث هذه الصفحة أو حاول مرة أخرى بعد بضع دقائق.",
+        "refresh_button": "تحديث الصفحة"
+      }
+    },
+    "throttle": {
+      "too_many_attempts": {
+        "message": "محاولات كثيرة جدًا",
+        "description": "الرجاء المحاولة مرة أخرى بعد بضع دقائق"
+      }
     }
   },
   "gift_cards": {
