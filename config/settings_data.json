@@ -230,7 +230,7 @@
         "type": "featured-content",
         "settings": {
           "title": "",
-          "text": "<p>AFX is a worldwide fashion brand encouraging independent, powerful, and loving women who thrive from helping others and giving back... because the best way <a href=\"/pages/charities\" title=\"Giving Back\" target=\"_blank\"><strong>to get</strong>, <em>is to give</em></a>. ♡ </p>",
+          "text": "<p><strong>UrbanActive™ by Morea is a worldwide fashion movement empowering independent, powerful, and uplifting women.</strong><br/>Morea, we believe <strong>the more you give, the stronger you become.</strong><br/><br/></p>",
           "align_text": "center",
           "narrow_column": true,
           "enlarge_text": true,
@@ -455,12 +455,12 @@
           "1524769873765-1": {
             "type": "image",
             "settings": {
-              "top_subheading": "",
-              "title": "New cute tops, \nmore fun accessories.",
+              "top_subheading": "Morea’s vibe update",
+              "title": "New fits. New energy.",
               "title_size": 80,
               "subheading": "Even better sales. Limited time only.",
-              "link": "shopify://collections/blouses-tops",
-              "link_text": "Shop Tops",
+              "link": "shopify://products/الطقم-الرابع-مع-غطاء-خصر-وحجاب",
+              "link_text": "Elevate your workouts",
               "link_2": "shopify://collections/all",
               "link_text_2": "Shop all",
               "color_accent": "#000000",
