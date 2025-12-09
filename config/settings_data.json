@@ -172,6 +172,7 @@
           "1494301487048": {
             "type": "logo_social",
             "settings": {
+              "logo": "shopify://shop_images/Logo_minimaliste_de_Morea.png",
               "desktop_logo_height": 50,
               "container_width": 95
             }
@@ -572,7 +573,7 @@
               "heading": "All shoes on sale",
               "textarea": "Select Shoes - Buy One, Get One FREE!",
               "cta_text1": "Shop Shoes",
-              "cta_link1": "shopify://collections/shoes",
+              "cta_link1": "shopify://collections/all",
               "cta_text2": "Shop All",
               "cta_link2": "shopify://collections/all",
               "image": "shopify://shop_images/activewear-minimal-3-middle.jpg",
@@ -589,6 +590,7 @@
           },
           "1525886854810": {
             "type": "sale_collection",
+            "disabled": true,
             "settings": {
               "sale_collection": "streetwear",
               "top_text": "Up to",
@@ -603,6 +605,7 @@
           },
           "1525911710924": {
             "type": "sale_collection",
+            "disabled": true,
             "settings": {
               "sale_collection": "الطقم-الرياضي-المحتشم",
               "top_text": "Up to",
@@ -635,12 +638,12 @@
             "type": "advanced",
             "settings": {
               "subheading": "Limited time",
-              "heading": "promotion",
-              "textarea": "All jewelry items on sale!",
+              "heading": "Active Modest Promotion",
+              "textarea": "Our best-selling modest training set is now on sale! Stay covered, confident, and ready to move.",
               "cta_text1": "Shop This",
-              "cta_link1": "shopify://collections/jewelry",
+              "cta_link1": "shopify://products/الطقم-الرابع-مع-غطاء-خصر-وحجاب",
               "cta_text2": "Shop All",
-              "cta_link2": "https://afx.life/collections/all",
+              "cta_link2": "shopify://collections/الطقم-الرياضي-المحتشم",
               "image": "shopify://shop_images/freepik__prompt-a-moroccan-woman-stretching-in-a-gym-wearin__36153.png",
               "video_url": "",
               "width": "50",
@@ -658,9 +661,9 @@
             "settings": {
               "subheading": "Limited time",
               "heading": "promotion",
-              "textarea": "All beauty items on sale!",
+              "textarea": "All streetwear essentials on sale — upgrade your look now!",
               "cta_text1": "Shop This",
-              "cta_link1": "shopify://collections/self-care",
+              "cta_link1": "shopify://products/ensemble-a-capuche-homme",
               "cta_text2": "Shop All",
               "cta_link2": "https://afx.life/collections/all",
               "image": "shopify://shop_images/ensemble-0-capuche-homme_2.jpg",
