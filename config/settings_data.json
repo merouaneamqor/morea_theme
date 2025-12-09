@@ -444,6 +444,7 @@
               "link_text_2": "Charities we love ♡",
               "color_accent": "#000000",
               "text_align": "vertical-bottom horizontal-left",
+              "image": "shopify://shop_images/1988_2700_2xs-xl_20.jpg",
               "focal_point": "top center"
             }
           },
@@ -460,6 +461,7 @@
               "link_text_2": "Shop all",
               "color_accent": "#000000",
               "text_align": "vertical-bottom horizontal-left",
+              "image": "shopify://shop_images/Gemini_Generated_Image_wjylg6wjylg6wjyl.jpg",
               "focal_point": "center center"
             }
           }
