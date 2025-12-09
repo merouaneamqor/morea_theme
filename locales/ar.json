@@ -251,7 +251,13 @@
       "order_summary": {
         "payment_terms_totals": {
           "due_later_checkout_to_draft": "الإجمالي المستحق لاحقًا",
-          "total_paid": "إجمالي المبلغ المدفوع"
+          "total_paid": "إجمالي المبلغ المدفوع",
+          "due_today": "الإجمالي المستحق اليوم",
+          "due_today_next": "المستحق اليوم",
+          "due_later": "الإجمالي المستحق %{due_at}",
+          "due_on_fulfillment": "الإجمالي المستحق عند التنفيذ",
+          "due_on_fulfillment_next": "مستحق عند الوفاء",
+          "due_on_receipt": "الإجمالي المستحق عند الاستلام"
         },
         "maximum_discount_code_limit_reached": "لقد وصلت إلى الحد الأقصى لعدد أكواد الخصم. يُرجى إزالة أي كود حالي لاستخدام <strong style=\"text-transform:uppercase\">%{code}</strong> .",
         "discount_code_application_failed": "<strong style=\"text-transform:uppercase\">%{code}</strong> لا يعمل حاليًا. تواصل معنا للمساعدة.",
@@ -285,7 +291,119 @@
             "other": "%{count} عناصر"
           }
         },
-        "alternative_payment_currency_total": "تم تحصيل الرسوم كـ %{amount_due}"
+        "alternative_payment_currency_total": "تم تحصيل الرسوم كـ %{amount_due}",
+        "eligible_customer_missing_notice": "يتطلب رمز الخصم <strong style=\"text-transform:uppercase\">%{code}</strong> العميل المؤهل",
+        "shipping_information_does_not_meet_discount_requirements_notice": "رمز الخصم <strong style=\"text-transform:uppercase\">%{code}</strong> غير متاح لعنوان الشحن الخاص بك",
+        "customer_already_used_once_per_customer_discount_notice": "تم استخدام رمز الخصم <strong style=\"text-transform:uppercase\">%{code}</strong> بالفعل",
+        "subtotal_label": "المجموع الفرعي",
+        "subtotal_label_with_quantity": {
+          "one": "المجموع الفرعي · %{count} عنصر",
+          "other": "المجموع الفرعي · %{count} عناصر"
+        },
+        "shipping_label": "شحن",
+        "pickup_label": "الاستلام من المتجر",
+        "no_pickup_location": "لا توجد أماكن متاحة للاستلام.",
+        "pickup_unavailable_banner_title": {
+          "one": "لا توجد متاجر متاحة مع العنصر الخاص بك",
+          "other": "لا توجد متاجر متاحة لعناصر الخاص بك"
+        },
+        "pickup_unavailable_banner_body": {
+          "ship_to_address": "عنوان الشحن",
+          "ship_to_address_instead_html": "%{link} بدلا من ذلك"
+        },
+        "tip_label": "نصيحة",
+        "unconfirmed_label": "غير مؤكد",
+        "calculating_shipping": "جاري الحساب…",
+        "calculating": "جاري الحساب…",
+        "shipping_default_value": "تم حسابها في الخطوة التالية",
+        "shipping_discount_title": "خصم الشحن",
+        "shipping_pending_message": "غير متوفر بعد",
+        "shipping_policy_link": "تكاليف الشحن",
+        "taxes_label": "الضرائب",
+        "estimated_taxes_label": "الضرائب المقدرة",
+        "information_estimated_taxes_label": "الضرائب (تقديرية)",
+        "estimated_taxes_finalization_tooltip_content": "سيتم تأكيد الضريبة النهائية والمبلغ الإجمالي عبر البريد الإلكتروني أو رسالة نصية بعد تقديم طلبك.",
+        "order_total_label": "إجمالي الطلب",
+        "price_before_discount_aria_text": "السعر الأصلي",
+        "price_after_discount_aria_text": "سعر مخفض",
+        "discount_code_aria_text": "رمز الخصم",
+        "total_savings": "إجمالي المدخرات",
+        "total_label": "المجموع",
+        "total_due_label": "المجموع المستحق",
+        "total_paid_label": "إجمالي المبلغ المدفوع",
+        "total_price_label": "السعر الإجمالي",
+        "total_outstanding_label": "المبلغ المستحق الدفع",
+        "deposit_label": "إيداع",
+        "total_due_today_label": "الإجمالي المستحق اليوم",
+        "total_due_later_label": "الإجمالي المستحق لاحقًا",
+        "partial_total_label": "المجموع",
+        "free_total_label": "حر",
+        "free_shipping_total_label": "حر",
+        "paid_label": "مدفوع",
+        "payment_due_label": "الدفع المستحق",
+        "vat_label_html": "بما في ذلك %{amount} في الضرائب",
+        "duties_included_label": "الإجمالي يشمل الضرائب والرسوم. لا توجد رسوم إضافية عند التوصيل.",
+        "discount_and_gift_card_savings_notice": "بعد %{discount_amount} في الخصومات و%{gift_card_amount} في بطاقات الهدايا",
+        "discount_savings_notice": "بعد %{discount_amount} في الخصومات",
+        "gift_card_savings_notice": "بعد %{gift_card_amount} في بطاقات الهدايا",
+        "cost_table_title": "ملخص التكلفة",
+        "cost_table_item_column_header": "غرض",
+        "cost_table_value_column_header": "قيمة",
+        "description_label": "وصف",
+        "price_label": "سعر",
+        "price_per_item": {
+          "accessibility_label": "%{price} لكل عنصر",
+          "label": "%{price}/للوحدة"
+        },
+        "quantity_label": "كمية",
+        "product_change_label": "يتغير",
+        "product_image_label": "صورة المنتج",
+        "product_image_quantity_label": "كمية",
+        "scroll_order_summary": "قم بالتمرير للحصول على المزيد من العناصر",
+        "expand_order_summary_short": "يعرض",
+        "collapse_order_summary_short": "يخفي",
+        "expand_order_summary": "إظهار ملخص الطلب",
+        "collapse_order_summary": "إخفاء ملخص الطلب",
+        "original_price": "السعر الأصلي",
+        "sale_price": "سعر البيع",
+        "total_updated_label": "السعر الإجمالي المحدث:",
+        "order_total_updated_label": "تم تحديث الإجمالي",
+        "total_already_paid_label": "مدفوع",
+        "unit_price": {
+          "accessible_separator": "لكل",
+          "content_html": "%{السعر}%{الفاصل المتاح}%{لكل وحدة}",
+          "per_item": {
+            "single": "%{price} لكل منهما",
+            "one": "%{price} لكل %{count} عنصر",
+            "other": "%{price} لكل %{count} عنصر"
+          },
+          "per_unit": {
+            "single": "%{السعر}/%{الوحدة}",
+            "plural": "%{السعر}/%{العدد}%{الوحدة}"
+          }
+        },
+        "gift_card_ending": "بطاقة الهدايا تنتهي بـ %{last_characters}",
+        "estimated_tax_label": "الضريبة المقدرة",
+        "multiple_shipping_lines_label": "إجمالي الشحن",
+        "recurring_subtotal_label": "المجموع الفرعي المتكرر",
+        "recurring_total_label": "المجموع المتكرر",
+        "recurring_total_tooltip": "لا يشمل الشحن أو الضرائب أو الرسوم أو أي خصومات قابلة للتطبيق.",
+        "confirmation_number_label": "رقم التأكيد #%{confirmation_number}",
+        "higher_value_discount_applied": "لا يمكن استخدام <strong style=\"text-transform:uppercase\">%{code}</strong> مع الخصومات الحالية لديك.",
+        "percent_off_shipping": "%{percent}% خصم على الشحن",
+        "amount_off_shipping": "%{amount} خصم على الشحن",
+        "deferred_payment_info": {
+          "title": "يجب دفع %{amount_due} في %{due_at}",
+          "description_html": "للاستفسارات حول طلبك، يرجى التواصل معنا عبر %{contact_us}.",
+          "paid_today": "إجمالي المبلغ المدفوع اليوم",
+          "paid_today_next": "تم الدفع اليوم",
+          "due_on_fulfillment_title": "يجب دفع %{amount_due} عند التنفيذ",
+          "due_on_receipt_title": "يجب دفع %{amount_due} عند الاستلام"
+        },
+        "deferred_balance_info": {
+          "title": "الرصيد البالغ {{amount_due}} مستحق في {{due_at}}",
+          "due_on_fulfillment_title": "الرصيد البالغ {{amount_due}} مستحق عند التنفيذ"
+        }
       },
       "shipping": {
         "title": "شحن",
@@ -1248,7 +1366,22 @@
         "saved_by_payment_method": "تم الحفظ بواسطة %{payment_method}",
         "pay_with_payment_method": "ادفع باستخدام %{payment_method}",
         "different_credit_card_label": "استخدم بطاقة ائتمان مختلفة",
-        "same_billing_address_label": "نفس عنوان الشحن"
+        "same_billing_address_label": "نفس عنوان الشحن",
+        "proposed_gateway_unavailable": "بوابة الدفع المقترحة غير متاحة",
+        "pay_in_installments_split_pay_short": "4 دفعات بقيمة %{amount}",
+        "gift_cards_unavailable": "لم يعد من الممكن تطبيق بطاقة الهدية الخاصة بك على هذا الطلب وتمت إزالتها",
+        "payment_flexibility_terms_id_mismatch": "شروط مرونة الدفع عدم تطابق الهوية",
+        "payment_option": {
+          "accessibility_label": "اختر خيار الدفع"
+        },
+        "bank_account_type": {
+          "checking": "التحقق",
+          "savings": "المدخرات"
+        },
+        "bank_account_choose": "اختر حسابًا لإكمال عملية الشراء الخاصة بك بأمان",
+        "bank_account_connect_another": "ربط حساب بنكي آخر",
+        "bank_account_connect": "ربط الحساب البنكي",
+        "bank_account_missing": "يجب ربط الحساب البنكي"
       },
       "localized_fields": {
         "additional_information": {
@@ -1561,6 +1694,105 @@
       },
       "online_store_chat": {
         "title": "لديك أسئلة؟ تواصل معنا"
+      },
+      "billing": {
+        "billing_address_title": "مشروع قانون ل",
+        "billing_address_rollup_accessibility_label": "خيارات الفاتورة",
+        "same_as_shipping": "نفس عنوان الشحن",
+        "add_address": "استخدم عنوانًا مختلفًا",
+        "edit": "يحرر",
+        "delete": "يمسح",
+        "address_more": "مزيد من الإجراءات لهذا العنوان",
+        "address_edit": "تعديل العنوان",
+        "address_delete": "حذف العنوان",
+        "address_confirm": "هل أنت متأكد أنك تريد حذف هذا العنوان من حسابك؟",
+        "address_form": {
+          "add_address": "إضافة عنوان",
+          "save": "يحفظ",
+          "cancel": "يلغي"
+        }
+      },
+      "company_location": {
+        "location_title": "موقع الشركة",
+        "location_rollup_accessibility_label": "خيارات موقع الشركة"
+      },
+      "payment_summary": {
+        "gift_card_current_balance_notice": "الرصيد الحالي %{amount}",
+        "credit_card_expires_on_notice": "تنتهي صلاحيتها في %{month}/%{year}",
+        "express_payment_gateway_label": "يعبر",
+        "manual_payment_gateway_label": "يدوي",
+        "billing_address_title": "عنوان الفاتورة",
+        "free_label": "حر"
+      },
+      "field_errors": {
+        "handle_phone_invalid": "أدخل رقم هاتف صالح",
+        "handle_email_invalid": "أدخل بريدًا إلكترونيًا صالحًا",
+        "email_invalid": "أدخل بريدًا إلكترونيًا صالحًا",
+        "email_or_phone_blank": "أدخل البريد الإلكتروني أو رقم الهاتف",
+        "email_or_phone_invalid": "أدخل بريدًا إلكترونيًا صالحًا أو رقم هاتف محمول",
+        "address_first_name_blank": "أدخل الاسم الأول",
+        "address_first_name_too_long": "الاسم الأول طويل جدًا (الحد الأقصى هو 255 حرفًا)",
+        "address_first_name_contains_emojis": "لا يمكن أن يحتوي الاسم الأول على رموز تعبيرية",
+        "address_first_name_contains_html_tags": "لا يمكن أن يحتوي الاسم الأول على علامات HTML.",
+        "address_first_name_contains_url": "لا يمكن أن يحتوي الاسم الأول على عنوان URL",
+        "address_first_name_contains_mathematical_symbols": "لا يمكن أن يحتوي الاسم الأول على رموز رياضية",
+        "address_last_name_blank": "أدخل اسم العائلة",
+        "address_last_name_too_long": "الاسم الأخير طويل جدًا (الحد الأقصى هو 255 حرفًا)",
+        "address_last_name_contains_emojis": "لا يمكن أن يحتوي الاسم الأخير على رموز تعبيرية",
+        "address_last_name_contains_html_tags": "لا يمكن أن يحتوي الاسم الأخير على علامات HTML.",
+        "address_last_name_contains_url": "لا يمكن أن يحتوي الاسم الأخير على عنوان URL",
+        "address_last_name_contains_mathematical_symbols": "لا يمكن أن يحتوي الاسم الأخير على رموز رياضية",
+        "address_address1_blank": "أدخل عنوانًا",
+        "address_address1_too_long": "سطر العنوان الأول طويل جدًا (الحد الأقصى هو 255 حرفًا)",
+        "address_address1_contains_emojis": "لا يمكن أن يحتوي العنوان 1 على رموز تعبيرية",
+        "address_address1_contains_html_tags": "لا يمكن أن يحتوي العنوان 1 على علامات HTML.",
+        "address_address1_contains_mathematical_symbols": "لا يمكن لسطر العنوان الأول أن يحتوي على رموز رياضية",
+        "address_address2_blank": "أدخل شقة أو جناحًا أو ما إلى ذلك.",
+        "address_address2_too_long": "سطر العنوان الثاني طويل جدًا (الحد الأقصى هو 255 حرفًا)",
+        "address_address2_contains_emojis": "لا يمكن أن يحتوي العنوان 2 على رموز تعبيرية",
+        "address_address2_contains_html_tags": "لا يمكن أن يحتوي Address2 على علامات HTML.",
+        "address_address2_contains_mathematical_symbols": "لا يمكن لسطر العنوان الثاني أن يحتوي على رموز رياضية",
+        "address_city_blank": "أدخل المدينة",
+        "address_city_too_long": "المدينة طويلة جدًا (الحد الأقصى هو 255 حرفًا)",
+        "address_city_contains_emojis": "لا يمكن للمدينة أن تحتوي على رموز تعبيرية",
+        "address_city_contains_html_tags": "لا يمكن للمدينة أن تحتوي على علامات HTML.",
+        "address_city_contains_mathematical_symbols": "لا يمكن للمدينة أن تحتوي على رموز رياضية",
+        "address_country_blank": "حدد البلد/المنطقة",
+        "address_country_not_supported": "لا نشحن إلى هذه الدولة أو المنطقة. أدخل عنوان شحن جديد وحاول مرة أخرى.",
+        "address_province_blank": "حدد الولاية / المقاطعة",
+        "address_province_invalid": "حدد ولاية/مقاطعة صالحة",
+        "address_company_blank": "أدخل اسم الشركة",
+        "address_company_too_long": "اسم الشركة طويل جدًا (الحد الأقصى 255 حرفًا)",
+        "address_company_contains_emojis": "لا يمكن للشركة أن تحتوي على رموز تعبيرية",
+        "address_company_contains_html_tags": "لا يمكن للشركة أن تحتوي على علامات HTML.",
+        "address_company_contains_mathematical_symbols": "لا يجوز للشركة أن تحتوي على رموز رياضية",
+        "address_phone_blank": "أدخل رقم هاتف صالح",
+        "address_phone_contains_emojis": "لا يمكن أن يحتوي رقم الهاتف على رموز تعبيرية",
+        "address_phone_invalid": "أدخل رقم هاتف صالح",
+        "address_zip_blank": "أدخل الرمز البريدي",
+        "address_zip_blocked_address": "هذا الموقع غير مدعوم",
+        "address_zip_too_long": "الرمز البريدي طويل جدًا (الحد الأقصى هو 255 حرفًا)",
+        "address_zip_not_supported": "هذا الموقع غير مدعوم",
+        "address_zip_invalid_for_country": "أدخل رمزًا بريديًا صالحًا لـ %{country}",
+        "address_zip_invalid_for_province": "أدخل رمزًا بريديًا صالحًا لـ %{province}",
+        "address_zip_invalid_for_country_and_province": "أدخل رمزًا بريديًا صالحًا لـ %{province}، %{country}",
+        "address_zip_contains_emojis": "لا يمكن أن يحتوي الرمز البريدي على رموز تعبيرية",
+        "address_zip_contains_mathematical_symbols": "لا يمكن أن يحتوي الرمز البريدي على رموز رياضية",
+        "address_generic_blank": "حقل مطلوب",
+        "address_generic_invalid": "إدخال غير صالح",
+        "address_generic_error": "خطأ في الحقل",
+        "credit_card_name_blank": "أدخل اسمك تمامًا كما هو مكتوب على بطاقتك",
+        "credit_card_name_invalid": "أدخل اسمك تمامًا كما هو مكتوب على بطاقتك",
+        "credit_card_number_invalid": "أدخل رقم بطاقة صالحًا",
+        "credit_card_expiry_invalid": "أدخل تاريخ انتهاء الصلاحية صالحًا",
+        "credit_card_month_invalid": "أدخل شهر انتهاء الصلاحية الصحيح",
+        "credit_card_year_invalid": "أدخل سنة انتهاء الصلاحية الصالحة",
+        "credit_card_start_invalid": "أدخل تاريخ بدء البطاقة الصحيح",
+        "credit_card_start_month_invalid": "أدخل شهر بداية البطاقة الصالحة",
+        "credit_card_start_year_invalid": "أدخل سنة بدء البطاقة الصالحة",
+        "credit_card_number_blank": "أدخل رقم البطاقة",
+        "credit_card_verification_value_blank": "أدخل رمز CVV أو رمز الأمان الموجود على بطاقتك",
+        "delivery_line_detail_changed": "قد تكون بعض تفاصيل التسليم قد تغيرت. تأكد من طريقة الشحن وحاول مرة أخرى."
       }
     },
     "errors": {
