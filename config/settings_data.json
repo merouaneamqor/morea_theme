@@ -440,7 +440,7 @@
             "type": "image",
             "settings": {
               "top_subheading": "Morea Streetwear Initiative",
-              "title": "15% of All Streetwear\nSales support local youth creatives",
+              "title": "15% of sales support youth creatives",
               "title_size": 80,
               "subheading": "Learn more about the projects and creators we empower.",
               "link": "shopify://products/ensemble-a-capuche-homme",
@@ -487,7 +487,7 @@
       "collection-header": {
         "type": "collection-header",
         "settings": {
-          "enable": true,
+          "enable": false,
           "collection_image_enable": true,
           "parallax": true
         }
@@ -697,8 +697,8 @@
             "type": "banner",
             "settings": {
               "promo_collection": "shop-all",
-              "heading": "Semi-annual winter sale",
-              "text": "For a limited time the entire store is on sale!",
+              "heading": "Morea Winter Sale",
+              "text": "Limited time only — shop exclusive discounts across all Morea collections.",
               "link": "shopify://collections/all",
               "label": "Shop now",
               "color_tint": "#e95454",
@@ -713,11 +713,11 @@
               "subheading": "Limited time",
               "heading": "promotion",
               "textarea": "Entire store on sale!",
-              "cta_text1": "Shop Eyewear",
-              "cta_link1": "shopify://collections/eyewear",
+              "cta_text1": "Shop Activewear",
+              "cta_link1": "shopify://collections/الطقم-الرياضي-المحتشم",
               "cta_text2": "Shop All",
               "cta_link2": "shopify://collections/all",
-              "image": "shopify://shop_images/happy-woman.jpg",
+              "image": "shopify://shop_images/Studio_Product_Photo_-_Muted_Dusty_Rose_Pink_1.jpg",
               "video_url": "",
               "width": "100",
               "height": 500,
