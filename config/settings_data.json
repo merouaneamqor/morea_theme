@@ -115,7 +115,7 @@
             "type": "announcement",
             "settings": {
               "text": "Free shipping",
-              "link_text": "On All Orders Over $100",
+              "link_text": "On All Orders",
               "link": ""
             }
           },
@@ -438,14 +438,14 @@
           "1524769873765-0": {
             "type": "image",
             "settings": {
-              "top_subheading": "",
-              "title": "15% of All Swimwear\nSales are donated",
+              "top_subheading": "Morea Streetwear Initiative",
+              "title": "15% of All Streetwear\nSales support local youth creatives",
               "title_size": 80,
-              "subheading": "Learn more about the charities we work with.",
-              "link": "shopify://collections/swim",
-              "link_text": "Shop Swim",
+              "subheading": "Learn more about the projects and creators we empower.",
+              "link": "shopify://products/ensemble-a-capuche-homme",
+              "link_text": "Shop Streetwear",
               "link_2": "shopify://collections/all",
-              "link_text_2": "Charities we love ♡",
+              "link_text_2": "Creators we support ♡",
               "color_accent": "#000000",
               "text_align": "vertical-bottom horizontal-left",
               "image": "shopify://shop_images/1988_2700_2xs-xl_20.jpg",
