@@ -743,8 +743,10 @@
         "blocks": {
           "footer-promotions-2": {
             "type": "promotion",
+            "disabled": true,
             "settings": {
               "enable_image": false,
+              "image": "shopify://shop_images/73BA83D8-FB53-4865-96B5-C1A00A6801D1.jpg",
               "title": "Site-wide promotion",
               "text": "<p>Entire store on sale!</p>",
               "button_label": "shop now",
@@ -753,8 +755,10 @@
           },
           "3abf7455-cb1f-47ec-b93b-8dea62d40520": {
             "type": "promotion",
+            "disabled": true,
             "settings": {
-              "enable_image": false,
+              "enable_image": true,
+              "image": "shopify://shop_images/freepik__prompt-a-moroccan-woman-stretching-in-a-gym-wearin__36153.png",
               "title": "Site-wide promotion",
               "text": "<p>Entire store on sale!</p>",
               "button_label": "shop now",
