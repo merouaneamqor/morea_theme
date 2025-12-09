@@ -1,0 +1,305 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "shopify": {
+    "sentence": {
+      "words_connector": "، ",
+      "two_words_connector": " و ",
+      "last_word_connector": "، و "
+    },
+    "checkout": {
+      "address_management": {
+        "confirm_address_deletion": "هل أنت متأكد أنك تريد حذف العنوان {{address}} ؟"
+      },
+      "general": {
+        "page_title": "الدفع",
+        "error_page_title": "خطأ",
+        "skip_to_content": "انتقل إلى المحتوى",
+        "breadcrumb": "فتات الخبز",
+        "continue_button_label": "يكمل",
+        "complete_purchase_button_label": "الطلب الكامل",
+        "pay_now_button_label": "ادفع الآن",
+        "authenticate_purchase_button_label": "التحقق من صحة الدفع",
+        "edit_link_label": "يحرر",
+        "all_rights_reserved": "جميع الحقوق محفوظة %{shop_name}",
+        "print_policies_link_label": "مطبعة",
+        "cart": "عربة التسوق",
+        "close_modal_label": "يغلق",
+        "close_notice_label": "يغلق",
+        "expand_notice_label": "عرض المزيد",
+        "continue_to_shipping_method": "الاستمرار في الشحن",
+        "continue_to_payment_method": "متابعة الدفع",
+        "continue_to_review": "مراجعة الطلب",
+        "back_to_cart": "العودة إلى سلة التسوق",
+        "back_to_contact_information": "العودة إلى المعلومات",
+        "back_to_shipping_method": "العودة إلى الشحن",
+        "back_to_payment_method": "العودة إلى الدفع",
+        "choose_shipping_method": "اختر طريقة الشحن",
+        "choose_payment_method": "اختر طريقة الدفع",
+        "choose_billing_address": "اختر عنوان الفاتورة",
+        "contact_us_html": "اتصل بنا لمزيد من المعلومات",
+        "autocomplete_title": "اقتراحات",
+        "autocomplete_single_item": "1 عنصر متاح",
+        "autocomplete_multi_item": "{{number}} عناصر متاحة",
+        "autocomplete_close": "إغلاق الاقتراحات",
+        "forwarding_indicator": {
+          "new_window": "يفتح في نافذة جديدة.",
+          "external": "يفتح موقع ويب خارجي.",
+          "external_and_new_window": "يفتح موقع ويب خارجي في نافذة جديدة."
+        },
+        "checkout_context": {
+          "step_one": "%{shop_name} - الدفع"
+        },
+        "tooltip_accessibility_label": "مزيد من المعلومات",
+        "qr_code": "رمز الاستجابة السريعة",
+        "errors": {
+          "only_empty_terms_accepted": "هذه السياسة تقبل فقط الشروط الفارغة.",
+          "session_identifier_not_unique_error": "لقد حدث خطأ ما في طلبك، يرجى محاولة إتمام عملية الدفع مرة أخرى.",
+          "line_item_limit_reached": "لقد تم الوصول إلى الحد الأقصى لعدد عناصر السطر.",
+          "session_is_already_finished": "لقد تم الانتهاء من جلسة الخروج هذه بالفعل.",
+          "merchandise": {
+            "only_value_constraint": "لا يُسمح إلا بالقيم الدقيقة في إدخال البضائع.",
+            "merchandise_not_found": "لم يتم العثور على المنتج.",
+            "merchandise_variant_not_found": "لم يتم العثور على متغير المنتج.",
+            "merchandise_not_applicable": "لا يمكن شراء متغير المنتج.",
+            "mixed_currencies": "تحتوي عملية الخروج على عناصر سطرية بعملات مختلفة.",
+            "bundle_products_not_supported_for_b2b": "لا يمكن إضافة العناصر المجمعة إلى طلبات B2B لهذا الموقع.",
+            "gift_card_quantity_mismatch": "عند تحديد رموز بطاقة الهدايا، يجب أن يتطابق عدد عناصر السطر مع عدد رموز بطاقة الهدايا.",
+            "gift_card_not_supported": "لا يتم دعم بطاقات الهدايا في هذه العملية.",
+            "gift_card_not_unique": "بطاقة الهدية التي تحمل الرمز {{code}} تظهر أكثر من مرة في هذه العملية. يتم تنسيق الرموز قبل المقارنة.",
+            "gift_card_used": "رمز بطاقة الهدية {{code}} مُخصَّص مُسبقًا لبطاقة الهدية. يتم تنسيق الرموز قبل المقارنة.",
+            "gift_card_invalid": "رمز بطاقة الهدية {{code}} غير صالح.",
+            "gift_card_code_changed": "تم تغيير رمز بطاقة الهدية {{proposed_code}} إلى {{formatted_code}} ليتوافق مع قواعد التنسيق.",
+            "gift_card_with_attributes_not_supported": "لا يتم دعم بطاقات الهدايا ذات السمات المخصصة في عملية الدفع هذه.",
+            "gift_card_with_components_not_supported": "لا يتم دعم بطاقات الهدايا التي تحتوي على مكونات في عملية الدفع هذه.",
+            "selling_plan_mismatch": "تم تحديث الاشتراك.",
+            "selling_plan_not_supported": "لا يتم دعم الاشتراكات.",
+            "selling_plan_not_supported_b2b": "لا يتم دعم الاشتراكات للدفع B2B.",
+            "price_mismatch": "السعر المقترح مسبقًا لهذه البضاعة كان غير صالح وتم تحديثه.",
+            "inventory_not_found": "لم يتم العثور على مخزون لهذه البضاعة.",
+            "product_not_published": "لم يتم نشر المنتج.",
+            "product_not_published_in_buyer_location": "لم يتم نشر المنتج في موقع المشتري.",
+            "duplicated_stable_id": "يتمتع خط البضائع هذا بنفس معرف المنتج مثل خط آخر.",
+            "minimum_quantity_not_met": "كمية بعض العناصر لا تصل إلى الحد الأدنى المطلوب.",
+            "maximum_quantity_exceeded": "كمية بعض العناصر تتجاوز الحد الأقصى المسموح به.",
+            "quantity_increment_not_met": "كمية بعض العناصر لا تصل إلى حدود الطلب.",
+            "quantity_rules_not_met": "كمية بعض العناصر لا تصل إلى حدود الطلب.",
+            "bundle_requires_components": "هذه الحزمة من البضائع لا تحتوي على أي مكونات.",
+            "title_too_long": "عنوان البضاعة طويل جدًا.",
+            "title_empty": "عنوان البضاعة فارغ."
+          },
+          "buyer_identity": {
+            "business_customer_does_not_match_company": "جهة الاتصال بالشركة ليس لديها إمكانية الوصول إلى الشركة.",
+            "customer_account_required": "يجب عليك تسجيل الدخول للمتابعة.",
+            "company_location_required": "يجب على العميل اختيار موقع الشركة للاستمرار.",
+            "company_purchase_permission_required": "ليس لدى العميل إذن لوضع طلبات الشركة.",
+            "personal_order_not_allowed": "لا يُسمح بالطلبات الشخصية لهذا المتجر.",
+            "lost_access_to_company": "فقد العميل إمكانية الوصول إلى أي شركة.",
+            "contact_info_does_not_match_customer_account": "يجب أن تتطابق معلومات الاتصال مع الحساب الذي قمت بتسجيل الدخول إليه.",
+            "phone_number_does_not_match_expected_pattern": "رقم الهاتف المحدد لا يتطابق مع النمط المتوقع.",
+            "email_required": "يجب أن يكون لديك بريد إلكتروني عند شراء البضائع باستخدام الاشتراك.",
+            "email_domain_is_invalid": "لا يمكن حل هذا المجال المحدد.",
+            "missing_contact_method": "فقدان طريقة اتصال صالحة.",
+            "checkout_completion_target_is_missing": "هدف إكمال عملية الدفع مفقود.",
+            "invalid_customer_profile": "تم تقديم ملف تعريف عميل غير صالح.",
+            "customer_profile_access_restricted": "لا يتوفر لدى Checkout إذن بالوصول إلى ملف تعريف العميل.",
+            "checkout_completion_target_is_invalid_proc": "هدف إكمال عملية الدفع غير صالح.",
+            "buyer_identity_presentment_currency_does_not_match": "حدثت مشكلة أثناء معالجة طلبك. حاول مرة أخرى بعد بضع دقائق."
+          },
+          "delivery": {
+            "only_one_delivery_line_allowed": "يجب أن تحتوي العربة على خط تسليم واحد فقط.",
+            "wrong_number_of_delivery_lines": "يجب تحديد خط تسليم لكل مجموعة من البضائع.",
+            "external_delivery_promise_error": "خطأ في جلب وعد التسليم الخارجي.",
+            "options_instructions_invalid": "التعليمات المحددة لا تتطابق مع النمط المتوقع.",
+            "destination_address_required": "يجب إدخال عنوان الوجهة حتى تتمكن من الاستمرار.",
+            "pickup_points_unavailable": "نقاط الاستلام غير متاحة حاليًا.",
+            "local_pickup_delivery_line_detail_changed": "يجب تغيير استراتيجية التسليم المحلية الحالية حتى نتمكن من الاستمرار.",
+            "selected_pickup_option_no_longer_available": "لم يعد خيار الاستلام المحدد مسبقًا متاحًا.",
+            "local_pickup_no_delivery_strategy_available": "لم يتم العثور على استراتيجية توصيل محلية متاحة.",
+            "origin_location_id_required": "مطلوب معرف موقع المنشأ عند طلب طريقة التسليم بالتجزئة.",
+            "invalid_origin_location_id": "لم يتم العثور على موقع يطابق معرف موقع الأصل."
+          }
+        }
+      }
+    }
+  },
+  "general": {
+    "breadcrumbs": {
+      "home_link_title": "العودة إلى الصفحة الرئيسية"
+    },
+    "social": {
+      "share_on_facebook": "يشارك",
+      "share_on_twitter": "سقسقة",
+      "share_on_pinterest": "ثبتها",
+      "alt_text": {
+        "share_on_facebook": "شارك على الفيسبوك",
+        "share_on_twitter": "تغريدة على تويتر",
+        "share_on_pinterest": "ثبت على بينتريست"
+      }
+    },
+    "newsletter_form": {
+      "newsletter_email": "أدخل بريدك الإلكتروني",
+      "newsletter_confirmation": "شكرا على الاشتراك",
+      "submit": "يشترك"
+    },
+    "search": {
+      "pages": "الصفحات:",
+      "articles": "المقالات:",
+      "no_results_html": "بحثك عن \" {{ terms }} \" لم يسفر عن أية نتائج.",
+      "results_for_html": "كشف بحثك عن \" {{ terms }} \" عن النتائج التالية:",
+      "placeholder": "ابحث في متجرنا",
+      "result_count": {
+        "one": "{{ count }} نتيجة"
+      }
+    },
+    "drawers": {
+      "navigation": "التنقل في الموقع",
+      "close_menu": "إغلاق القائمة",
+      "expand_submenu": "توسيع القائمة الفرعية",
+      "collapse_submenu": "انهيار القائمة الفرعية"
+    },
+    "currency": {
+      "dropdown_label": "عملة"
+    }
+  },
+  "blogs": {
+    "article": {
+      "read_more": "تابع القراءة",
+      "back_to_blog": "العودة إلى {{ title }}"
+    },
+    "comments": {
+      "moderated": "يرجى ملاحظة أنه يجب الموافقة على التعليقات قبل نشرها",
+      "success_moderated": "تم نشر تعليقك بنجاح. سننشره قريبًا، لأن مدونتنا تخضع لإشرافنا.",
+      "success": "تم نشر تعليقك بنجاح! شكرًا لك!"
+    }
+  },
+  "cart": {
+    "general": {
+      "note": "مذكرة الطلب",
+      "shipping_at_checkout": "يتم احتساب رسوم الشحن والضرائب ورموز الخصم عند الدفع.",
+      "update": "تحديث عربة التسوق",
+      "empty": "سلة التسوق الخاصة بك فارغة حاليًا.",
+      "continue_browsing_html": "<a href=\"&lt;span%20class=\" notranslate>{{url}} '&gt;متابعة التسوق</a>",
+      "close_cart": "إغلاق عربة التسوق",
+      "reduce_quantity": "تقليل كمية العنصر بمقدار عنصر واحد",
+      "increase_quantity": "زيادة كمية العنصر بمقدار عنصر واحد",
+      "terms": "أوافق على الشروط والأحكام",
+      "terms_html": "أوافق على <a href=\"&lt;span%20class=\" notranslate>الشروط والأحكام {{url}} ' target='_blank'&gt;</a>",
+      "terms_confirm": "يجب عليك الموافقة على الشروط والأحكام الخاصة بالمبيعات للتحقق"
+    }
+  },
+  "collections": {
+    "general": {
+      "view_all_products_html": "عرض الكل<br> {{ count }} منتجات",
+      "no_matches": "عذراً، لا يوجد منتجات في هذه المجموعة."
+    },
+    "filters": {
+      "all_tags": "جميع المنتجات",
+      "categories_title": "فئات"
+    }
+  },
+  "contact": {
+    "form": {
+      "send": "يرسل"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "حسابي",
+      "details": "تفاصيل الحساب",
+      "view_addresses": "عرض العناوين",
+      "return": "العودة إلى الحساب"
+    },
+    "activate_account": {
+      "title": "تفعيل الحساب",
+      "subtext": "قم بإنشاء كلمة المرور الخاصة بك لتفعيل حسابك.",
+      "password_confirm": "تأكيد كلمة المرور",
+      "submit": "تفعيل الحساب",
+      "cancel": "رفض الدعوة"
+    },
+    "addresses": {
+      "address1": "العنوان 1",
+      "address2": "العنوان 2",
+      "country": "دولة",
+      "zip": "الرمز البريدي",
+      "set_default": "تعيين كعنوان افتراضي"
+    },
+    "login": {
+      "title": "تسجيل الدخول",
+      "forgot_password": "هل نسيت كلمة السر؟",
+      "sign_in": "تسجيل الدخول",
+      "cancel": "العودة إلى المتجر",
+      "guest_title": "متابعة كضيف"
+    },
+    "orders": {
+      "title": "سجل الطلبات",
+      "fulfillment_status": "حالة الإنجاز",
+      "none": "لم تقم بوضع أي طلبات بعد."
+    },
+    "order": {
+      "title": "الطلب {{ name }}",
+      "date_html": "تم وضعه في {{ date }}",
+      "cancelled_html": "تم إلغاء الطلب في {{ date }}",
+      "cancelled_reason": "السبب: {{ reason }}",
+      "fulfillment_status": "حالة الإنجاز",
+      "tax": "ضريبة",
+      "product": "منتج",
+      "sku": "رمز المنتج",
+      "fulfilled_at_html": "تم تنفيذه {{ date }}"
+    },
+    "recover_password": {
+      "title": "إعادة تعيين كلمة المرور الخاصة بك",
+      "subtext": "سنرسل لك بريدًا إلكترونيًا لإعادة تعيين كلمة المرور الخاصة بك.",
+      "success": "لقد أرسلنا لك رسالة بريد إلكتروني تحتوي على رابط لتحديث كلمة المرور الخاصة بك."
+    },
+    "reset_password": {
+      "title": "إعادة تعيين كلمة مرور الحساب",
+      "subtext": "أدخل كلمة مرور جديدة لـ {{ email }}",
+      "password_confirm": "تأكيد كلمة المرور",
+      "submit": "إعادة تعيين كلمة المرور"
+    },
+    "register": {
+      "first_name": "الاسم الأول",
+      "last_name": "اسم العائلة",
+      "submit": "يخلق",
+      "cancel": "العودة إلى المتجر"
+    }
+  },
+  "home_page": {
+    "onboarding": {
+      "product_title": "مثال على المنتج",
+      "product_description": "تُستخدم هذه المنطقة لوصف تفاصيل منتجك. أخبر العملاء بمظهره وملمسه وأسلوبه. أضف تفاصيل حول اللون والمواد المستخدمة والمقاسات ومكان الصنع.",
+      "collection_title": "مجموعة الأمثلة",
+      "no_content": "لا يحتوي هذا القسم حاليًا على أي محتوى. أضف محتوىً إليه باستخدام الشريط الجانبي."
+    }
+  },
+  "layout": {
+    "customer": {
+      "create_account": "إنشاء حساب"
+    }
+  },
+  "products": {
+    "general": {
+      "save_html": "حفظ {{ saved_amount }}",
+      "collection_return": "العودة إلى {{ collection }}",
+      "next_product": "التالي: {{ title }}",
+      "from_text_html": "من {{ price }}"
+    },
+    "product": {
+      "stock_label": "فقط {{ count }} عنصرًا في المخزون!",
+      "preorder": "النظام السابق",
+      "include_taxes": "الضريبة متضمنة.",
+      "shipping_policy_html": "<a href=\"&lt;span%20class=\" notranslate>{{ الرابط }} '&gt;يتم احتساب الشحن</a> عند الخروج.",
+      "will_not_ship_until": "لن يتم الشحن حتى {{ date }}",
+      "will_be_in_stock_after": "سيكون متوفرًا في المخزون بعد {{ date }}",
+      "waiting_for_stock": "المخزون في الطريق"
+    }
+  }
+}
