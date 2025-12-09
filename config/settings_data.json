@@ -571,6 +571,7 @@
               "cta_link1": "shopify://collections/shoes",
               "cta_text2": "Shop All",
               "cta_link2": "shopify://collections/all",
+              "image": "shopify://shop_images/activewear-minimal-3-middle.jpg",
               "video_url": "",
               "width": "100",
               "height": 720,
@@ -585,7 +586,7 @@
           "1525886854810": {
             "type": "sale_collection",
             "settings": {
-              "sale_collection": "blouses-tops",
+              "sale_collection": "streetwear",
               "top_text": "Up to",
               "middle_text": "25% off",
               "bottom_text": "Select products",
@@ -599,7 +600,7 @@
           "1525911710924": {
             "type": "sale_collection",
             "settings": {
-              "sale_collection": "swim",
+              "sale_collection": "الطقم-الرياضي-المحتشم",
               "top_text": "Up to",
               "middle_text": "50% off",
               "bottom_text": "Select products",
@@ -636,6 +637,7 @@
               "cta_link1": "shopify://collections/jewelry",
               "cta_text2": "Shop All",
               "cta_link2": "https://afx.life/collections/all",
+              "image": "shopify://shop_images/freepik__prompt-a-moroccan-woman-stretching-in-a-gym-wearin__36153.png",
               "video_url": "",
               "width": "50",
               "height": 800,
@@ -657,6 +659,7 @@
               "cta_link1": "shopify://collections/self-care",
               "cta_text2": "Shop All",
               "cta_link2": "https://afx.life/collections/all",
+              "image": "shopify://shop_images/ensemble-0-capuche-homme_2.jpg",
               "video_url": "",
               "width": "50",
               "height": 500,
