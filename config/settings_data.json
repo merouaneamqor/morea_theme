@@ -53,7 +53,7 @@
     "button_style": "square",
     "icon_weight": "2px",
     "icon_linecaps": "miter",
-    "vendor_enable": false,
+    "vendor_enable": true,
     "sku_enable": false,
     "quantity_enable": true,
     "variant_labels_enable": true,
