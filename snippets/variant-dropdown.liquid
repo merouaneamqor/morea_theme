@@ -57,29 +57,88 @@
     </div>
   {%- else -%}
     {%- comment -%} Default dropdown for non-color options {%- endcomment -%}
-    <div class="variant-input-wrap" data-index="option{{ forloop.index }}">
-      <select
-        class="variant__input-{{ section_id }}"
-        id="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}"
-        data-index="option{{ forloop.index }}">
+    {%- assign is_size = false -%}
+    {%- assign size_option_name = option.name | downcase -%}
+    {%- if size_option_name contains 'size' or size_option_name contains 'taille' -%}
+      {%- assign is_size = true -%}
+    {%- endif -%}
+    
+    {%- if is_size -%}
+      {%- comment -%} Size buttons with stock display {%- endcomment -%}
+      {%- assign option_index = forloop.index0 -%}
+      <div class="variant-input-wrap variant-input-wrap--size-buttons" data-index="option{{ forloop.index }}">
         {% for value in option.values %}
           {%- assign variant_label_state = true -%}
-          {% if product.options.size == 1 %}
-            {% unless product.variants[forloop.index0].available %}
-              {%- assign variant_label_state = false -%}
-            {% endunless %}
-          {% endif %}
-          <option
-            value="{{ value | escape }}"
-            {% if option.selected_value == value %} selected="selected"{% endif %}
-            {% unless variant_label_state %} disabled="disabled"{% endunless %}
-            name="{{ option.name }}"
-            class="variant-input"
-            data-index="option{{ forloop.index }}">
-            {{ value }}
-          </option>
+          {%- assign variant_inventory = 0 -%}
+          {%- assign variant_available = false -%}
+          
+          {%- comment -%} Find variants with this size and calculate inventory {%- endcomment -%}
+          {%- for variant in product.variants -%}
+            {%- assign variant_option_value = variant.options[option_index] -%}
+            {%- if variant_option_value == value -%}
+              {%- if variant.inventory_management == 'shopify' -%}
+                {%- assign variant_inventory = variant_inventory | plus: variant.inventory_quantity -%}
+              {%- else -%}
+                {%- assign variant_inventory = variant_inventory | plus: 999 -%}
+              {%- endif -%}
+              {%- if variant.available -%}
+                {%- assign variant_available = true -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          
+          {%- unless variant_available -%}
+            {%- assign variant_label_state = false -%}
+          {%- endunless -%}
+          
+          <div class="size-button-wrapper{% unless variant_label_state %} disabled{% endunless %}">
+            <input type="radio"
+              name="{{ option.name }}"
+              value="{{ value | escape }}"
+              id="SingleOptionSelector-{{ section_id }}-option-{{ option_index }}-{{ value | handleize }}"
+              class="variant__input-{{ section_id }} variant__input--size-{{ section_id }}"
+              data-index="option{{ option_index | plus: 1 }}"
+              {% if option.selected_value == value %} checked="checked"{% endif %}
+              {% unless variant_label_state %} disabled="disabled"{% endunless %}>
+            <label
+              for="SingleOptionSelector-{{ section_id }}-option-{{ option_index }}-{{ value | handleize }}"
+              class="size-button size-button--{{ value | handle }}{% unless variant_label_state %} disabled{% endunless %}">
+              <span class="size-button__label">{{ value | escape }}</span>
+              {%- if variant_inventory > 0 and variant_available -%}
+                <span class="size-button__stock">Restent {{ variant_inventory }}</span>
+              {%- elsif variant_inventory == 0 or variant_label_state == false -%}
+                <span class="size-button__stock size-button__stock--sold-out">Épuisé</span>
+              {%- endif -%}
+            </label>
+          </div>
         {% endfor %}
-      </select>
-    </div>
+      </div>
+    {%- else -%}
+      {%- comment -%} Regular dropdown for other options {%- endcomment -%}
+      <div class="variant-input-wrap" data-index="option{{ forloop.index }}">
+        <select
+          class="variant__input-{{ section_id }}"
+          id="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}"
+          data-index="option{{ forloop.index }}">
+          {% for value in option.values %}
+            {%- assign variant_label_state = true -%}
+            {% if product.options.size == 1 %}
+              {% unless product.variants[forloop.index0].available %}
+                {%- assign variant_label_state = false -%}
+              {% endunless %}
+            {% endif %}
+            <option
+              value="{{ value | escape }}"
+              {% if option.selected_value == value %} selected="selected"{% endif %}
+              {% unless variant_label_state %} disabled="disabled"{% endunless %}
+              name="{{ option.name }}"
+              class="variant-input"
+              data-index="option{{ forloop.index }}">
+              {{ value }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    {%- endif -%}
   {%- endif -%}
 </div>

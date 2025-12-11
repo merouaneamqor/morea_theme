@@ -105,39 +105,43 @@
               {%- if current_variant.compare_at_price > current_variant.price -%}
                 {%- assign hide_sale_price = false -%}
               {%- endif -%}
-              <span
-                id="PriceA11y-{{ section_id }}"
-                class="visually-hidden"
-                aria-hidden="{{ hide_sale_price }}">
-                  {{ 'products.general.regular_price' | t }}
-              </span>
-              <span class="product__price-wrap-{{ section_id }}{% if hide_sale_price %} hide{% endif %}">
-                <span id="ComparePrice-{{ section_id }}" class="product__price product__price--compare">
-                  {%- if current_variant.compare_at_price > current_variant.price -%}
-                    {{ current_variant.compare_at_price | money }}
-                  {%- endif -%}
-                </span>
-              </span>
-              <span id="ComparePriceA11y-{{ section_id }}" class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
-            {% else %}
-              <span id="PriceA11y-{{ section_id }}" class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
             {%- endif -%}
-
-            <span id="ProductPrice-{{ section_id }}"
-              class="product__price{% if current_variant.compare_at_price > current_variant.price %} on-sale{% endif %}">
-              {{ current_variant.price | money }}
-            </span>
-
-            {%- if settings.product_save_amount -%}
-              {%- if settings.product_save_type == 'dollar' -%}
-                {% capture saved_amount %}{{ current_variant.compare_at_price | minus: current_variant.price | money }}{% endcapture %}
+            
+            <div class="product__price-container" style="margin: 15px 0;">
+              {%- if hide_sale_price == false -%}
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                  <span id="ComparePrice-{{ section_id }}" class="product__price product__price--compare" style="text-decoration: line-through; color: #999; font-size: 0.9em;">
+                    Prix régulier {{ current_variant.compare_at_price | money }}
+                  </span>
+                  <span id="ProductPrice-{{ section_id }}" class="product__price on-sale" style="font-weight: 600; color: #e74c3c;">
+                    Prix réduit{{ current_variant.price | money }}
+                  </span>
+                </div>
               {%- else -%}
-                {% capture saved_amount %}{{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%{% endcapture %}
+                <span id="ProductPrice-{{ section_id }}" class="product__price" style="font-weight: 600;">
+                  {{ current_variant.price | money }}
+                </span>
               {%- endif -%}
-              <span id="SavePrice-{{ section_id }}" class="product__price-savings{% if hide_sale_price %} hide{% endif %}">
-                {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
-              </span>
-            {%- endif -%}
+              
+              {%- if settings.product_save_amount and hide_sale_price == false -%}
+                {%- if settings.product_save_type == 'dollar' -%}
+                  {% capture saved_amount %}{{ current_variant.compare_at_price | minus: current_variant.price | money }}{% endcapture %}
+                {%- else -%}
+                  {% capture saved_amount %}{{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%{% endcapture %}
+                {%- endif -%}
+                <span id="SavePrice-{{ section_id }}" class="product__price-savings" style="display: block; margin-top: 5px; color: #27ae60; font-size: 0.9em;">
+                  {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
+                </span>
+              {%- endif -%}
+            </div>
+            
+            <span id="PriceA11y-{{ section_id }}" class="visually-hidden" aria-hidden="{{ hide_sale_price }}">
+              {%- if hide_sale_price == false -%}
+                {{ 'products.general.regular_price' | t }} {{ current_variant.compare_at_price | money }}, {{ 'products.general.sale_price' | t }} {{ current_variant.price | money }}
+              {%- else -%}
+                {{ 'products.general.regular_price' | t }} {{ current_variant.price | money }}
+              {%- endif -%}
+            </span>
 
             <div class="product__unit-price product__unit-price--spacing product__unit-price-wrapper--{{ section_id }}{% unless current_variant.unit_price_measurement %} hide{% endunless %}">
               {%- capture unit_price_base_unit -%}
@@ -228,6 +232,34 @@
                 data-url="{{ product.url }}"
                 data-template="{{ product.template_suffix }}"></div>
             {%- endunless -%}
+
+            {%- comment -%} Shipping, Exchange and Returns Information {%- endcomment -%}
+            <div class="product-shipping-info" style="margin-top: 20px; padding: 20px 0; border-top: 1px solid #e5e5e5;">
+              <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 15px;">LIVRAISON , ÉCHANGE ET RETOURS</h3>
+              <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 20px; margin-right: 10px;">⇄</span>
+                <span>Retours et échanges sous 7 jours*</span>
+              </div>
+              <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 20px; margin-right: 10px;">📏</span>
+                <span>Prenez votre taille habituelle, ça marche pour 95% de nos clients.</span>
+              </div>
+              <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 20px; margin-right: 10px;">⛟</span>
+                <span>Livraison sous 48H partout au Maroc</span>
+              </div>
+            </div>
+
+            {%- comment -%} Size Guide {%- endcomment -%}
+            <div class="product-size-guide" style="margin-top: 20px; padding: 20px 0; border-top: 1px solid #e5e5e5;">
+              <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 15px;">GUIDE DE TAILLE</h3>
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 8px;">• Tissu de qualité pour un confort optimal.</li>
+                <li style="margin-bottom: 8px;">• Tailles : S, M, L , XL</li>
+                <li style="margin-bottom: 8px;">• Lavage : En machine, cycle délicat, séchage à l'air recommandé.</li>
+                <li style="margin-bottom: 8px;">Notre modèle mesure 1m68 et porte une taille M</li>
+              </ul>
+            </div>
 
             {%- if settings.trust_image != blank -%}
               <div class="aos-animate trust-image" style="max-width: {{ settings.trust_image.width }}px;">
