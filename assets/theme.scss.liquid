@@ -8695,6 +8695,48 @@ $label-bottom-margin: 12px;
   input[type='radio']:checked + label {
     box-shadow: 0 0 0 2px $colorTextBody;
   }
+
+  // Color swatch wrapper in dropdown context
+  &.variant-input-wrap--color-swatch {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -4px;
+
+    .color-swatch-wrapper {
+      position: relative;
+      display: inline-block;
+      margin: 0 4px 4px 0;
+
+      .color-swatch {
+        height: 2.5em;
+        cursor: pointer;
+      }
+
+      input[type='radio']:checked + .color-swatch {
+        box-shadow: 0 0 0 2px $colorTextBody;
+      }
+
+      input[type='radio']:focus + .color-swatch {
+        box-shadow: 0 0 0 1px $colorTextBody;
+      }
+
+      &.disabled .color-swatch {
+        opacity: 0.5;
+        cursor: not-allowed;
+
+        &:after {
+          position: absolute;
+          content: "";
+          left: 50%;
+          top: 0;
+          bottom: 0;
+          border-left: 1px solid;
+          border-color: $colorBorder;
+          transform: rotate(45deg);
+        }
+      }
+    }
+  }
 }
 
 .variant-input {

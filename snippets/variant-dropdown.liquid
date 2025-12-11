@@ -1,30 +1,85 @@
+{%- assign swatch_file_extension = 'png' -%}
+{%- assign is_color = false -%}
+{%- assign downcased_option = option.name | downcase -%}
+{%- if downcased_option contains 'color' or downcased_option contains 'colour' -%}
+  {%- assign is_color = true -%}
+  {%- assign color_option_index = forloop.index0 -%}
+{%- endif -%}
+
 <div class="variant-wrapper variant-wrapper--{{ settings.variant_type }} js">
   <label class="variant__label{% if option.name == 'Default' or option.name == 'Title' %} hidden-label{% endif %}{% unless settings.variant_labels_enable %} hidden-label{% endunless %}"
-    for="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}">
+    {% unless is_color %}for="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}"{% endunless %}>
     {{ option.name }}
+    {%- if is_color -%}
+      <span class="variant__label-info">
+        &mdash;
+        <span
+          id="VariantColorLabel-{{ section_id }}-{{ forloop.index0 }}"
+          data-option-index="{{ color_option_index }}">
+          {{ option.selected_value }}
+        </span>
+      </span>
+    {%- endif -%}
   </label>
-  <div class="variant-input-wrap" data-index="option{{ forloop.index }}">
-    <select
-      class="variant__input-{{ section_id }}"
-      id="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}"
-      data-index="option{{ forloop.index }}">
-      {% for value in option.values %}
+  
+  {%- if is_color -%}
+    {%- comment -%} Color swatch UI for color options {%- endcomment -%}
+    <div class="variant-input-wrap variant-input-wrap--color-swatch" data-index="option{{ forloop.index }}">
+      {%- for value in option.values -%}
         {%- assign variant_label_state = true -%}
-        {% if product.options.size == 1 %}
-          {% unless product.variants[forloop.index0].available %}
+        {%- if product.options.size == 1 -%}
+          {%- unless product.variants[forloop.index0].available -%}
             {%- assign variant_label_state = false -%}
-          {% endunless %}
-        {% endif %}
-        <option
-          value="{{ value | escape }}"
-          {% if option.selected_value == value %} selected="selected"{% endif %}
-          {% unless variant_label_state %} disabled="disabled"{% endunless %}
-          name="{{ option.name }}"
-          class="variant-input"
-          data-index="option{{ forloop.index }}">
-          {{ value }}
-        </option>
-      {% endfor %}
-    </select>
-  </div>
+          {%- endunless -%}
+        {%- endif -%}
+        {%- assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first -%}
+        {%- assign color_swatch_fallback = value | split: ' ' | last | handle -%}
+        <div class="color-swatch-wrapper{% unless variant_label_state %} disabled{% endunless %}">
+          <input type="radio"
+            name="{{ option.name }}"
+            value="{{ value | escape }}"
+            id="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}-{{ value | handleize }}"
+            class="variant__input-{{ section_id }} variant__input--color-swatch-{{ section_id }}"
+            data-index="option{{ forloop.index }}"
+            data-color-name="{{ value | escape }}"
+            data-color-index="{{ color_option_index }}"
+            {% if option.selected_value == value %} checked="checked"{% endif %}
+            {% unless variant_label_state %} disabled="disabled"{% endunless %}>
+          <label
+            for="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}-{{ value | handleize }}"
+            class="color-swatch color-swatch--{{ value | handle }}{% unless variant_label_state %} disabled{% endunless %}"
+            style="background-image: url({{ color_image }}); background-color: {{ color_swatch_fallback }};"
+            title="{{ value | escape }}">
+            <span class="visually-hidden">{{ value | escape }}</span>
+          </label>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    {%- comment -%} Default dropdown for non-color options {%- endcomment -%}
+    <div class="variant-input-wrap" data-index="option{{ forloop.index }}">
+      <select
+        class="variant__input-{{ section_id }}"
+        id="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}"
+        data-index="option{{ forloop.index }}">
+        {% for value in option.values %}
+          {%- assign variant_label_state = true -%}
+          {% if product.options.size == 1 %}
+            {% unless product.variants[forloop.index0].available %}
+              {%- assign variant_label_state = false -%}
+            {% endunless %}
+          {% endif %}
+          <option
+            value="{{ value | escape }}"
+            {% if option.selected_value == value %} selected="selected"{% endif %}
+            {% unless variant_label_state %} disabled="disabled"{% endunless %}
+            name="{{ option.name }}"
+            class="variant-input"
+            data-index="option{{ forloop.index }}">
+            {{ value }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  {%- endif -%}
 </div>
