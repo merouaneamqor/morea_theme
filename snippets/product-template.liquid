@@ -111,10 +111,10 @@
               {%- if hide_sale_price == false -%}
                 <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                   <span id="ComparePrice-{{ section_id }}" class="product__price product__price--compare" style="text-decoration: line-through; color: #999; font-size: 0.9em;">
-                    Prix régulier {{ current_variant.compare_at_price | money }}
+                    Prix régulier : {{ current_variant.compare_at_price | money }}
                   </span>
                   <span id="ProductPrice-{{ section_id }}" class="product__price on-sale" style="font-weight: 600; color: #e74c3c;">
-                    Prix réduit{{ current_variant.price | money }}
+                    Prix réduit : {{ current_variant.price | money }}
                   </span>
                 </div>
               {%- else -%}
