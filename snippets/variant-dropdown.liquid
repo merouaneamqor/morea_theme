@@ -24,29 +24,35 @@
   
   {%- if is_color -%}
     {%- comment -%} Color swatch UI for color options {%- endcomment -%}
+    {%- assign color_option_index = forloop.index0 -%}
     <div class="variant-input-wrap variant-input-wrap--color-swatch" data-index="option{{ forloop.index }}">
       {%- for value in option.values -%}
-        {%- assign variant_label_state = true -%}
-        {%- if product.options.size == 1 -%}
-          {%- unless product.variants[forloop.index0].available -%}
-            {%- assign variant_label_state = false -%}
-          {%- endunless -%}
-        {%- endif -%}
+        {%- assign variant_label_state = false -%}
+        
+        {%- comment -%} Check if any variant with this color is available {%- endcomment -%}
+        {%- for variant in product.variants -%}
+          {%- assign variant_color_value = variant.options[color_option_index] -%}
+          {%- if variant_color_value == value and variant.available -%}
+            {%- assign variant_label_state = true -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        
         {%- assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first -%}
         {%- assign color_swatch_fallback = value | split: ' ' | last | handle -%}
         <div class="color-swatch-wrapper{% unless variant_label_state %} disabled{% endunless %}">
           <input type="radio"
             name="{{ option.name }}"
             value="{{ value | escape }}"
-            id="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}-{{ value | handleize }}"
+            id="SingleOptionSelector-{{ section_id }}-option-{{ color_option_index }}-{{ value | handleize }}"
             class="variant__input-{{ section_id }} variant__input--color-swatch-{{ section_id }}"
-            data-index="option{{ forloop.index }}"
+            data-index="option{{ color_option_index | plus: 1 }}"
             data-color-name="{{ value | escape }}"
             data-color-index="{{ color_option_index }}"
             {% if option.selected_value == value %} checked="checked"{% endif %}
             {% unless variant_label_state %} disabled="disabled"{% endunless %}>
           <label
-            for="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}-{{ value | handleize }}"
+            for="SingleOptionSelector-{{ section_id }}-option-{{ color_option_index }}-{{ value | handleize }}"
             class="color-swatch color-swatch--{{ value | handle }}{% unless variant_label_state %} disabled{% endunless %}"
             style="background-image: url({{ color_image }}); background-color: {{ color_swatch_fallback }};"
             title="{{ value | escape }}">
