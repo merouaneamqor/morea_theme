@@ -145,16 +145,41 @@
     {%- if is_size -%}
       {%- comment -%} Size buttons with stock display {%- endcomment -%}
       {%- assign option_index = forloop.index0 -%}
-      <div class="variant-input-wrap variant-input-wrap--size-buttons" data-index="option{{ forloop.index }}">
+      {%- comment -%} Find the color option index and selected color value {%- endcomment -%}
+      {%- assign selected_color_value = '' -%}
+      {%- assign color_option_index = -1 -%}
+      {%- for opt in product.options_with_values -%}
+        {%- assign opt_name_lower = opt.name | downcase -%}
+        {%- if opt_name_lower contains 'color' or opt_name_lower contains 'colour' or opt_name_lower contains 'couleur' -%}
+          {%- assign color_option_index = forloop.index0 -%}
+          {%- assign selected_color_value = opt.selected_value -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      
+      <div class="variant-input-wrap variant-input-wrap--size-buttons" data-index="option{{ forloop.index }}" data-color-option-index="{{ color_option_index }}">
         {% for value in option.values %}
           {%- assign variant_label_state = true -%}
           {%- assign variant_inventory = 0 -%}
           {%- assign variant_available = false -%}
           
-          {%- comment -%} Find variants with this size and calculate inventory {%- endcomment -%}
+          {%- comment -%} Find variants with this size and selected color, calculate inventory {%- endcomment -%}
           {%- for variant in product.variants -%}
             {%- assign variant_option_value = variant.options[option_index] -%}
+            {%- assign variant_matches_size = false -%}
             {%- if variant_option_value == value -%}
+              {%- assign variant_matches_size = true -%}
+            {%- endif -%}
+            
+            {%- comment -%} If color is selected, only count variants matching that color {%- endcomment -%}
+            {%- if variant_matches_size -%}
+              {%- if color_option_index >= 0 and selected_color_value != '' -%}
+                {%- assign variant_color_value = variant.options[color_option_index] -%}
+                {%- if variant_color_value != selected_color_value -%}
+                  {%- continue -%}
+                {%- endif -%}
+              {%- endif -%}
+              
               {%- if variant.inventory_management == 'shopify' -%}
                 {%- assign variant_inventory = variant_inventory | plus: variant.inventory_quantity -%}
               {%- else -%}

@@ -8750,13 +8750,14 @@ $label-bottom-margin: 12px;
   // Size buttons wrapper
   &.variant-input-wrap--size-buttons {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-wrap: nowrap;
+    gap: 0;
     margin-left: 0;
 
     .size-button-wrapper {
       position: relative;
       display: inline-block;
+      flex: 1 1 auto;
 
       input[type='radio'] {
         @include visuallyHidden;
@@ -8770,10 +8771,15 @@ $label-bottom-margin: 12px;
         min-width: 60px;
         padding: 10px 15px;
         background-color: $colorBody;
-        border: 1px solid $colorBorder;
+        border: 1px solid #e0e0e0;
+        border-right: none;
         cursor: pointer;
         transition: all 0.2s ease;
         text-align: center;
+        
+        &:last-child {
+          border-right: 1px solid #e0e0e0;
+        }
 
         .size-button__label {
           font-weight: 500;
@@ -8797,9 +8803,16 @@ $label-bottom-margin: 12px;
       }
 
       input[type='radio']:checked + .size-button {
-        border: 2px solid $colorTextBody;
+        border: 1px solid #999;
+        border-right: none;
         background-color: rgba($colorTextBody, 0.05);
         font-weight: 600;
+        z-index: 1;
+        position: relative;
+        
+        &:last-child {
+          border-right: 1px solid #999;
+        }
       }
 
       input[type='radio']:focus + .size-button {

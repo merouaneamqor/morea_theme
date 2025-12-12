@@ -3766,6 +3766,8 @@ lazySizesConfig.expFactor = 4;
             var color = $el.data('color-name');
             var index = $el.data('color-index');
             this.updateColorName(color, index);
+            // Update size button inventory when color changes
+            this.updateSizeButtonInventory(color, index);
           }.bind(this));
         }
   
@@ -3989,6 +3991,95 @@ lazySizesConfig.expFactor = 4;
       updateColorName: function(color, index) {
         // Updates on radio button change, not variant.js
         $('#VariantColorLabel-' + this.sectionId + '-' + index).text(color);
+      },
+  
+      updateSizeButtonInventory: function(selectedColor, colorIndex) {
+        var self = this;
+        var $sizeButtonWraps = this.$container.find('.variant-input-wrap--size-buttons');
+        
+        if (!$sizeButtonWraps.length || !this.variantsObject) {
+          return;
+        }
+        
+        // Get color option index from data attribute or find it
+        var colorOptionIndex = colorIndex;
+        if (colorOptionIndex === undefined) {
+          var $colorWrap = this.$container.find('.variant-input-wrap--color-swatch');
+          if ($colorWrap.length) {
+            colorOptionIndex = parseInt($colorWrap.attr('data-index').replace('option', '')) - 1;
+          }
+        }
+        
+        // Update each size button
+        $sizeButtonWraps.each(function() {
+          var $sizeWrap = $(this);
+          var sizeOptionIndex = parseInt($sizeWrap.attr('data-index').replace('option', '')) - 1;
+          
+          $sizeWrap.find('.size-button-wrapper').each(function() {
+            var $wrapper = $(this);
+            var $sizeButton = $wrapper.find('.size-button');
+            var $stockSpan = $sizeButton.find('.size-button__stock');
+            var sizeValue = $wrapper.find('input[type="radio"]').val();
+            
+            if (!sizeValue) return;
+            
+            // Find variant matching selected color and this size
+            var variantInventory = 0;
+            var variantAvailable = false;
+            
+            for (var i = 0; i < self.variantsObject.length; i++) {
+              var variant = self.variantsObject[i];
+              if (!variant.options) continue;
+              
+              var variantColor = colorOptionIndex >= 0 ? variant.options[colorOptionIndex] : '';
+              var variantSize = sizeOptionIndex >= 0 ? variant.options[sizeOptionIndex] : '';
+              
+              // Check if this variant matches the selected color and size
+              if (variantSize === sizeValue) {
+                if (colorOptionIndex >= 0 && selectedColor) {
+                  if (variantColor !== selectedColor) {
+                    continue; // Skip if color doesn't match
+                  }
+                }
+                
+                if (variant.inventory_management === 'shopify') {
+                  variantInventory += variant.inventory_quantity || 0;
+                } else {
+                  variantInventory += 999;
+                }
+                
+                if (variant.available) {
+                  variantAvailable = true;
+                }
+              }
+            }
+            
+            // Update the stock display
+            if ($stockSpan.length) {
+              if (variantInventory > 0 && variantAvailable) {
+                $stockSpan.text('Restent ' + variantInventory).removeClass('size-button__stock--sold-out');
+              } else {
+                $stockSpan.text('Épuisé').addClass('size-button__stock--sold-out');
+              }
+            } else {
+              // Create stock span if it doesn't exist
+              var stockText = variantInventory > 0 && variantAvailable ? 'Restent ' + variantInventory : 'Épuisé';
+              var stockClass = variantInventory > 0 && variantAvailable ? 'size-button__stock' : 'size-button__stock size-button__stock--sold-out';
+              $sizeButton.append('<span class="' + stockClass + '">' + stockText + '</span>');
+            }
+            
+            // Update disabled state
+            if (variantAvailable) {
+              $wrapper.removeClass('disabled');
+              $wrapper.find('input[type="radio"]').prop('disabled', false);
+              $sizeButton.removeClass('disabled');
+            } else {
+              $wrapper.addClass('disabled');
+              $wrapper.find('input[type="radio"]').prop('disabled', true);
+              $sizeButton.addClass('disabled');
+            }
+          });
+        });
       },
   
       updateCartButton: function(evt) {
