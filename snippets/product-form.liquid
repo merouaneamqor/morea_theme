@@ -27,9 +27,13 @@
   </select>
 
   {% if settings.quantity_enable %}
-    <div class="product__quantity product__quantity--{{ settings.variant_type }}">
+    <div class="product__quantity product__quantity--{{ section_id }} product__quantity--{{ settings.variant_type }}">
       <label for="Quantity-{{ section_id }}">{{ 'products.product.quantity' | t }}</label>
-      {% include 'quantity-input', id: section_id, qty: 1, min: 1 %}
+      {%- assign max_quantity = 999 -%}
+      {%- if current_variant.inventory_management == 'shopify' and current_variant.inventory_quantity > 0 -%}
+        {%- assign max_quantity = current_variant.inventory_quantity -%}
+      {%- endif -%}
+      {% include 'quantity-input', id: section_id, qty: 1, min: 1, max: max_quantity %}
     </div>
   {% endif %}
 

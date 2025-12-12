@@ -31,7 +31,14 @@
     {%- endif -%}
   </label>
   {%- assign option_index = forloop.index -%}
-  <fieldset class="variant-input-wrap"
+  {%- comment -%} Check if this is a size option {%- endcomment -%}
+  {%- assign is_size_option = false -%}
+  {%- assign size_option_name = option.name | downcase -%}
+  {%- if size_option_name contains 'size' or size_option_name contains 'taille' -%}
+    {%- assign is_size_option = true -%}
+  {%- endif -%}
+  
+  <fieldset class="variant-input-wrap{% if is_size_option %} variant-input-wrap--size-buttons{% endif %}"
     name="{{ option.name }}"
     data-index="option{{ option_index }}"
     id="ProductSelect-{{ section_id }}-option-{{ forloop.index0 }}">
@@ -40,20 +47,66 @@
       {%- if product.options.size == 1 -%}
         {%- assign product_available = product.variants[forloop.index0].available -%}
       {%- endif -%}
-      <div
-        class="variant-input"
-        data-index="option{{ option_index }}"
-        data-value="{{ value | escape }}">
-        <input type="radio"
-          {% if option.selected_value == value %} checked="checked"{% endif %}
-          value="{{ value | escape }}"
+      {%- if is_size_option -%}
+        {%- comment -%} Size buttons with stock display - special structure {%- endcomment -%}
+        {%- assign option_index_value = forloop.parentloop.index0 -%}
+        {%- assign variant_inventory = 0 -%}
+        {%- assign variant_available = false -%}
+        
+        {%- comment -%} Find variants with this size and calculate inventory {%- endcomment -%}
+        {%- for variant in product.variants -%}
+          {%- assign variant_option_value = variant.options[option_index_value] -%}
+          {%- if variant_option_value == value -%}
+            {%- if variant.inventory_management == 'shopify' -%}
+              {%- assign variant_inventory = variant_inventory | plus: variant.inventory_quantity -%}
+            {%- else -%}
+              {%- assign variant_inventory = variant_inventory | plus: 999 -%}
+            {%- endif -%}
+            {%- if variant.available -%}
+              {%- assign variant_available = true -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        
+        {%- unless variant_available -%}
+          {%- assign product_available = false -%}
+        {%- endunless -%}
+        
+        <div class="size-button-wrapper{% unless product_available %} disabled{% endunless %}">
+          <input type="radio"
+            {% if option.selected_value == value %} checked="checked"{% endif %}
+            value="{{ value | escape }}"
+            data-index="option{{ option_index }}"
+            name="{{ option.name }}"
+            class="variant__input-{{ section_id }} variant__input--size-{{ section_id }}"
+            id="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+            {% unless product_available %} disabled="disabled"{% endunless %}>
+          <label
+            for="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+            class="variant__button-label size-button size-button--{{ value | handle }}{% unless product_available %} disabled{% endunless %}">
+            <span class="size-button__label">{{ value | escape }}</span>
+            {%- if variant_inventory > 0 and variant_available -%}
+              <span class="size-button__stock">Restent {{ variant_inventory }}</span>
+            {%- elsif variant_inventory == 0 or product_available == false -%}
+              <span class="size-button__stock size-button__stock--sold-out">Épuisé</span>
+            {%- endif -%}
+          </label>
+        </div>
+      {%- else -%}
+        <div
+          class="variant-input"
           data-index="option{{ option_index }}"
-          name="{{ option.name }}"
-          class="variant__input-{{ section_id }}{% unless product_available %} disabled{% endunless %}{% if is_color %} variant__input--color-swatch-{{ section_id }}{% endif %}"
-          {% if is_color %} data-color-name="{{ value | escape }}"{% endif %}
-          {% if is_color %} data-color-index="{{ color_option_index }}"{% endif %}
-          id="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}">
-        {%- if is_color -%}
+          data-value="{{ value | escape }}">
+          <input type="radio"
+            {% if option.selected_value == value %} checked="checked"{% endif %}
+            value="{{ value | escape }}"
+            data-index="option{{ option_index }}"
+            name="{{ option.name }}"
+            class="variant__input-{{ section_id }}{% unless product_available %} disabled{% endunless %}{% if is_color %} variant__input--color-swatch-{{ section_id }}{% endif %}"
+            {% if is_color %} data-color-name="{{ value | escape }}"{% endif %}
+            {% if is_color %} data-color-index="{{ color_option_index }}"{% endif %}
+            id="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}">
+          {%- if is_color -%}
           {%- assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first -%}
           
           {%- comment -%} Map color names to CSS color values {%- endcomment -%}
@@ -135,12 +188,13 @@
           >
             {{ value | escape }}
           </label>
-        {%- else -%}
-          <label
-            for="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
-            class="variant__button-label{% unless product_available %} disabled{% endunless %}">{{ value | escape }}</label>
-        {%- endif -%}
-      </div>
+          {%- else -%}
+            <label
+              for="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+              class="variant__button-label{% unless product_available %} disabled{% endunless %}">{{ value | escape }}</label>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     {%- endfor -%}
   </fieldset>
 </div>
