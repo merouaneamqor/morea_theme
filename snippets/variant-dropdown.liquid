@@ -1,9 +1,11 @@
 {%- assign swatch_file_extension = 'png' -%}
 {%- assign is_color = false -%}
+{%- assign color_option_index = forloop.index0 -%}
 {%- assign downcased_option = option.name | downcase -%}
-{%- if downcased_option contains 'color' or downcased_option contains 'colour' -%}
+
+{%- comment -%} Always show color swatches for color options in dropdown mode {%- endcomment -%}
+{%- if downcased_option contains 'color' or downcased_option contains 'colour' or downcased_option contains 'couleur' -%}
   {%- assign is_color = true -%}
-  {%- assign color_option_index = forloop.index0 -%}
 {%- endif -%}
 
 <div class="variant-wrapper variant-wrapper--{{ settings.variant_type }} js">
@@ -39,7 +41,78 @@
         {%- endfor -%}
         
         {%- assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first -%}
-        {%- assign color_swatch_fallback = value | split: ' ' | last | handle -%}
+        
+        {%- comment -%} Map color names to CSS color values {%- endcomment -%}
+        {%- assign color_name_lower = value | downcase | strip -%}
+        {%- assign color_swatch_fallback = '#cccccc' -%}
+        
+        {%- case color_name_lower -%}
+          {%- when 'black', 'noir' -%}
+            {%- assign color_swatch_fallback = '#000000' -%}
+          {%- when 'white', 'blanc' -%}
+            {%- assign color_swatch_fallback = '#ffffff' -%}
+          {%- when 'brown', 'marron', 'brun' -%}
+            {%- assign color_swatch_fallback = '#8b4513' -%}
+          {%- when 'red', 'rouge', 'darkred' -%}
+            {%- assign color_swatch_fallback = '#dc143c' -%}
+          {%- when 'blue', 'bleu' -%}
+            {%- assign color_swatch_fallback = '#0000ff' -%}
+          {%- when 'green', 'vert' -%}
+            {%- assign color_swatch_fallback = '#008000' -%}
+          {%- when 'yellow', 'jaune' -%}
+            {%- assign color_swatch_fallback = '#ffff00' -%}
+          {%- when 'orange' -%}
+            {%- assign color_swatch_fallback = '#ffa500' -%}
+          {%- when 'pink', 'rose' -%}
+            {%- assign color_swatch_fallback = '#ffc0cb' -%}
+          {%- when 'purple', 'violet' -%}
+            {%- assign color_swatch_fallback = '#800080' -%}
+          {%- when 'grey', 'gray', 'gris' -%}
+            {%- assign color_swatch_fallback = '#808080' -%}
+          {%- when 'navy', 'marine' -%}
+            {%- assign color_swatch_fallback = '#000080' -%}
+          {%- when 'beige' -%}
+            {%- assign color_swatch_fallback = '#f5f5dc' -%}
+          {%- when 'khaki' -%}
+            {%- assign color_swatch_fallback = '#c3b091' -%}
+          {%- when 'papayawhip' -%}
+            {%- assign color_swatch_fallback = '#ffefd5' -%}
+          {%- when 'tan' -%}
+            {%- assign color_swatch_fallback = '#d2b48c' -%}
+          {%- when 'cream', 'crème' -%}
+            {%- assign color_swatch_fallback = '#fffdd0' -%}
+          {%- when 'ivory' -%}
+            {%- assign color_swatch_fallback = '#fffff0' -%}
+          {%- when 'burgundy', 'bordeaux' -%}
+            {%- assign color_swatch_fallback = '#800020' -%}
+          {%- when 'maroon' -%}
+            {%- assign color_swatch_fallback = '#800000' -%}
+          {%- else -%}
+            {%- comment -%} Try to extract a color from the name {%- endcomment -%}
+            {%- if color_name_lower contains 'red' or color_name_lower contains 'rouge' -%}
+              {%- assign color_swatch_fallback = '#dc143c' -%}
+            {%- elsif color_name_lower contains 'blue' or color_name_lower contains 'bleu' -%}
+              {%- assign color_swatch_fallback = '#0000ff' -%}
+            {%- elsif color_name_lower contains 'green' or color_name_lower contains 'vert' -%}
+              {%- assign color_swatch_fallback = '#008000' -%}
+            {%- elsif color_name_lower contains 'yellow' or color_name_lower contains 'jaune' -%}
+              {%- assign color_swatch_fallback = '#ffff00' -%}
+            {%- elsif color_name_lower contains 'orange' -%}
+              {%- assign color_swatch_fallback = '#ffa500' -%}
+            {%- elsif color_name_lower contains 'pink' or color_name_lower contains 'rose' -%}
+              {%- assign color_swatch_fallback = '#ffc0cb' -%}
+            {%- elsif color_name_lower contains 'purple' or color_name_lower contains 'violet' -%}
+              {%- assign color_swatch_fallback = '#800080' -%}
+            {%- elsif color_name_lower contains 'brown' or color_name_lower contains 'marron' or color_name_lower contains 'brun' or color_name_lower contains 'tan' -%}
+              {%- assign color_swatch_fallback = '#8b4513' -%}
+            {%- elsif color_name_lower contains 'black' or color_name_lower contains 'noir' -%}
+              {%- assign color_swatch_fallback = '#000000' -%}
+            {%- elsif color_name_lower contains 'white' or color_name_lower contains 'blanc' -%}
+              {%- assign color_swatch_fallback = '#ffffff' -%}
+            {%- elsif color_name_lower contains 'grey' or color_name_lower contains 'gray' or color_name_lower contains 'gris' -%}
+              {%- assign color_swatch_fallback = '#808080' -%}
+            {%- endif -%}
+        {%- endcase -%}
         <div class="color-swatch-wrapper{% unless variant_label_state %} disabled{% endunless %}">
           <input type="radio"
             name="{{ option.name }}"
