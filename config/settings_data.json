@@ -57,7 +57,7 @@
     "sku_enable": false,
     "quantity_enable": true,
     "variant_labels_enable": true,
-    "variant_type": "button",
+    "variant_type": "dropdown",
     "enable_payment_button": true,
     "inventory_enable": true,
     "inventory_transfers_enable": true,
