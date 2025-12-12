@@ -1201,6 +1201,7 @@ lazySizesConfig.expFactor = 4;
       this.$plus = $el.find(classes.plus);
       this.$minus = $el.find(classes.minus);
       this.minValue = this.$input.attr('min') || 1;
+      this.maxValue = this.$input.data('max') || this.$input.attr('max') || null;
   
       var defaults = {
         namespace: null,
@@ -1214,46 +1215,123 @@ lazySizesConfig.expFactor = 4;
   
     QtySelector.prototype = $.extend({}, QtySelector.prototype, {
       initEventListeners: function() {
+        var self = this;
         this.$plus.on('click', function() {
-          var qty = this.validateQty(this.$input.val());
-          this.addQty(qty);
-        }.bind(this));
+          if (!$(this).prop('disabled')) {
+            var qty = self.validateQty(self.$input.val());
+            self.addQty(qty);
+          }
+        });
   
         this.$minus.on('click', function() {
-          var qty = this.validateQty(this.$input.val());
-          this.subtractQty(qty);
-        }.bind(this));
+          if (!$(this).prop('disabled')) {
+            var qty = self.validateQty(self.$input.val());
+            self.subtractQty(qty);
+          }
+        });
   
         this.$input.on('change', function() {
-          var qty = this.validateQty(this.$input.val());
-          this.changeQty(qty);
-        }.bind(this));
+          var qty = self.validateQty(self.$input.val());
+          self.changeQty(qty);
+        });
+        
+        // Set initial button states
+        this.changeQty(this.validateQty(this.$input.val()));
       },
   
       addQty: function(number) {
         var qty = number + 1;
+        if (this.maxValue !== null && qty > this.maxValue) {
+          qty = this.maxValue;
+        }
         this.changeQty(qty);
       },
   
       subtractQty: function(number) {
         var qty = number - 1;
-        if (qty <= this.minValue) {
+        if (this.maxValue === 0) {
+          qty = 0;
+        } else if (qty <= this.minValue) {
           qty = this.minValue;
         }
         this.changeQty(qty);
       },
   
       changeQty: function(qty) {
+        // Enforce max value
+        if (this.maxValue !== null) {
+          if (this.maxValue === 0) {
+            qty = 0;
+          } else if (qty > this.maxValue) {
+            qty = this.maxValue;
+          }
+        }
+        // Enforce min value (unless max is 0 for sold out)
+        if (this.maxValue !== 0 && qty < this.minValue) {
+          qty = this.minValue;
+        }
         this.$input.val(qty);
+        
+        // Update button states
+        if (this.maxValue !== null && qty >= this.maxValue) {
+          this.$plus.prop('disabled', true).addClass('disabled');
+        } else {
+          this.$plus.prop('disabled', false).removeClass('disabled');
+        }
+        if (qty <= this.minValue || (this.maxValue === 0 && qty === 0)) {
+          this.$minus.prop('disabled', true).addClass('disabled');
+        } else {
+          this.$minus.prop('disabled', false).removeClass('disabled');
+        }
+        
         $('body').trigger('qty' + this.options.namespace, [this.options.key, qty]);
+      },
+  
+      updateMax: function(maxValue) {
+        this.maxValue = maxValue;
+        if (maxValue !== null) {
+          this.$input.attr('max', maxValue);
+          this.$input.data('max', maxValue);
+        } else {
+          this.$input.removeAttr('max');
+          this.$input.removeData('max');
+        }
+        // If current quantity exceeds new max, reduce it
+        var currentQty = this.validateQty(this.$input.val());
+        if (this.maxValue !== null) {
+          if (this.maxValue === 0) {
+            // Sold out - set to 0
+            this.changeQty(0);
+          } else if (currentQty > this.maxValue) {
+            // Exceeds max - reduce to max
+            this.changeQty(this.maxValue);
+          }
+        }
       },
   
       validateQty: function(number) {
         if((parseFloat(number) == parseInt(number)) && !isNaN(number)) {
           // We have a valid number!
+          number = parseInt(number);
+          // Enforce max value
+          if (this.maxValue !== null) {
+            if (this.maxValue === 0) {
+              number = 0;
+            } else if (number > this.maxValue) {
+              number = this.maxValue;
+            }
+          }
+          // Enforce min value (unless max is 0 for sold out)
+          if (this.maxValue !== 0 && number < this.minValue) {
+            number = this.minValue;
+          }
         } else {
-          // Not a number. Default to 1.
-          number = 1;
+          // Not a number. Default based on availability
+          if (this.maxValue === 0) {
+            number = 0;
+          } else {
+            number = this.minValue;
+          }
         }
         return parseInt(number);
       }
@@ -3705,6 +3783,8 @@ lazySizesConfig.expFactor = 4;
         if (this.settings.inventory || this.settings.incomingInventory) {
           this.$container.on('variantChange' + this.settings.namespace, this.updateInventory.bind(this));
         }
+        // Update quantity max when variant changes
+        this.$container.on('variantChange' + this.settings.namespace, this.updateQuantityMax.bind(this));
   
         // Update individual variant availability on each selection
         if (theme.settings.dynamicVariantsEnable && document.getElementById(this.selectors.currentVariantJson)) {
@@ -3718,11 +3798,40 @@ lazySizesConfig.expFactor = 4;
       },
   
       initQtySelector: function() {
+        this.qtySelectors = [];
+        var self = this;
         this.$container.find('.js-qty__wrapper').each(function() {
-          new theme.QtySelector($(this), {
+          var qtySelector = new theme.QtySelector($(this), {
             namespace: '.product'
           });
+          self.qtySelectors.push(qtySelector);
         });
+      },
+  
+      updateQuantityMax: function(evt) {
+        var variant = evt.variant;
+        var maxQuantity = 999;
+        
+        if (variant) {
+          if (variant.inventory_management === 'shopify') {
+            if (variant.inventory_quantity > 0) {
+              maxQuantity = variant.inventory_quantity;
+            } else {
+              // Sold out - set max to 0
+              maxQuantity = 0;
+            }
+          } else {
+            // No inventory management - allow unlimited
+            maxQuantity = 999;
+          }
+        }
+        
+        // Update all quantity selectors
+        if (this.qtySelectors) {
+          this.qtySelectors.forEach(function(qtySelector) {
+            qtySelector.updateMax(maxQuantity);
+          });
+        }
       },
   
       initAjaxProductForm: function() {

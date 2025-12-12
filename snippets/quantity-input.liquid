@@ -3,6 +3,7 @@
     class="js-qty__num"
     value="{{ qty }}"
     min="{{ min }}"
+    {% if max %}max="{{ max }}" data-max="{{ max }}"{% endif %}
     aria-label="quantity"
     pattern="[0-9]*"
     name="quantity">
