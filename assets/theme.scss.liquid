@@ -8717,13 +8717,6 @@ $label-bottom-margin: 12px;
   }
 }
 
-// Make size variant inputs display vertically
-.variant-wrapper--size .variant-input {
-  display: block;
-  width: 100%;
-  margin-bottom: 8px;
-}
-
 .variant-wrapper {
   margin-bottom: 5px;
 
@@ -8779,18 +8772,17 @@ $label-bottom-margin: 12px;
 
 // Size variant buttons styling
 .variant__button-wrapper--size {
-  display: block;
+  display: inline-block;
   position: relative;
-  margin-right: 0;
-  margin-bottom: 8px;
-  width: 100%;
+  margin-right: 0px;
+  margin-bottom: 0px;
 }
 
 .variant__button-label--size {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  min-width: 50px;
   padding: 10px 15px;
-  text-align: left;
+  text-align: center;
   border: 1px solid $colorBorder;
   background-color: $colorBody;
   color: $colorTextBody;
@@ -8832,10 +8824,10 @@ $label-bottom-margin: 12px;
 }
 
 .variant__inventory-count {
-  display: inline;
-  font-size: $type_base_size - 2px;
+  display: block;
+  font-size: $type_base_size - 3px;
   color: #ff9500;
-  margin-left: 8px;
+  margin-top: 5px;
   font-weight: normal;
   
   &.hide {
