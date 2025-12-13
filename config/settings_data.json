@@ -33,7 +33,7 @@
     "color_modal_overlays": "#e6e6e6",
     "color_image_overlay": "#000",
     "color_image_overlay_text_shadow": 20,
-    "type_header_font_family": "tiemann_n4",
+    "type_header_font_family": "sans_serif_n4",
     "type_header_spacing": "0",
     "type_header_base_size": 38,
     "type_header_line_height": 1,
@@ -83,9 +83,9 @@
     "cart_additional_buttons": false,
     "cart_notes_enable": false,
     "cart_terms_conditions_enable": false,
-    "social_facebook_link": "https://www.facebook.com/shopify",
+    "social_facebook_link": "",
     "social_pinterest_link": "https://www.pinterest.com/shopify",
-    "social_instagram_link": "https://instagram.com/shopify",
+    "social_instagram_link": "https://instagram.com/morea.style",
     "share_facebook": true,
     "share_twitter": true,
     "share_pinterest": true,
@@ -108,8 +108,9 @@
           "1524770014057": {
             "type": "logo",
             "settings": {
-              "desktop_logo_width": 140,
-              "mobile_logo_width": 110
+              "logo": "shopify://shop_images/Logo_minimaliste_de_Morea.png",
+              "desktop_logo_width": 110,
+              "mobile_logo_width": 100
             }
           },
           "1524770292306": {
@@ -871,6 +872,11 @@
     "blocks": {
       "1343067074321463367": {
         "type": "shopify://apps/madgic-cod-form/blocks/orichi_cod/f60a6e43-d658-4a23-8ef0-3b9b3d89ab53",
+        "disabled": false,
+        "settings": {}
+      },
+      "12439146293631897289": {
+        "type": "shopify://apps/blockify-fraud-filter/blocks/app_embed/2e3e0ba5-0e70-447a-9ec5-3bf76b5ef12e",
         "disabled": false,
         "settings": {}
       }
