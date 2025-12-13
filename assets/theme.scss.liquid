@@ -8717,13 +8717,6 @@ $label-bottom-margin: 12px;
   }
 }
 
-// Make size variant inputs display vertically
-.variant-wrapper--size .variant-input {
-  display: block;
-  width: 100%;
-  margin-bottom: 8px;
-}
-
 .variant-wrapper {
   margin-bottom: 5px;
 
@@ -8779,18 +8772,17 @@ $label-bottom-margin: 12px;
 
 // Size variant buttons styling
 .variant__button-wrapper--size {
-  display: block;
+  display: inline-block;
   position: relative;
-  margin-right: 0;
-  margin-bottom: 8px;
-  width: 100%;
+  margin-right: 0px;
+  margin-bottom: 0px;
 }
 
 .variant__button-label--size {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  min-width: 50px;
   padding: 10px 15px;
-  text-align: left;
+  text-align: center;
   border: 1px solid $colorBorder;
   background-color: $colorBody;
   color: $colorTextBody;
@@ -8803,11 +8795,9 @@ $label-bottom-margin: 12px;
   }
   
   &.variant__button-label--selected {
-    background-color: $colorBody;
-    color: $colorTextBody;
+    background-color: #000;
+    color: #fff;
     border-color: #000;
-    border-width: 2px;
-    font-weight: bold;
   }
   
   &.unavailable {
@@ -8834,10 +8824,10 @@ $label-bottom-margin: 12px;
 }
 
 .variant__inventory-count {
-  display: inline;
-  font-size: $type_base_size - 2px;
+  display: block;
+  font-size: $type_base_size - 3px;
   color: #ff9500;
-  margin-left: 8px;
+  margin-top: 5px;
   font-weight: normal;
   
   &.hide {
@@ -8845,61 +8835,7 @@ $label-bottom-margin: 12px;
   }
 }
 
-// Commandez maintenant button styling
-.btn--commandez {
-  background-color: #000;
-  color: #fff;
-  border-color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 15px 20px;
-  min-height: 60px;
-  
-  .btn__icon {
-    margin-right: 15px;
-    flex-shrink: 0;
-    
-    .icon-delivery {
-      width: 24px;
-      height: 24px;
-      stroke: #fff;
-      fill: none;
-    }
-  }
-  
-  .btn__content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
-  }
-  
-  .btn__primary-text {
-    font-size: $type_base_size + 2px;
-    font-weight: bold;
-    line-height: 1.2;
-    margin-bottom: 4px;
-  }
-  
-  .btn__secondary-text {
-    font-size: $type_base_size - 2px;
-    opacity: 0.9;
-    line-height: 1.2;
-  }
-  
-  &:hover:not(:disabled) {
-    background-color: #333;
-    border-color: #333;
-  }
-  
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}
-
-// COD button styling (kept for backward compatibility)
+// COD button styling
 .btn--cod {
   background-color: #28a745;
   color: #fff;
