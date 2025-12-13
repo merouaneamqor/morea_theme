@@ -82,32 +82,56 @@
 {%- assign color_hex = null -%}
 {%- assign normalized_value = value | strip | downcase -%}
 
-{%- comment -%} Find a variant with this color value and check for hex color metafield {%- endcomment -%}
-{%- for variant in product.variants -%}
-  {%- assign variant_color_value = variant.options[color_option_index] | strip | downcase -%}
-  {%- if variant_color_value == normalized_value -%}
-    {%- comment -%} Check common metafield namespaces and keys for hex color {%- endcomment -%}
-    {%- if variant.metafields.custom.color_hex != blank -%}
-      {%- assign color_hex = variant.metafields.custom.color_hex -%}
-      {%- break -%}
-    {%- elsif variant.metafields.custom.hex_color != blank -%}
-      {%- assign color_hex = variant.metafields.custom.hex_color -%}
-      {%- break -%}
-    {%- elsif variant.metafields.custom.color != blank -%}
-      {%- assign color_hex = variant.metafields.custom.color -%}
-      {%- break -%}
-    {%- elsif variant.metafields.my_fields.color_hex != blank -%}
-      {%- assign color_hex = variant.metafields.my_fields.color_hex -%}
-      {%- break -%}
-    {%- elsif variant.metafields.my_fields.hex_color != blank -%}
-      {%- assign color_hex = variant.metafields.my_fields.hex_color -%}
-      {%- break -%}
-    {%- elsif variant.metafields.my_fields.color != blank -%}
-      {%- assign color_hex = variant.metafields.my_fields.color -%}
-      {%- break -%}
+{%- comment -%} First check product-level metafields for color swatch definitions {%- endcomment -%}
+{%- assign color_handle = value | handle -%}
+{%- if product.metafields.custom[color_handle] != blank -%}
+  {%- assign color_hex = product.metafields.custom[color_handle] -%}
+{%- elsif product.metafields.my_fields[color_handle] != blank -%}
+  {%- assign color_hex = product.metafields.my_fields[color_handle] -%}
+{%- elsif product.metafields.custom.color_value != blank -%}
+  {%- assign color_hex = product.metafields.custom.color_value -%}
+{%- elsif product.metafields.custom['color_' | append: color_handle] != blank -%}
+  {%- assign color_hex = product.metafields.custom['color_' | append: color_handle] -%}
+{%- else -%}
+  {%- comment -%} Find a variant with this color value and check for hex color metafield {%- endcomment -%}
+  {%- for variant in product.variants -%}
+    {%- assign variant_color_value = variant.options[color_option_index] | strip | downcase -%}
+    {%- if variant_color_value == normalized_value -%}
+      {%- comment -%} Check common metafield namespaces and keys for hex color {%- endcomment -%}
+      {%- if variant.metafields.custom.color_hex != blank -%}
+        {%- assign color_hex = variant.metafields.custom.color_hex -%}
+        {%- break -%}
+      {%- elsif variant.metafields.custom.hex_color != blank -%}
+        {%- assign color_hex = variant.metafields.custom.hex_color -%}
+        {%- break -%}
+      {%- elsif variant.metafields.custom.color_value != blank -%}
+        {%- assign color_hex = variant.metafields.custom.color_value -%}
+        {%- break -%}
+      {%- elsif variant.metafields.custom.color != blank -%}
+        {%- assign color_hex = variant.metafields.custom.color -%}
+        {%- break -%}
+      {%- elsif variant.metafields.my_fields.color_hex != blank -%}
+        {%- assign color_hex = variant.metafields.my_fields.color_hex -%}
+        {%- break -%}
+      {%- elsif variant.metafields.my_fields.hex_color != blank -%}
+        {%- assign color_hex = variant.metafields.my_fields.hex_color -%}
+        {%- break -%}
+      {%- elsif variant.metafields.my_fields.color_value != blank -%}
+        {%- assign color_hex = variant.metafields.my_fields.color_value -%}
+        {%- break -%}
+      {%- elsif variant.metafields.my_fields.color != blank -%}
+        {%- assign color_hex = variant.metafields.my_fields.color -%}
+        {%- break -%}
+      {%- elsif variant.metafields.swatch.color != blank -%}
+        {%- assign color_hex = variant.metafields.swatch.color -%}
+        {%- break -%}
+      {%- elsif variant.metafields.swatch.color_value != blank -%}
+        {%- assign color_hex = variant.metafields.swatch.color_value -%}
+        {%- break -%}
+      {%- endif -%}
     {%- endif -%}
-  {%- endif -%}
-{%- endfor -%}
+  {%- endfor -%}
+{%- endif -%}
 
 {%- comment -%} Fallback to hardcoded mapping if no metafield found {%- endcomment -%}
 {%- if color_hex == null or color_hex == blank -%}
