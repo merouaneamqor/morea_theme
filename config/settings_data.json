@@ -55,7 +55,7 @@
     "icon_linecaps": "miter",
     "vendor_enable": true,
     "sku_enable": false,
-    "quantity_enable": true,
+    "quantity_enable": false,
     "variant_labels_enable": true,
     "variant_type": "dropdown",
     "enable_payment_button": true,
