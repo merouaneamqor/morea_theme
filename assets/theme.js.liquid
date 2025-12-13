@@ -3970,6 +3970,7 @@ lazySizesConfig.expFactor = 4;
         if (!variant || !variant.inventory_management) {
           this.toggleInventoryQuantity(false);
           this.toggleIncomingInventory(false);
+          this.updateVariantButtonInventory(null);
           return;
         }
   
@@ -3990,6 +3991,25 @@ lazySizesConfig.expFactor = 4;
           }
   
           this.toggleIncomingInventory(showIncomingInventory, variant.available, variantInventoryObject.next_incoming_date);
+          
+          // Update variant button inventory counts
+          this.updateVariantButtonInventory(variant, quantity);
+        }
+      },
+      
+      updateVariantButtonInventory: function(variant, quantity) {
+        // Hide all variant inventory counts first
+        $('.variant__inventory-count').addClass('hide');
+        
+        if (variant && quantity && quantity > 0 && quantity <= theme.settings.inventoryThreshold) {
+          // Show inventory count for the selected variant
+          var $inventoryCount = $('.variant__inventory-count[data-variant-id="' + variant.id + '"]');
+          if ($inventoryCount.length && theme.strings.remaining) {
+            var remainingText = theme.strings.remaining.replace('[count]', quantity);
+            $inventoryCount
+              .removeClass('hide')
+              .text(remainingText);
+          }
         }
       },
   

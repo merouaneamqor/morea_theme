@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "accessibility": {
@@ -304,6 +313,8 @@
       "unavailable": "Unavailable",
       "quantity": "Quantity",
       "add_to_cart": "Add to cart",
+      "cod_button": "Buy with cash on delivery",
+      "remaining": "{{ count }} remaining",
       "preorder": "Pre-order",
       "include_taxes": "Tax included.",
       "shipping_policy_html": "<a href='{{ link }}'>Shipping<\/a> calculated at checkout.",

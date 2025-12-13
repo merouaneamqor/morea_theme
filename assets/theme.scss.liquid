@@ -501,6 +501,10 @@ $type_base_fallback: {{ settings.type_base_font_family.fallback_families }};
 
 $type_base_stack: #{"'" + $type_base_family + "', " + $type_base_fallback};
 
+// Override to use Helvetica
+$type_base_stack: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$type_header_stack: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 $type_base_weight: {{ settings.type_base_font_family.weight }};
 
 // Non font-face base styles
@@ -8650,7 +8654,7 @@ $label-bottom-margin: 12px;
 .variant-input-wrap {
   border: 0;
   padding: 0;
-  margin: 0 0 ($gutter / 1.5);
+  margin: 0 0 ($gutter / 3);
   position: relative;
 
   input {
@@ -8695,150 +8699,12 @@ $label-bottom-margin: 12px;
   input[type='radio']:checked + label {
     box-shadow: 0 0 0 2px $colorTextBody;
   }
-
-  // Color swatch wrapper in dropdown context
-  &.variant-input-wrap--color-swatch {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -4px;
-
-    .color-swatch-wrapper {
-      position: relative;
-      display: inline-block;
-      margin: 0 4px 4px 0;
-
-      .color-swatch {
-        width: 2.5em;
-        height: 2.5em;
-        cursor: pointer;
-        display: block;
-        border-radius: 100%;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        box-shadow: 0 0 0 1px $colorBorder;
-        min-width: 2.5em;
-        min-height: 2.5em;
-      }
-
-      input[type='radio']:checked + .color-swatch {
-        box-shadow: 0 0 0 2px $colorTextBody;
-      }
-
-      input[type='radio']:focus + .color-swatch {
-        box-shadow: 0 0 0 1px $colorTextBody;
-      }
-
-      &.disabled .color-swatch {
-        opacity: 0.5;
-        cursor: not-allowed;
-
-        &:after {
-          position: absolute;
-          content: "";
-          left: 50%;
-          top: 0;
-          bottom: 0;
-          border-left: 1px solid;
-          border-color: $colorBorder;
-          transform: rotate(45deg);
-        }
-      }
-    }
-  }
-
-  // Size buttons wrapper
-  &.variant-input-wrap--size-buttons {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0;
-    margin-left: 0;
-
-    .size-button-wrapper {
-      position: relative;
-      display: inline-block;
-      flex: 1 1 auto;
-
-      input[type='radio'] {
-        @include visuallyHidden;
-      }
-
-      .size-button {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-width: 60px;
-        padding: 10px 15px;
-        background-color: $colorBody;
-        border: 1px solid #e0e0e0;
-        border-right: none;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        text-align: center;
-        
-        &:last-child {
-          border-right: 1px solid #e0e0e0;
-        }
-
-        .size-button__label {
-          font-weight: 500;
-          margin-bottom: 4px;
-        }
-
-        .size-button__stock {
-          font-size: 0.75em;
-          color: #666;
-          font-weight: normal;
-        }
-
-        .size-button__stock--sold-out {
-          color: #999;
-        }
-
-        &:hover:not(.disabled) {
-          background-color: rgba($colorTextBody, 0.05);
-          border-color: $colorTextBody;
-        }
-      }
-
-      input[type='radio']:checked + .size-button {
-        border: 1px solid #999;
-        border-right: none;
-        background-color: rgba($colorTextBody, 0.05);
-        font-weight: 600;
-        z-index: 1;
-        position: relative;
-        
-        &:last-child {
-          border-right: 1px solid #999;
-        }
-      }
-
-      input[type='radio']:focus + .size-button {
-        outline: 2px solid $colorTextBody;
-        outline-offset: 2px;
-      }
-
-      &.disabled {
-        .size-button {
-          opacity: 0.5;
-          cursor: not-allowed;
-          background-color: #f5f5f5;
-
-          &:after {
-            position: absolute;
-            content: "";
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            border-left: 1px solid;
-            border-color: $colorBorder;
-            transform: rotate(45deg);
-          }
-        }
-      }
-    }
+  
+  input[type='radio']:checked + .variant__button-wrapper > .variant__button-label--size {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+    box-shadow: none;
   }
 }
 
@@ -8852,7 +8718,7 @@ $label-bottom-margin: 12px;
 }
 
 .variant-wrapper {
-  margin-bottom: -$label-bottom-margin;
+  margin-bottom: 5px;
 
   .no-js & {
     display: none;
@@ -8868,7 +8734,7 @@ $label-bottom-margin: 12px;
 
 .variant__label[for] {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   cursor: default;
 }
 
@@ -8877,6 +8743,114 @@ $label-bottom-margin: 12px;
   text-transform: none;
   font-weight: normal;
   letter-spacing: 0;
+}
+
+// Discount offers section
+.product__discount-offers {
+  margin: 15px 0 20px;
+}
+
+.product__discount-offer {
+  margin-bottom: 10px;
+  font-size: $type_base_size - 1px;
+  line-height: 1.5;
+  color: $colorTextBody;
+}
+
+.product__discount-offer--bulk {
+  color: $colorTextBody;
+}
+
+.product__discount-offer--code {
+  color: $colorTextBody;
+}
+
+.product__promo-code {
+  color: #ff4e4e;
+  font-weight: bold;
+}
+
+// Size variant buttons styling
+.variant__button-wrapper--size {
+  display: inline-block;
+  position: relative;
+  margin-right: 0px;
+  margin-bottom: 0px;
+}
+
+.variant__button-label--size {
+  display: inline-block;
+  min-width: 50px;
+  padding: 10px 15px;
+  text-align: center;
+  border: 1px solid $colorBorder;
+  background-color: $colorBody;
+  color: $colorTextBody;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 0;
+  
+  &:hover:not(.disabled):not(.unavailable) {
+    border-color: $colorTextBody;
+  }
+  
+  &.variant__button-label--selected {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+  }
+  
+  &.unavailable {
+    position: relative;
+    opacity: 0.5;
+    cursor: not-allowed;
+    
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background-color: $colorBorder;
+      transform: rotate(45deg);
+    }
+  }
+  
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.variant__inventory-count {
+  display: block;
+  font-size: $type_base_size - 3px;
+  color: #ff9500;
+  margin-top: 5px;
+  font-weight: normal;
+  
+  &.hide {
+    display: none;
+  }
+}
+
+// COD button styling
+.btn--cod {
+  background-color: #28a745;
+  color: #fff;
+  border-color: #28a745;
+  margin-top: 10px;
+  
+  &:hover:not(:disabled) {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 
 .grid-product {
@@ -9208,94 +9182,124 @@ $label-bottom-margin: 12px;
     margin-top: 4px;
   }
 }
+/* ===============================
+   Color swatch base
+================================ */
 
 .color-swatch {
   position: relative;
-  display: block;
-  text-indent: -9999px;
-  overflow: hidden;
-  margin: 0 4px 4px;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
   width: 2.5em;
-  box-shadow: 0 0 0 1px $colorBorder;
-  transition: box-shadow 0.2s ease;
-
-  @if ($swatchStyle == 'round') {
-    border-radius: 100%;
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2;
-  }
-
-  &:before {
-    border: 3px solid $colorBody;
-
-    // Try and avoid over-pixelated borders on some screens
-    @if ($swatchStyle == 'round') {
-      border-radius: 100%;
-      border-width: 4px;
-      top: -1px;
-      left: -1px;
-      right: -1px;
-      bottom: -1px;
-    }
-  }
+  height: 2.5em;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 1px #ddd;
+  cursor: pointer;
+  display: inline-block;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
 }
 
-// Product grid direct variant links and
+/* Inner white ring */
+.color-swatch::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 0px solid #fff;
+  border-radius: 50%;
+  pointer-events: none;
+}
 
-// sidebar color swatches
+/* ===============================
+   Radio handling
+================================ */
+
+/* Hide radio but keep accessibility */
+.variant-input input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hover */
+.variant-input:hover .color-swatch {
+  transform: scale(1.05);
+}
+
+/* Selected */
+.variant-input input:checked + .color-swatch {
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Focus (keyboard) */
+.variant-input input:focus-visible + .color-swatch {
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Disabled */
+.variant-input input.disabled + .color-swatch,
+.variant-input input:disabled + .color-swatch {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===============================
+   Product grid & filters
+================================ */
 
 a.color-swatch:hover,
-.tag:not(.tag--active) a:hover .color-swatch:hover {
-  box-shadow: 0 0 0 1px $colorTextBody;
+.tag:not(.tag--active) a:hover .color-swatch {
+  box-shadow: 0 0 0 2px #000;
 }
 
 .tag--active .color-swatch {
-  box-shadow: 0 0 0 2px $colorTextBody;
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 6px rgba(0, 0, 0, 0.12);
 }
+
+/* ===============================
+   Size variants
+================================ */
 
 .color-swatch--small {
-  width: $colorSwatchCollectionSize;
-  height: $colorSwatchCollectionSize;
+  width: 1.75em;
+  height: 1.75em;
+}
 
-  @include media-query($medium-up) {
-    width: $colorSwatchCollectionSizeLarge;
-    height: $colorSwatchCollectionSizeLarge;
-  }
-
-  &:before {
-    border: 2px solid $colorBody;
-
-    @if ($swatchStyle == 'round') {
-      border-width: 3px;
-    }
+@media (min-width: 768px) {
+  .color-swatch--small {
+    width: 2em;
+    height: 2em;
   }
 }
+
+/* ===============================
+   Sidebar filter swatches
+================================ */
 
 .color-swatch--filter {
-  width: $colorSwatchSidebarSize;
-  height: $colorSwatchSidebarSize;
+  width: 1.5em;
+  height: 1.5em;
 }
 
-.tag--active .color-swatch--filter:hover:after {
+.tag--active .color-swatch--filter::after {
+  content: '';
   position: absolute;
-  content: "";
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  border-left: 1px solid;
-  border-color: $colorBorder;
-  transform: rotate(45deg);
+  inset: 0;
+  background:
+    linear-gradient(
+      45deg,
+      transparent 45%,
+      rgba(0, 0, 0, 0.6) 50%,
+      transparent 55%
+    );
+  pointer-events: none;
 }
 
 .collection-item {
@@ -11025,6 +11029,7 @@ iframe.zoid-component-frame {
 @include media-query($small) {
   .page-content--product {
     padding-top: 0;
+    text-align: left !important;
   }
 
   .grid--product-images-right {
@@ -11051,9 +11056,21 @@ iframe.zoid-component-frame {
   padding-left: 45px;
 
   @include media-query($small) {
-    text-align: center;
+    text-align: left !important;
     padding-left: 0;
     margin-top: $gutter / 2;
+    
+    .product-single__title,
+    .product-single__vendor,
+    .product__price,
+    .product__price-wrap,
+    .product__discount-offers,
+    .variant-wrapper,
+    .variant__label,
+    .product__quantity,
+    .product-single__form {
+      text-align: left !important;
+    }
   }
 
   .grid--product-images-right & {
@@ -11522,6 +11539,24 @@ iframe.zoid-component-frame {
 .product__price-savings {
   color: $colorTextSavings;
   white-space: nowrap;
+}
+
+[class*="product__price-container"] {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.product__price--sale.on-sale {
+  color: #ff4e4e;
+  font-weight: bold;
+  font-size: $type_base_size + 4px;
+}
+
+.product__price--compare {
+  color: #999;
+  opacity: 0.7;
 }
 
 .product__inventory {

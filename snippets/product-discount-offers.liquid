@@ -1,0 +1,26 @@
+{%- if settings.product_discount_offers_enable -%}
+  <div class="product__discount-offers">
+    {%- if settings.product_bulk_discount_text != blank -%}
+      <div class="product__discount-offer product__discount-offer--bulk">
+        {{ settings.product_bulk_discount_text }}
+      </div>
+    {%- endif -%}
+    
+    {%- if settings.product_promo_code_text != blank -%}
+      <div class="product__discount-offer product__discount-offer--code">
+        {%- if settings.product_promo_code_value != blank -%}
+          {%- assign parts = settings.product_promo_code_text | split: settings.product_promo_code_value -%}
+          {%- if parts.size > 1 -%}
+            {{ parts[0] }}<span class="product__promo-code">{{ settings.product_promo_code_value }}</span>{{ parts[1] }}
+          {%- else -%}
+            {{ settings.product_promo_code_text }}
+          {%- endif -%}
+        {%- else -%}
+          {{ settings.product_promo_code_text }}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+

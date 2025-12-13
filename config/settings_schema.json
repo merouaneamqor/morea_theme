@@ -1,11 +1,11 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Impulse",
-    "theme_author": "Archetype Themes",
-    "theme_version": "3.0.3",
-    "theme_documentation_url": "https://archetypethemes.co/blogs/impulse",
-    "theme_support_url": "https://archetypethemes.co/pages/support#impulse"
+    "theme_name": "GLW Theme",
+    "theme_author": "GLW",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://example.com/", 
+    "theme_support_url": "https://example.com/support"
   },
   {
     "name": "Colors",
@@ -825,6 +825,45 @@
             "label": "Full width"
           }
         ]
+      },
+      {
+        "type": "header",
+        "content": "Discount offers"
+      },
+      {
+        "type": "checkbox",
+        "id": "product_discount_offers_enable",
+        "label": "Enable discount offers section",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "product_bulk_discount_text",
+        "label": "Bulk discount text",
+        "default": "-15% à l'achat de 2 articles"
+      },
+      {
+        "type": "text",
+        "id": "product_promo_code_text",
+        "label": "Promo code offer text",
+        "default": "Black Friday réduction ! Profitez de -10% sur tout le site avec le code : FRIDAY10"
+      },
+      {
+        "type": "text",
+        "id": "product_promo_code_value",
+        "label": "Promo code value",
+        "default": "FRIDAY10",
+        "info": "This code will be highlighted in red"
+      },
+      {
+        "type": "header",
+        "content": "Cash on delivery"
+      },
+      {
+        "type": "checkbox",
+        "id": "product_cod_button_enable",
+        "label": "Enable cash on delivery button",
+        "default": false
       }
     ]
   },

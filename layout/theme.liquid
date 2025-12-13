@@ -49,6 +49,7 @@
       willBeInStockAfter: {{ 'products.product.will_be_in_stock_after' | t: date: '[date]' | json }},
       waitingForStock: {{ 'products.product.waiting_for_stock' | t | json }},
       savePrice: {{ 'products.general.save_html' | t: saved_amount: '[saved_amount]' | json }},
+      remaining: {{ 'products.product.remaining' | t: count: '[count]' | json }},
       cartEmpty: {{ 'cart.general.empty' | t | json }},
       cartTermsConfirmation: {{ 'cart.general.terms_confirm' | t | json }}
     };
@@ -63,8 +64,8 @@
       predictiveSearchType: {{ settings.search_type | json }},
       inventoryThreshold: {{ settings.inventory_threshold }},
       quickView: {{ settings.quick_shop_enable }},
-      themeName: 'Impulse',
-      themeVersion: "3.0.3"
+      themeName: 'GLW Theme',
+      themeVersion: "1.0.0"
     };
   </script>
 

@@ -1,5 +1,5 @@
-{%- assign swatch_file_extension = 'png' -%}
 {%- assign is_color = false -%}
+{%- assign is_size = false -%}
 {%- assign color_swatch_drop = option_drop -%}
 {%- assign color_option_index = 0 -%}
 
@@ -8,218 +8,166 @@
     {%- if option == color_swatch_drop -%}
       {%- assign color_option_index = forloop.index0 -%}
       {%- assign downcased_option = color_swatch_drop.name | downcase -%}
-      {%- if downcased_option contains 'color' or downcased_option contains 'colour' or downcased_option contains 'couleur' -%}
+      {%- if downcased_option contains 'color'
+        or downcased_option contains 'colour'
+        or downcased_option contains 'couleur'
+      -%}
         {%- assign is_color = true -%}
       {%- endif -%}
     {%- endif -%}
   {%- endfor -%}
 {%- endif -%}
 
+{%- assign downcased_option_name = option_drop.name | downcase -%}
+{%- if downcased_option_name contains 'size'
+  or downcased_option_name contains 'taille'
+  or downcased_option_name contains 'tailles'
+-%}
+  {%- assign is_size = true -%}
+{%- endif -%}
+
 <div class="variant-wrapper variant-wrapper--{{ settings.variant_type }} js">
-  <label class="variant__label{% if option.name == 'Default' or option.name == 'Title' %} hidden-label{% endif %}{% unless settings.variant_labels_enable %} hidden-label{% endunless %}"
-    for="ProductSelect-{{ section_id }}-option-{{ forloop.index0 }}">
+  <label
+    class="variant__label{% if option.name == 'Default' or option.name == 'Title' %} hidden-label{% endif %}{% unless settings.variant_labels_enable %} hidden-label{% endunless %}"
+    for="ProductSelect-{{ section_id }}-option-{{ forloop.index0 }}"
+  >
     {{ option.name }}
+
     {%- if is_color -%}
       <span class="variant__label-info">
         &mdash;
         <span
           id="VariantColorLabel-{{ section_id }}-{{ forloop.index0 }}"
-          data-option-index="{{ color_option_index }}">
+          data-option-index="{{ color_option_index }}"
+        >
           {{ option.selected_value }}
         </span>
       </span>
     {%- endif -%}
   </label>
+
   {%- assign option_index = forloop.index -%}
-  {%- comment -%} Check if this is a size option {%- endcomment -%}
-  {%- assign is_size_option = false -%}
-  {%- assign size_option_name = option.name | downcase -%}
-  {%- if size_option_name contains 'size' or size_option_name contains 'taille' -%}
-    {%- assign is_size_option = true -%}
-  {%- endif -%}
-  
-  <fieldset class="variant-input-wrap{% if is_size_option %} variant-input-wrap--size-buttons{% endif %}"
+
+  <fieldset
+    class="variant-input-wrap"
     name="{{ option.name }}"
     data-index="option{{ option_index }}"
-    id="ProductSelect-{{ section_id }}-option-{{ forloop.index0 }}">
+    id="ProductSelect-{{ section_id }}-option-{{ forloop.index0 }}"
+  >
     {%- for value in option.values -%}
       {%- assign product_available = true -%}
       {%- if product.options.size == 1 -%}
         {%- assign product_available = product.variants[forloop.index0].available -%}
       {%- endif -%}
-      {%- if is_size_option -%}
-        {%- comment -%} Size buttons with stock display - special structure {%- endcomment -%}
-        {%- assign option_index_value = forloop.parentloop.index0 -%}
-        {%- comment -%} Find the color option index and selected color value {%- endcomment -%}
-        {%- assign selected_color_value = '' -%}
-        {%- assign color_option_index = -1 -%}
-        {%- for opt in product.options_with_values -%}
-          {%- assign opt_name_lower = opt.name | downcase -%}
-          {%- if opt_name_lower contains 'color' or opt_name_lower contains 'colour' or opt_name_lower contains 'couleur' -%}
-            {%- assign color_option_index = forloop.index0 -%}
-            {%- assign selected_color_value = opt.selected_value -%}
-            {%- break -%}
-          {%- endif -%}
-        {%- endfor -%}
-        
-        {%- assign variant_inventory = 0 -%}
-        {%- assign variant_available = false -%}
-        
-        {%- comment -%} Find variants with this size and selected color, calculate inventory {%- endcomment -%}
-        {%- for variant in product.variants -%}
-          {%- assign variant_option_value = variant.options[option_index_value] -%}
-          {%- assign variant_matches_size = false -%}
-          {%- if variant_option_value == value -%}
-            {%- assign variant_matches_size = true -%}
-          {%- endif -%}
-          
-          {%- comment -%} If color is selected, only count variants matching that color {%- endcomment -%}
-          {%- if variant_matches_size -%}
-            {%- if color_option_index >= 0 and selected_color_value != '' -%}
-              {%- assign variant_color_value = variant.options[color_option_index] -%}
-              {%- if variant_color_value != selected_color_value -%}
-                {%- continue -%}
-              {%- endif -%}
-            {%- endif -%}
-            
-            {%- if variant.inventory_management == 'shopify' -%}
-              {%- assign variant_inventory = variant_inventory | plus: variant.inventory_quantity -%}
-            {%- else -%}
-              {%- assign variant_inventory = variant_inventory | plus: 999 -%}
-            {%- endif -%}
-            {%- if variant.available -%}
-              {%- assign variant_available = true -%}
-            {%- endif -%}
-          {%- endif -%}
-        {%- endfor -%}
-        
-        {%- unless variant_available -%}
-          {%- assign product_available = false -%}
-        {%- endunless -%}
-        
-        <div class="size-button-wrapper{% unless product_available %} disabled{% endunless %}">
-          <input type="radio"
-            {% if option.selected_value == value %} checked="checked"{% endif %}
-            value="{{ value | escape }}"
-            data-index="option{{ option_index }}"
-            name="{{ option.name }}"
-            class="variant__input-{{ section_id }} variant__input--size-{{ section_id }}"
-            id="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
-            {% unless product_available %} disabled="disabled"{% endunless %}>
-          <label
-            for="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
-            class="variant__button-label size-button size-button--{{ value | handle }}{% unless product_available %} disabled{% endunless %}">
-            <span class="size-button__label">{{ value | escape }}</span>
-            {%- if variant_inventory > 0 and variant_available -%}
-              <span class="size-button__stock">Restent {{ variant_inventory }}</span>
-            {%- elsif variant_inventory == 0 or product_available == false -%}
-              <span class="size-button__stock size-button__stock--sold-out">Épuisé</span>
-            {%- endif -%}
-          </label>
-        </div>
-      {%- else -%}
-        <div
-          class="variant-input"
+
+      <div
+        class="variant-input"
+        data-index="option{{ option_index }}"
+        data-value="{{ value | escape }}"
+      >
+        <input
+          type="radio"
+          {% if option.selected_value == value %}checked="checked"{% endif %}
+          value="{{ value | escape }}"
+          name="{{ option.name }}"
           data-index="option{{ option_index }}"
-          data-value="{{ value | escape }}">
-          <input type="radio"
-            {% if option.selected_value == value %} checked="checked"{% endif %}
-            value="{{ value | escape }}"
-            data-index="option{{ option_index }}"
-            name="{{ option.name }}"
-            class="variant__input-{{ section_id }}{% unless product_available %} disabled{% endunless %}{% if is_color %} variant__input--color-swatch-{{ section_id }}{% endif %}"
-            {% if is_color %} data-color-name="{{ value | escape }}"{% endif %}
-            {% if is_color %} data-color-index="{{ color_option_index }}"{% endif %}
-            id="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}">
-          {%- if is_color -%}
-          {%- assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first -%}
-          
-          {%- comment -%} Map color names to CSS color values {%- endcomment -%}
-          {%- assign color_name_lower = value | downcase | strip -%}
-          {%- assign color_swatch_fallback = '#cccccc' -%}
-          
-          {%- case color_name_lower -%}
-            {%- when 'black', 'noir' -%}
-              {%- assign color_swatch_fallback = '#000000' -%}
-            {%- when 'white', 'blanc' -%}
-              {%- assign color_swatch_fallback = '#ffffff' -%}
-            {%- when 'brown', 'marron', 'brun' -%}
-              {%- assign color_swatch_fallback = '#8b4513' -%}
-            {%- when 'red', 'rouge', 'darkred' -%}
-              {%- assign color_swatch_fallback = '#dc143c' -%}
-            {%- when 'blue', 'bleu' -%}
-              {%- assign color_swatch_fallback = '#0000ff' -%}
-            {%- when 'green', 'vert' -%}
-              {%- assign color_swatch_fallback = '#008000' -%}
-            {%- when 'yellow', 'jaune' -%}
-              {%- assign color_swatch_fallback = '#ffff00' -%}
-            {%- when 'orange' -%}
-              {%- assign color_swatch_fallback = '#ffa500' -%}
-            {%- when 'pink', 'rose' -%}
-              {%- assign color_swatch_fallback = '#ffc0cb' -%}
-            {%- when 'purple', 'violet' -%}
-              {%- assign color_swatch_fallback = '#800080' -%}
-            {%- when 'grey', 'gray', 'gris' -%}
-              {%- assign color_swatch_fallback = '#808080' -%}
-            {%- when 'navy', 'marine' -%}
-              {%- assign color_swatch_fallback = '#000080' -%}
-            {%- when 'beige' -%}
-              {%- assign color_swatch_fallback = '#f5f5dc' -%}
-            {%- when 'khaki' -%}
-              {%- assign color_swatch_fallback = '#c3b091' -%}
-            {%- when 'papayawhip' -%}
-              {%- assign color_swatch_fallback = '#ffefd5' -%}
-            {%- when 'tan' -%}
-              {%- assign color_swatch_fallback = '#d2b48c' -%}
-            {%- when 'cream', 'crème' -%}
-              {%- assign color_swatch_fallback = '#fffdd0' -%}
-            {%- when 'ivory' -%}
-              {%- assign color_swatch_fallback = '#fffff0' -%}
-            {%- when 'burgundy', 'bordeaux' -%}
-              {%- assign color_swatch_fallback = '#800020' -%}
-            {%- when 'maroon' -%}
-              {%- assign color_swatch_fallback = '#800000' -%}
-            {%- else -%}
-              {%- comment -%} Try to extract a color from the name {%- endcomment -%}
-              {%- if color_name_lower contains 'red' or color_name_lower contains 'rouge' -%}
-                {%- assign color_swatch_fallback = '#dc143c' -%}
-              {%- elsif color_name_lower contains 'blue' or color_name_lower contains 'bleu' -%}
-                {%- assign color_swatch_fallback = '#0000ff' -%}
-              {%- elsif color_name_lower contains 'green' or color_name_lower contains 'vert' -%}
-                {%- assign color_swatch_fallback = '#008000' -%}
-              {%- elsif color_name_lower contains 'yellow' or color_name_lower contains 'jaune' -%}
-                {%- assign color_swatch_fallback = '#ffff00' -%}
-              {%- elsif color_name_lower contains 'orange' -%}
-                {%- assign color_swatch_fallback = '#ffa500' -%}
-              {%- elsif color_name_lower contains 'pink' or color_name_lower contains 'rose' -%}
-                {%- assign color_swatch_fallback = '#ffc0cb' -%}
-              {%- elsif color_name_lower contains 'purple' or color_name_lower contains 'violet' -%}
-                {%- assign color_swatch_fallback = '#800080' -%}
-              {%- elsif color_name_lower contains 'brown' or color_name_lower contains 'marron' or color_name_lower contains 'brun' or color_name_lower contains 'tan' -%}
-                {%- assign color_swatch_fallback = '#8b4513' -%}
-              {%- elsif color_name_lower contains 'black' or color_name_lower contains 'noir' -%}
-                {%- assign color_swatch_fallback = '#000000' -%}
-              {%- elsif color_name_lower contains 'white' or color_name_lower contains 'blanc' -%}
-                {%- assign color_swatch_fallback = '#ffffff' -%}
-              {%- elsif color_name_lower contains 'grey' or color_name_lower contains 'gray' or color_name_lower contains 'gris' -%}
-                {%- assign color_swatch_fallback = '#808080' -%}
-              {%- endif -%}
-          {%- endcase -%}
-          
+          class="variant__input-{{ section_id }}{% unless product_available %} disabled{% endunless %}{% if is_color %} variant__input--color-swatch-{{ section_id }}{% endif %}"
+          {% if is_color %}data-color-name="{{ value | escape }}"{% endif %}
+          {% if is_color %}data-color-index="{{ color_option_index }}"{% endif %}
+          id="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+        >
+
+        {%- if is_color -%}
+{%- assign normalized_value = value | strip | downcase -%}
+{%- assign color_swatch_fallback = '#cccccc' -%}
+
+{%- if normalized_value contains 'noir' or normalized_value contains 'black' -%}
+  {%- assign color_swatch_fallback = '#000000' -%}
+
+{%- elsif normalized_value contains 'blanc' or normalized_value contains 'white' -%}
+  {%- assign color_swatch_fallback = '#ffffff' -%}
+
+{%- elsif normalized_value contains 'clair'
+  or normalized_value contains 'claire'
+  or normalized_value contains 'light'
+-%}
+  {%- assign color_swatch_fallback = '#f3f4f6' -%}
+
+{%- elsif normalized_value contains 'gris'
+  or normalized_value contains 'gray'
+  or normalized_value contains 'grey'
+-%}
+  {%- assign color_swatch_fallback = '#9e9e9e' -%}
+
+{%- elsif normalized_value contains 'beige' -%}
+  {%- assign color_swatch_fallback = '#e8dcc5' -%}
+
+{%- elsif normalized_value contains 'bleu'
+  or normalized_value contains 'blue'
+-%}
+  {%- assign color_swatch_fallback = '#1e40af' -%}
+
+{%- elsif normalized_value contains 'rouge'
+  or normalized_value contains 'red'
+-%}
+  {%- assign color_swatch_fallback = '#dc2626' -%}
+
+{%- elsif normalized_value contains 'rose'
+  or normalized_value contains 'pink'
+-%}
+  {%- assign color_swatch_fallback = '#ec4899' -%}
+
+{%- elsif normalized_value contains 'vert'
+  or normalized_value contains 'green'
+-%}
+  {%- assign color_swatch_fallback = '#16a34a' -%}
+
+{%- elsif normalized_value contains 'marron'
+  or normalized_value contains 'brown'
+-%}
+  {%- assign color_swatch_fallback = '#7c4a2d' -%}
+
+{%- endif -%}
+
+
+
           <label
             for="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
             class="variant__button-label color-swatch color-swatch--{{ value | handle }}{% unless product_available %} disabled{% endunless %}"
-            style="background-image: url({{ color_image }}); background-color: {{ color_swatch_fallback }};"
-          >
-            {{ value | escape }}
-          </label>
-          {%- else -%}
+            style="background-color: {{ color_swatch_fallback }};"
+            title="{{ value | escape }}"
+          ></label>
+
+        {%- else -%}
+          <div class="variant__button-wrapper{% if is_size %} variant__button-wrapper--size{% endif %}">
             <label
               for="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
-              class="variant__button-label{% unless product_available %} disabled{% endunless %}">{{ value | escape }}</label>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
+              class="variant__button-label{% unless product_available %} disabled unavailable{% endunless %}{% if is_size %} variant__button-label--size{% endif %}{% if option.selected_value == value %} variant__button-label--selected{% endif %}"
+            >
+              {{ value | escape }}
+            </label>
+            {%- if is_size and option.selected_value == value and settings.inventory_enable -%}
+              {%- comment -%} Find the variant for this size to get inventory {%- endcomment -%}
+              {%- for variant in product.variants -%}
+                {%- if variant.available and variant.inventory_management == 'shopify' -%}
+                  {%- assign variant_option1 = variant.option1 | downcase -%}
+                  {%- assign variant_option2 = variant.option2 | downcase -%}
+                  {%- assign variant_option3 = variant.option3 | downcase -%}
+                  {%- assign current_value = value | downcase -%}
+                  {%- if variant_option1 == current_value or variant_option2 == current_value or variant_option3 == current_value -%}
+                    {%- if variant.inventory_quantity > 0 and variant.inventory_quantity <= settings.inventory_threshold -%}
+                      <span class="variant__inventory-count" data-variant-id="{{ variant.id }}">
+                        {{ 'products.product.remaining' | t: count: variant.inventory_quantity }}
+                      </span>
+                    {%- endif -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
     {%- endfor -%}
   </fieldset>
 </div>
