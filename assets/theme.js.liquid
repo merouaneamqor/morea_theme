@@ -3705,6 +3705,20 @@ lazySizesConfig.expFactor = 4;
         if (this.settings.inventory || this.settings.incomingInventory) {
           this.$container.on('variantChange' + this.settings.namespace, this.updateInventory.bind(this));
         }
+        
+        // Update selected state on size buttons when radio buttons change
+        $(this.selectors.formContainer).on('change', 'input[type="radio"]', function() {
+          var $input = $(this);
+          var $label = $('label[for="' + $input.attr('id') + '"]');
+          if ($label.hasClass('variant__button-label--size')) {
+            // Remove selected from all size buttons in the same group
+            $input.closest('.variant-input-wrap').find('.variant__button-label--size').removeClass('variant__button-label--selected');
+            // Add selected to the clicked button
+            if ($input.is(':checked')) {
+              $label.addClass('variant__button-label--selected');
+            }
+          }
+        });
   
         // Update individual variant availability on each selection
         if (theme.settings.dynamicVariantsEnable && document.getElementById(this.selectors.currentVariantJson)) {
@@ -4001,11 +4015,22 @@ lazySizesConfig.expFactor = 4;
         // Hide all variant inventory counts first
         $('.variant__inventory-count').addClass('hide');
         
+        // Update selected state on size buttons based on checked radio buttons
+        $('.variant__button-label--size').removeClass('variant__button-label--selected');
+        $(this.selectors.formContainer).find('input[type="radio"]:checked').each(function() {
+          var $input = $(this);
+          var $label = $('label[for="' + $input.attr('id') + '"]');
+          if ($label.hasClass('variant__button-label--size')) {
+            $label.addClass('variant__button-label--selected');
+          }
+        });
+        
         if (variant && quantity && quantity > 0 && quantity <= theme.settings.inventoryThreshold) {
           // Show inventory count for the selected variant
           var $inventoryCount = $('.variant__inventory-count[data-variant-id="' + variant.id + '"]');
           if ($inventoryCount.length && theme.strings.remaining) {
-            var remainingText = theme.strings.remaining.replace('[count]', quantity);
+            // Replace {{ count }} with actual quantity
+            var remainingText = theme.strings.remaining.replace(/\{\{\s*count\s*\}\}/g, quantity);
             $inventoryCount
               .removeClass('hide')
               .text(remainingText);
