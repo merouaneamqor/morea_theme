@@ -84,30 +84,32 @@
       {% if product.empty? %}type="button"{% else %}type="submit"{% endif %}
       name="add"
       id="AddToCart-{{ section_id }}"
-      class="btn btn--full add-to-cart{% if enable_dynamic_buttons %} btn--secondary{% endif %}"
+      class="btn btn--full add-to-cart btn--commandez{% if enable_dynamic_buttons %} btn--secondary{% endif %}"
       {% unless current_variant.available %} disabled="disabled"{% endunless %}>
-      <span id="AddToCartText-{{ section_id }}">
-        {% if current_variant.available %}
-          {% if template == 'product.preorder' %}
-            {{ 'products.product.preorder' | t }}
+      <span class="btn__icon">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-delivery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+      </span>
+      <span class="btn__content">
+        <span id="AddToCartText-{{ section_id }}" class="btn__primary-text">
+          {% if current_variant.available %}
+            {% if template == 'product.preorder' %}
+              {{ 'products.product.preorder' | t }}
+            {% else %}
+              {{ 'products.product.add_to_cart' | t }}
+            {% endif %}
           {% else %}
-            {{ 'products.product.add_to_cart' | t }}
+            {{ 'products.product.sold_out' | t }}
           {% endif %}
-        {% else %}
-          {{ 'products.product.sold_out' | t }}
+        </span>
+        {% if settings.product_cod_button_enable %}
+          <span class="btn__secondary-text">{{ 'products.product.cod_button' | t }}</span>
         {% endif %}
       </span>
     </button>
-
-    {% if settings.product_cod_button_enable %}
-      <button
-        type="button"
-        id="CODButton-{{ section_id }}"
-        class="btn btn--full btn--cod"
-        {% unless current_variant.available %} disabled="disabled"{% endunless %}>
-        {{ 'products.product.cod_button' | t }}
-      </button>
-    {% endif %}
 
     {% if enable_dynamic_buttons %}
       {{ form | payment_button }}
