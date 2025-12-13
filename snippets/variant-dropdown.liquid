@@ -1,248 +1,30 @@
-{%- assign swatch_file_extension = 'png' -%}
-{%- assign is_color = false -%}
-{%- assign color_option_index = forloop.index0 -%}
-{%- assign downcased_option = option.name | downcase -%}
-
-{%- comment -%} Always show color swatches for color options in dropdown mode {%- endcomment -%}
-{%- if downcased_option contains 'color' or downcased_option contains 'colour' or downcased_option contains 'couleur' -%}
-  {%- assign is_color = true -%}
-{%- endif -%}
-
 <div class="variant-wrapper variant-wrapper--{{ settings.variant_type }} js">
   <label class="variant__label{% if option.name == 'Default' or option.name == 'Title' %} hidden-label{% endif %}{% unless settings.variant_labels_enable %} hidden-label{% endunless %}"
-    {% unless is_color %}for="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}"{% endunless %}>
+    for="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}">
     {{ option.name }}
-    {%- if is_color -%}
-      <span class="variant__label-info">
-        &mdash;
-        <span
-          id="VariantColorLabel-{{ section_id }}-{{ forloop.index0 }}"
-          data-option-index="{{ color_option_index }}">
-          {{ option.selected_value }}
-        </span>
-      </span>
-    {%- endif -%}
   </label>
-  
-  {%- if is_color -%}
-    {%- comment -%} Color swatch UI for color options {%- endcomment -%}
-    {%- assign color_option_index = forloop.index0 -%}
-    <div class="variant-input-wrap variant-input-wrap--color-swatch" data-index="option{{ forloop.index }}">
-      {%- for value in option.values -%}
-        {%- assign variant_label_state = false -%}
-        
-        {%- comment -%} Check if any variant with this color is available {%- endcomment -%}
-        {%- for variant in product.variants -%}
-          {%- assign variant_color_value = variant.options[color_option_index] -%}
-          {%- if variant_color_value == value and variant.available -%}
-            {%- assign variant_label_state = true -%}
-            {%- break -%}
-          {%- endif -%}
-        {%- endfor -%}
-        
-        {%- assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first -%}
-        
-        {%- comment -%} Map color names to CSS color values {%- endcomment -%}
-        {%- assign color_name_lower = value | downcase | strip -%}
-        {%- assign color_swatch_fallback = '#cccccc' -%}
-        
-        {%- case color_name_lower -%}
-          {%- when 'black', 'noir' -%}
-            {%- assign color_swatch_fallback = '#000000' -%}
-          {%- when 'white', 'blanc' -%}
-            {%- assign color_swatch_fallback = '#ffffff' -%}
-          {%- when 'brown', 'marron', 'brun' -%}
-            {%- assign color_swatch_fallback = '#8b4513' -%}
-          {%- when 'red', 'rouge', 'darkred' -%}
-            {%- assign color_swatch_fallback = '#dc143c' -%}
-          {%- when 'blue', 'bleu' -%}
-            {%- assign color_swatch_fallback = '#0000ff' -%}
-          {%- when 'green', 'vert' -%}
-            {%- assign color_swatch_fallback = '#008000' -%}
-          {%- when 'yellow', 'jaune' -%}
-            {%- assign color_swatch_fallback = '#ffff00' -%}
-          {%- when 'orange' -%}
-            {%- assign color_swatch_fallback = '#ffa500' -%}
-          {%- when 'pink', 'rose' -%}
-            {%- assign color_swatch_fallback = '#ffc0cb' -%}
-          {%- when 'purple', 'violet' -%}
-            {%- assign color_swatch_fallback = '#800080' -%}
-          {%- when 'grey', 'gray', 'gris' -%}
-            {%- assign color_swatch_fallback = '#808080' -%}
-          {%- when 'navy', 'marine' -%}
-            {%- assign color_swatch_fallback = '#000080' -%}
-          {%- when 'beige' -%}
-            {%- assign color_swatch_fallback = '#f5f5dc' -%}
-          {%- when 'khaki' -%}
-            {%- assign color_swatch_fallback = '#c3b091' -%}
-          {%- when 'papayawhip' -%}
-            {%- assign color_swatch_fallback = '#ffefd5' -%}
-          {%- when 'tan' -%}
-            {%- assign color_swatch_fallback = '#d2b48c' -%}
-          {%- when 'cream', 'crème' -%}
-            {%- assign color_swatch_fallback = '#fffdd0' -%}
-          {%- when 'ivory' -%}
-            {%- assign color_swatch_fallback = '#fffff0' -%}
-          {%- when 'burgundy', 'bordeaux' -%}
-            {%- assign color_swatch_fallback = '#800020' -%}
-          {%- when 'maroon' -%}
-            {%- assign color_swatch_fallback = '#800000' -%}
-          {%- else -%}
-            {%- comment -%} Try to extract a color from the name {%- endcomment -%}
-            {%- if color_name_lower contains 'red' or color_name_lower contains 'rouge' -%}
-              {%- assign color_swatch_fallback = '#dc143c' -%}
-            {%- elsif color_name_lower contains 'blue' or color_name_lower contains 'bleu' -%}
-              {%- assign color_swatch_fallback = '#0000ff' -%}
-            {%- elsif color_name_lower contains 'green' or color_name_lower contains 'vert' -%}
-              {%- assign color_swatch_fallback = '#008000' -%}
-            {%- elsif color_name_lower contains 'yellow' or color_name_lower contains 'jaune' -%}
-              {%- assign color_swatch_fallback = '#ffff00' -%}
-            {%- elsif color_name_lower contains 'orange' -%}
-              {%- assign color_swatch_fallback = '#ffa500' -%}
-            {%- elsif color_name_lower contains 'pink' or color_name_lower contains 'rose' -%}
-              {%- assign color_swatch_fallback = '#ffc0cb' -%}
-            {%- elsif color_name_lower contains 'purple' or color_name_lower contains 'violet' -%}
-              {%- assign color_swatch_fallback = '#800080' -%}
-            {%- elsif color_name_lower contains 'brown' or color_name_lower contains 'marron' or color_name_lower contains 'brun' or color_name_lower contains 'tan' -%}
-              {%- assign color_swatch_fallback = '#8b4513' -%}
-            {%- elsif color_name_lower contains 'black' or color_name_lower contains 'noir' -%}
-              {%- assign color_swatch_fallback = '#000000' -%}
-            {%- elsif color_name_lower contains 'white' or color_name_lower contains 'blanc' -%}
-              {%- assign color_swatch_fallback = '#ffffff' -%}
-            {%- elsif color_name_lower contains 'grey' or color_name_lower contains 'gray' or color_name_lower contains 'gris' -%}
-              {%- assign color_swatch_fallback = '#808080' -%}
-            {%- endif -%}
-        {%- endcase -%}
-        <div class="color-swatch-wrapper{% unless variant_label_state %} disabled{% endunless %}">
-          <input type="radio"
-            name="{{ option.name }}"
-            value="{{ value | escape }}"
-            id="SingleOptionSelector-{{ section_id }}-option-{{ color_option_index }}-{{ value | handleize }}"
-            class="variant__input-{{ section_id }} variant__input--color-swatch-{{ section_id }}"
-            data-index="option{{ color_option_index | plus: 1 }}"
-            data-color-name="{{ value | escape }}"
-            data-color-index="{{ color_option_index }}"
-            {% if option.selected_value == value %} checked="checked"{% endif %}
-            {% unless variant_label_state %} disabled="disabled"{% endunless %}>
-          <label
-            for="SingleOptionSelector-{{ section_id }}-option-{{ color_option_index }}-{{ value | handleize }}"
-            class="color-swatch color-swatch--{{ value | handle }}{% unless variant_label_state %} disabled{% endunless %}"
-            style="background-image: url({{ color_image }}); background-color: {{ color_swatch_fallback }};"
-            title="{{ value | escape }}">
-            <span class="visually-hidden">{{ value | escape }}</span>
-          </label>
-        </div>
-      {%- endfor -%}
-    </div>
-  {%- else -%}
-    {%- comment -%} Default dropdown for non-color options {%- endcomment -%}
-    {%- assign is_size = false -%}
-    {%- assign size_option_name = option.name | downcase -%}
-    {%- if size_option_name contains 'size' or size_option_name contains 'taille' -%}
-      {%- assign is_size = true -%}
-    {%- endif -%}
-    
-    {%- if is_size -%}
-      {%- comment -%} Size buttons with stock display {%- endcomment -%}
-      {%- assign option_index = forloop.index0 -%}
-      {%- comment -%} Find the color option index and selected color value {%- endcomment -%}
-      {%- assign selected_color_value = '' -%}
-      {%- assign color_option_index = -1 -%}
-      {%- for opt in product.options_with_values -%}
-        {%- assign opt_name_lower = opt.name | downcase -%}
-        {%- if opt_name_lower contains 'color' or opt_name_lower contains 'colour' or opt_name_lower contains 'couleur' -%}
-          {%- assign color_option_index = forloop.index0 -%}
-          {%- assign selected_color_value = opt.selected_value -%}
-          {%- break -%}
-        {%- endif -%}
-      {%- endfor -%}
-      
-      <div class="variant-input-wrap variant-input-wrap--size-buttons" data-index="option{{ forloop.index }}" data-color-option-index="{{ color_option_index }}">
-        {% for value in option.values %}
-          {%- assign variant_label_state = true -%}
-          {%- assign variant_inventory = 0 -%}
-          {%- assign variant_available = false -%}
-          
-          {%- comment -%} Find variants with this size and selected color, calculate inventory {%- endcomment -%}
-          {%- for variant in product.variants -%}
-            {%- assign variant_option_value = variant.options[option_index] -%}
-            {%- assign variant_matches_size = false -%}
-            {%- if variant_option_value == value -%}
-              {%- assign variant_matches_size = true -%}
-            {%- endif -%}
-            
-            {%- comment -%} If color is selected, only count variants matching that color {%- endcomment -%}
-            {%- if variant_matches_size -%}
-              {%- if color_option_index >= 0 and selected_color_value != '' -%}
-                {%- assign variant_color_value = variant.options[color_option_index] -%}
-                {%- if variant_color_value != selected_color_value -%}
-                  {%- continue -%}
-                {%- endif -%}
-              {%- endif -%}
-              
-              {%- if variant.inventory_management == 'shopify' -%}
-                {%- assign variant_inventory = variant_inventory | plus: variant.inventory_quantity -%}
-              {%- else -%}
-                {%- assign variant_inventory = variant_inventory | plus: 999 -%}
-              {%- endif -%}
-              {%- if variant.available -%}
-                {%- assign variant_available = true -%}
-              {%- endif -%}
-            {%- endif -%}
-          {%- endfor -%}
-          
-          {%- unless variant_available -%}
+  <div class="variant-input-wrap" data-index="option{{ forloop.index }}">
+    <select
+      class="variant__input-{{ section_id }}"
+      id="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}"
+      data-index="option{{ forloop.index }}">
+      {% for value in option.values %}
+        {%- assign variant_label_state = true -%}
+        {% if product.options.size == 1 %}
+          {% unless product.variants[forloop.index0].available %}
             {%- assign variant_label_state = false -%}
-          {%- endunless -%}
-          
-          <div class="size-button-wrapper{% unless variant_label_state %} disabled{% endunless %}">
-            <input type="radio"
-              name="{{ option.name }}"
-              value="{{ value | escape }}"
-              id="SingleOptionSelector-{{ section_id }}-option-{{ option_index }}-{{ value | handleize }}"
-              class="variant__input-{{ section_id }} variant__input--size-{{ section_id }}"
-              data-index="option{{ option_index | plus: 1 }}"
-              {% if option.selected_value == value %} checked="checked"{% endif %}
-              {% unless variant_label_state %} disabled="disabled"{% endunless %}>
-            <label
-              for="SingleOptionSelector-{{ section_id }}-option-{{ option_index }}-{{ value | handleize }}"
-              class="size-button size-button--{{ value | handle }}{% unless variant_label_state %} disabled{% endunless %}">
-              <span class="size-button__label">{{ value | escape }}</span>
-              {%- if variant_inventory > 0 and variant_available -%}
-                <span class="size-button__stock">Restent {{ variant_inventory }}</span>
-              {%- elsif variant_inventory == 0 or variant_label_state == false -%}
-                <span class="size-button__stock size-button__stock--sold-out">Épuisé</span>
-              {%- endif -%}
-            </label>
-          </div>
-        {% endfor %}
-      </div>
-    {%- else -%}
-      {%- comment -%} Regular dropdown for other options {%- endcomment -%}
-      <div class="variant-input-wrap" data-index="option{{ forloop.index }}">
-        <select
-          class="variant__input-{{ section_id }}"
-          id="SingleOptionSelector-{{ section_id }}-option-{{ forloop.index0 }}"
+          {% endunless %}
+        {% endif %}
+        <option
+          value="{{ value | escape }}"
+          {% if option.selected_value == value %} selected="selected"{% endif %}
+          {% unless variant_label_state %} disabled="disabled"{% endunless %}
+          name="{{ option.name }}"
+          class="variant-input"
           data-index="option{{ forloop.index }}">
-          {% for value in option.values %}
-            {%- assign variant_label_state = true -%}
-            {% if product.options.size == 1 %}
-              {% unless product.variants[forloop.index0].available %}
-                {%- assign variant_label_state = false -%}
-              {% endunless %}
-            {% endif %}
-            <option
-              value="{{ value | escape }}"
-              {% if option.selected_value == value %} selected="selected"{% endif %}
-              {% unless variant_label_state %} disabled="disabled"{% endunless %}
-              name="{{ option.name }}"
-              class="variant-input"
-              data-index="option{{ forloop.index }}">
-              {{ value }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-    {%- endif -%}
-  {%- endif -%}
+          {{ value }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
 </div>
