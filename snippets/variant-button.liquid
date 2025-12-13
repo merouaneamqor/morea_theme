@@ -78,55 +78,90 @@
         >
 
         {%- if is_color -%}
+{%- comment -%} Try to get hex color from variant metafields first {%- endcomment -%}
+{%- assign color_hex = null -%}
 {%- assign normalized_value = value | strip | downcase -%}
-{%- assign color_swatch_fallback = '#cccccc' -%}
 
-{%- if normalized_value contains 'noir' or normalized_value contains 'black' -%}
-  {%- assign color_swatch_fallback = '#000000' -%}
+{%- comment -%} Find a variant with this color value and check for hex color metafield {%- endcomment -%}
+{%- for variant in product.variants -%}
+  {%- assign variant_color_value = variant.options[color_option_index] | strip | downcase -%}
+  {%- if variant_color_value == normalized_value -%}
+    {%- comment -%} Check common metafield namespaces and keys for hex color {%- endcomment -%}
+    {%- if variant.metafields.custom.color_hex != blank -%}
+      {%- assign color_hex = variant.metafields.custom.color_hex -%}
+      {%- break -%}
+    {%- elsif variant.metafields.custom.hex_color != blank -%}
+      {%- assign color_hex = variant.metafields.custom.hex_color -%}
+      {%- break -%}
+    {%- elsif variant.metafields.custom.color != blank -%}
+      {%- assign color_hex = variant.metafields.custom.color -%}
+      {%- break -%}
+    {%- elsif variant.metafields.my_fields.color_hex != blank -%}
+      {%- assign color_hex = variant.metafields.my_fields.color_hex -%}
+      {%- break -%}
+    {%- elsif variant.metafields.my_fields.hex_color != blank -%}
+      {%- assign color_hex = variant.metafields.my_fields.hex_color -%}
+      {%- break -%}
+    {%- elsif variant.metafields.my_fields.color != blank -%}
+      {%- assign color_hex = variant.metafields.my_fields.color -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
 
-{%- elsif normalized_value contains 'blanc' or normalized_value contains 'white' -%}
-  {%- assign color_swatch_fallback = '#ffffff' -%}
+{%- comment -%} Fallback to hardcoded mapping if no metafield found {%- endcomment -%}
+{%- if color_hex == null or color_hex == blank -%}
+  {%- assign color_swatch_fallback = '#cccccc' -%}
 
-{%- elsif normalized_value contains 'clair'
-  or normalized_value contains 'claire'
-  or normalized_value contains 'light'
--%}
-  {%- assign color_swatch_fallback = '#f3f4f6' -%}
+  {%- if normalized_value contains 'noir' or normalized_value contains 'black' -%}
+    {%- assign color_swatch_fallback = '#000000' -%}
 
-{%- elsif normalized_value contains 'gris'
-  or normalized_value contains 'gray'
-  or normalized_value contains 'grey'
--%}
-  {%- assign color_swatch_fallback = '#9e9e9e' -%}
+  {%- elsif normalized_value contains 'blanc' or normalized_value contains 'white' -%}
+    {%- assign color_swatch_fallback = '#ffffff' -%}
 
-{%- elsif normalized_value contains 'beige' -%}
-  {%- assign color_swatch_fallback = '#e8dcc5' -%}
+  {%- elsif normalized_value contains 'clair'
+    or normalized_value contains 'claire'
+    or normalized_value contains 'light'
+  -%}
+    {%- assign color_swatch_fallback = '#f3f4f6' -%}
 
-{%- elsif normalized_value contains 'bleu'
-  or normalized_value contains 'blue'
--%}
-  {%- assign color_swatch_fallback = '#1e40af' -%}
+  {%- elsif normalized_value contains 'gris'
+    or normalized_value contains 'gray'
+    or normalized_value contains 'grey'
+  -%}
+    {%- assign color_swatch_fallback = '#9e9e9e' -%}
 
-{%- elsif normalized_value contains 'rouge'
-  or normalized_value contains 'red'
--%}
-  {%- assign color_swatch_fallback = '#dc2626' -%}
+  {%- elsif normalized_value contains 'beige' -%}
+    {%- assign color_swatch_fallback = '#e8dcc5' -%}
 
-{%- elsif normalized_value contains 'rose'
-  or normalized_value contains 'pink'
--%}
-  {%- assign color_swatch_fallback = '#f782bc' -%}
+  {%- elsif normalized_value contains 'bleu'
+    or normalized_value contains 'blue'
+  -%}
+    {%- assign color_swatch_fallback = '#1e40af' -%}
 
-{%- elsif normalized_value contains 'vert'
-  or normalized_value contains 'green'
--%}
-  {%- assign color_swatch_fallback = '#16a34a' -%}
+  {%- elsif normalized_value contains 'rouge'
+    or normalized_value contains 'red'
+  -%}
+    {%- assign color_swatch_fallback = '#dc2626' -%}
 
-{%- elsif normalized_value contains 'marron'
-  or normalized_value contains 'brown'
--%}
-  {%- assign color_swatch_fallback = '#7c4a2d' -%}
+  {%- elsif normalized_value contains 'rose'
+    or normalized_value contains 'pink'
+  -%}
+    {%- assign color_swatch_fallback = '#f782bc' -%}
 
+  {%- elsif normalized_value contains 'vert'
+    or normalized_value contains 'green'
+  -%}
+    {%- assign color_swatch_fallback = '#16a34a' -%}
+
+  {%- elsif normalized_value contains 'marron'
+    or normalized_value contains 'brown'
+  -%}
+    {%- assign color_swatch_fallback = '#7c4a2d' -%}
+
+  {%- endif -%}
+{%- else -%}
+  {%- assign color_swatch_fallback = color_hex -%}
 {%- endif -%}
 
 
