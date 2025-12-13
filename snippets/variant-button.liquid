@@ -146,29 +146,6 @@
             >
               {{ value | escape }}
             </label>
-            {%- if is_size and settings.inventory_enable -%}
-              {%- comment -%} Find the variant for this size to get inventory - render for all sizes {%- endcomment -%}
-              {%- assign size_variant_id = null -%}
-              {%- assign size_inventory = 0 -%}
-              {%- for variant in product.variants -%}
-                {%- if variant.available and variant.inventory_management == 'shopify' -%}
-                  {%- assign variant_option1 = variant.option1 | downcase -%}
-                  {%- assign variant_option2 = variant.option2 | downcase -%}
-                  {%- assign variant_option3 = variant.option3 | downcase -%}
-                  {%- assign current_value = value | downcase -%}
-                  {%- if variant_option1 == current_value or variant_option2 == current_value or variant_option3 == current_value -%}
-                    {%- assign size_variant_id = variant.id -%}
-                    {%- assign size_inventory = variant.inventory_quantity -%}
-                    {%- break -%}
-                  {%- endif -%}
-                {%- endif -%}
-              {%- endfor -%}
-              {%- if size_variant_id != null -%}
-                <span class="variant__inventory-count{% unless option.selected_value == value %} hide{% endunless %}" data-variant-id="{{ size_variant_id }}" data-size-value="{{ value | escape }}">
-                  {{ 'products.product.remaining' | t: count: size_inventory }}
-                </span>
-              {%- endif -%}
-            {%- endif -%}
           </div>
         {%- endif -%}
       </div>
