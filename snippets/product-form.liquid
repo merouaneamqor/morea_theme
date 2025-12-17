@@ -135,18 +135,3 @@
     </div>
   {% endif %}
 {% endform %}
-
-{%- comment -%} Hide COD form if inventory is zero or less {%- endcomment -%}
-{%- if current_variant.inventory_management == 'shopify' and current_variant.inventory_quantity <= 0 -%}
-  <style>
-    #orichi-cod {
-      display: none !important;
-    }
-  </style>
-{%- elsif button_disabled -%}
-  <style>
-    #orichi-cod {
-      display: none !important;
-    }
-  </style>
-{%- endif -%}

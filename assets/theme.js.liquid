@@ -3713,14 +3713,6 @@ lazySizesConfig.expFactor = 4;
             self.updateCartButton({
               variant: self.variants.currentVariant
             });
-          } else {
-            // Fallback: check if add to cart button is disabled
-            var $addToCart = $(self.selectors.addToCart);
-            if ($addToCart.length && $addToCart.prop('disabled')) {
-              // Button is disabled, so hide COD form
-              $('#orichi-cod').hide();
-              $('#orichi-cod-button').css('pointer-events', 'none').css('opacity', '0.5');
-            }
           }
         }, 300);
         
@@ -3957,9 +3949,6 @@ lazySizesConfig.expFactor = 4;
           $(this.selectors.addToCartText).html(theme.strings.unavailable);
           // Also disable COD button if it exists
           $('#CODButton-' + this.sectionId).addClass(classes.disabled).prop('disabled', true);
-          // Hide/disable COD form app block (orichi-cod)
-          $('#orichi-cod').hide();
-          $('#orichi-cod-button').css('pointer-events', 'none').css('opacity', '0.5');
         }
       },
   
