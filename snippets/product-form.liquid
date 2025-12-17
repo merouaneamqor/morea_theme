@@ -85,7 +85,7 @@
       name="add"
       id="AddToCart-{{ section_id }}"
       class="btn btn--full add-to-cart{% if enable_dynamic_buttons %} btn--secondary{% endif %}"
-      {% unless current_variant.available %} disabled="disabled"{% endunless %}>
+      {% unless current_variant.available and current_variant.inventory_quantity > 0 %} disabled="disabled"{% endunless %}>
       <span id="AddToCartText-{{ section_id }}">
         {% if current_variant.available %}
           {% if template == 'product.preorder' %}
@@ -104,7 +104,7 @@
         type="button"
         id="CODButton-{{ section_id }}"
         class="btn btn--full btn--cod"
-        {% unless current_variant.available %} disabled="disabled"{% endunless %}>
+        {% unless current_variant.available and current_variant.inventory_quantity > 0 %} disabled="disabled"{% endunless %}>
         {{ 'products.product.cod_button' | t }}
       </button>
     {% endif %}

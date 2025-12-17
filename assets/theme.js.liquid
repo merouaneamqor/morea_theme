@@ -3898,21 +3898,43 @@ lazySizesConfig.expFactor = 4;
   
       updateCartButton: function(evt) {
         var variant = evt.variant;
+        var inventoryQuantity = null;
+        var hasInventoryTracking = false;
+  
+        // Get inventory quantity if inventory tracking is enabled
+        if (variant && window.inventories && window.inventories[this.sectionId] && window.inventories[this.sectionId][variant.id]) {
+          inventoryQuantity = window.inventories[this.sectionId][variant.id].quantity;
+          hasInventoryTracking = true;
+        }
   
         if (variant) {
-          if (variant.available) {
+          // Determine if button should be enabled
+          // If inventory tracking is enabled, check quantity > 0
+          // Otherwise, rely on variant.available
+          var shouldEnable = variant.available;
+          if (hasInventoryTracking && inventoryQuantity !== null) {
+            shouldEnable = variant.available && inventoryQuantity > 0;
+          }
+  
+          if (shouldEnable) {
             // Available, enable the submit button and change text
             $(this.selectors.addToCart).removeClass(classes.disabled).prop('disabled', false);
             $(this.selectors.addToCartText).html(theme.strings.addToCart);
+            // Also enable COD button if it exists
+            $('#CODButton-' + this.sectionId).removeClass(classes.disabled).prop('disabled', false);
           } else {
-            // Sold out, disable the submit button and change text
+            // Sold out or inventory <= 0, disable the submit button and change text
             $(this.selectors.addToCart).addClass(classes.disabled).prop('disabled', true);
             $(this.selectors.addToCartText).html(theme.strings.soldOut);
+            // Also disable COD button if it exists
+            $('#CODButton-' + this.sectionId).addClass(classes.disabled).prop('disabled', true);
           }
         } else {
           // The variant doesn't exist, disable submit button
           $(this.selectors.addToCart).addClass(classes.disabled).prop('disabled', true);
           $(this.selectors.addToCartText).html(theme.strings.unavailable);
+          // Also disable COD button if it exists
+          $('#CODButton-' + this.sectionId).addClass(classes.disabled).prop('disabled', true);
         }
       },
   
