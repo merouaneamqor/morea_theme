@@ -870,13 +870,13 @@
       "1525118065355"
     ],
     "blocks": {
-      "1343067074321463367": {
-        "type": "shopify://apps/madgic-cod-form/blocks/orichi_cod/f60a6e43-d658-4a23-8ef0-3b9b3d89ab53",
+      "12439146293631897289": {
+        "type": "shopify://apps/blockify-fraud-filter/blocks/app_embed/2e3e0ba5-0e70-447a-9ec5-3bf76b5ef12e",
         "disabled": false,
         "settings": {}
       },
-      "12439146293631897289": {
-        "type": "shopify://apps/blockify-fraud-filter/blocks/app_embed/2e3e0ba5-0e70-447a-9ec5-3bf76b5ef12e",
+      "1343067074321463367": {
+        "type": "shopify://apps/madgic-cod-form/blocks/orichi_cod/f60a6e43-d658-4a23-8ef0-3b9b3d89ab53",
         "disabled": false,
         "settings": {}
       }
