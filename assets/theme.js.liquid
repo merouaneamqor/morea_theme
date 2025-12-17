@@ -3909,11 +3909,15 @@ lazySizesConfig.expFactor = 4;
   
         if (variant) {
           // Determine if button should be enabled
-          // If inventory tracking is enabled, check quantity > 0
-          // Otherwise, rely on variant.available
-          var shouldEnable = variant.available;
-          if (hasInventoryTracking && inventoryQuantity !== null) {
-            shouldEnable = variant.available && inventoryQuantity > 0;
+          var shouldEnable = false;
+          
+          // If inventory tracking is enabled, check quantity must be > 0
+          if (hasInventoryTracking) {
+            // Explicitly check if quantity is > 0
+            shouldEnable = variant.available && inventoryQuantity !== null && inventoryQuantity !== undefined && inventoryQuantity > 0;
+          } else {
+            // No inventory tracking, just check if variant is available
+            shouldEnable = variant.available;
           }
   
           if (shouldEnable) {

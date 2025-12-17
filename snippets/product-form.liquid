@@ -80,12 +80,21 @@
     <div class="payment-buttons">
   {% endif %}
 
+    {%- assign button_disabled = false -%}
+    {%- unless current_variant.available -%}
+      {%- assign button_disabled = true -%}
+    {%- endunless -%}
+    {%- if current_variant.inventory_management == 'shopify' -%}
+      {%- if current_variant.inventory_quantity <= 0 -%}
+        {%- assign button_disabled = true -%}
+      {%- endif -%}
+    {%- endif -%}
     <button
       {% if product.empty? %}type="button"{% else %}type="submit"{% endif %}
       name="add"
       id="AddToCart-{{ section_id }}"
       class="btn btn--full add-to-cart{% if enable_dynamic_buttons %} btn--secondary{% endif %}"
-      {% unless current_variant.available and current_variant.inventory_quantity > 0 %} disabled="disabled"{% endunless %}>
+      {% if button_disabled %} disabled="disabled"{% endif %}>
       <span id="AddToCartText-{{ section_id }}">
         {% if current_variant.available %}
           {% if template == 'product.preorder' %}
@@ -104,7 +113,7 @@
         type="button"
         id="CODButton-{{ section_id }}"
         class="btn btn--full btn--cod"
-        {% unless current_variant.available and current_variant.inventory_quantity > 0 %} disabled="disabled"{% endunless %}>
+        {% if button_disabled %} disabled="disabled"{% endif %}>
         {{ 'products.product.cod_button' | t }}
       </button>
     {% endif %}
