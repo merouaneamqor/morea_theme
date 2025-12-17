@@ -3944,18 +3944,12 @@ lazySizesConfig.expFactor = 4;
             $(this.selectors.addToCartText).html(theme.strings.addToCart);
             // Also enable COD button if it exists
             $('#CODButton-' + this.sectionId).removeClass(classes.disabled).prop('disabled', false);
-            // Show/enable COD form app block (orichi-cod)
-            $('#orichi-cod').show();
-            $('#orichi-cod-button').css('pointer-events', 'auto').css('opacity', '1');
           } else {
             // Sold out or inventory <= 0, disable the submit button and change text
             $(this.selectors.addToCart).addClass(classes.disabled).prop('disabled', true);
             $(this.selectors.addToCartText).html(theme.strings.soldOut);
             // Also disable COD button if it exists
             $('#CODButton-' + this.sectionId).addClass(classes.disabled).prop('disabled', true);
-            // Hide/disable COD form app block (orichi-cod)
-            $('#orichi-cod').hide();
-            $('#orichi-cod-button').css('pointer-events', 'none').css('opacity', '0.5');
           }
         } else {
           // The variant doesn't exist, disable submit button
