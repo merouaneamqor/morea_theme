@@ -12234,3 +12234,29 @@ iframe.zoid-component-frame {
   .product-single__meta { padding-left: 0; padding-top: 24px; }
   .product-single__title { font-size: 26px !important; }
 }
+
+/* ATC BUTTON FIX — class is .add-to-cart, not .product-form__cart-submit */
+.add-to-cart {
+  background: #0a0a0a !important;
+  color: #fff !important;
+  border: 2px solid #0a0a0a !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase !important;
+  padding: 18px 32px !important;
+  width: 100%;
+  border-radius: 0 !important;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease !important;
+  transform: none !important;
+}
+.add-to-cart:hover {
+  background: #e8ff00 !important;
+  color: #0a0a0a !important;
+  border-color: #e8ff00 !important;
+  transform: none !important;
+}
+.add-to-cart[disabled] {
+  opacity: 0.4 !important;
+  cursor: not-allowed;
+}
