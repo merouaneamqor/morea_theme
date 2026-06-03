@@ -11897,145 +11897,393 @@ iframe.zoid-component-frame {
 }
 
 /*============================================================================
-  Morea Theme Enhancements
+  Morea Sport — Athletic UI System
+  Inspired by Nike / Adidas / Gymshark
 ==============================================================================*/
 
-/* ---- Promo Grid: Elegant framed border ---- */
+/* ============ SPORT VARIABLES ============ */
+:root {
+  --sport-energy:  #e8ff00;
+  --sport-dark:    #0a0a0a;
+  --sport-mid:     #1a1a1a;
+  --transition-fast: 0.18s cubic-bezier(0.4,0,0.2,1);
+  --transition-med:  0.32s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ============ ANNOUNCEMENT BAR ============ */
+.announcement-bar {
+  background: var(--sport-dark) !important;
+  padding: 10px 0 !important;
+}
+.announcement-bar__message {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.announcement-bar__message strong {
+  color: var(--sport-energy);
+  margin-right: 6px;
+}
+
+/* ============ HEADER ============ */
+.site-header {
+  border-bottom: 2px solid var(--sport-dark);
+}
+.site-nav__link {
+  font-weight: 700 !important;
+  letter-spacing: 0.15em !important;
+  font-size: 11px !important;
+  position: relative;
+}
+.site-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--sport-energy);
+  transform: scaleX(0);
+  transition: transform var(--transition-fast);
+  transform-origin: left;
+}
+.site-nav__link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ============ HERO ============ */
+.hero {
+  background-color: var(--sport-dark);
+}
+.hero__text-wrap {
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.25) 55%, transparent 100%);
+}
+.hero__text-content {
+  padding-bottom: 56px !important;
+}
+.hero__top-subtitle {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.28em !important;
+  text-transform: uppercase;
+  color: var(--sport-energy) !important;
+  margin-bottom: 10px;
+}
+.hero__title {
+  font-weight: 900 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 0.95 !important;
+  text-transform: uppercase !important;
+  text-shadow: none !important;
+}
+.hero__subtitle {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+  margin-top: 14px;
+  text-shadow: none !important;
+}
+.hero__link {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ============ BUTTONS ============ */
+.btn {
+  border-radius: 0 !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  padding: 14px 28px !important;
+  position: relative;
+  overflow: hidden;
+  transition: color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast) !important;
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--sport-energy);
+  transform: translateX(-101%);
+  transition: transform var(--transition-med);
+  z-index: 0;
+}
+.btn > * { position: relative; z-index: 1; }
+.btn:not(.btn--no-animate):hover::before {
+  transform: translateX(0);
+}
+.btn:not(.btn--no-animate):hover {
+  color: var(--sport-dark) !important;
+  transform: translateY(-2px);
+}
+.btn--inverse {
+  border: 2px solid rgba(255,255,255,0.8) !important;
+}
+.btn--secondary {
+  border: 2px solid currentColor !important;
+  background: transparent !important;
+}
+.btn--secondary::before {
+  background: var(--sport-dark);
+}
+.btn--secondary:hover {
+  color: #fff !important;
+  border-color: var(--sport-dark) !important;
+}
+.btn--small {
+  padding: 9px 18px !important;
+  font-size: 10px !important;
+}
+
+/* ============ SECTION HEADERS ============ */
+.section-header {
+  position: relative;
+  padding-bottom: 16px;
+  margin-bottom: 28px;
+}
+.section-header::after {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 3px;
+  background: var(--sport-energy);
+  margin-top: 14px;
+}
+.section-header--with-link::after { display: none; }
+
+.section-header__title {
+  font-weight: 900 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: uppercase !important;
+  font-size: clamp(22px, 3.5vw, 40px) !important;
+  line-height: 1 !important;
+}
+.section-header__subtitle {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--sport-dark);
+  background: var(--sport-energy);
+  padding: 4px 10px;
+  margin-bottom: 12px;
+}
+
+/* ============ PRODUCT GRID ============ */
+.grid-product__image-mask {
+  overflow: hidden;
+  background: #f0f0f0;
+}
+.grid-product__image,
+.grid__image-ratio {
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1) !important;
+}
+.grid-product__content:hover .grid-product__image,
+.grid-product__content:hover .grid__image-ratio {
+  transform: scale(1.06) !important;
+}
+.grid-product__meta {
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  margin-top: 2px;
+}
+.grid-product__title {
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+.grid-product__price {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em;
+  margin-top: 3px;
+}
+.grid-product__tag {
+  font-weight: 700 !important;
+  font-size: 9px !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+  border-radius: 0 !important;
+  padding: 4px 8px !important;
+}
+.grid-product__tag--sale {
+  background: var(--sport-energy) !important;
+  color: var(--sport-dark) !important;
+}
+.grid-product__tag--sold-out {
+  background: #444 !important;
+  color: #fff !important;
+}
+.quick-product__btn {
+  border-radius: 0 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+  background: var(--sport-dark) !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+/* ============ TAGLINE SECTION ============ */
+.featured-content-section {
+  padding: 48px 0 !important;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.featured-content-section .enlarge-text p,
+.featured-content-section .rte p {
+  font-weight: 700 !important;
+  font-size: clamp(15px, 2.2vw, 22px) !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  line-height: 1.4 !important;
+}
+.featured-content__cta { margin-top: 24px; }
+
+/* ============ PROMO GRID ============ */
 .promo-grid__container--framed {
-  outline: 1px solid rgba(255, 255, 255, 0.55) !important;
-  outline-offset: -10px;
+  outline: 2px solid rgba(255,255,255,0.5) !important;
+  outline-offset: -12px;
 }
 .promo-grid__container--framed.promo-grid__container--boxed {
   outline: none !important;
 }
-
-/* ---- Section: Better headline spacing ---- */
-.section-header__title {
-  letter-spacing: 0.04em;
+.promo-grid__content--boxed .promo-grid__text {
+  padding: 30px 32px !important;
+}
+.promo-grid__text .rte--em {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase !important;
+  color: var(--sport-energy) !important;
+}
+.promo-grid__text .rte--strong {
+  font-weight: 900 !important;
+  font-size: clamp(20px, 2.8vw, 36px) !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+}
+@media only screen and (max-width: 768px) {
+  .promo-grid__content--boxed .promo-grid__text { padding: 22px 20px !important; }
 }
 
-/* ---- Featured Collection: subtitle ---- */
-.section-header__subtitle {
-  display: block;
-  font-size: 0.85em;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  opacity: 0.55;
-  margin-bottom: 6px;
-  margin-top: 0;
-}
-
-/* ---- Product grid: polished hover ---- */
-.grid-product__content {
-  transition: transform 0.28s ease;
-}
-.grid-product__content:hover {
-  transform: translateY(-3px);
-}
-.grid-product__image-mask {
-  overflow: hidden;
-  border-radius: 2px;
-}
-.grid-product__image {
-  transition: transform 0.5s ease;
-}
-.grid-product__image-mask:hover .grid-product__image {
-  transform: scale(1.04);
-}
-.grid-product__title {
-  margin-top: 10px;
-  font-size: 0.9em;
-  letter-spacing: 0.03em;
-}
-.grid-product__price {
-  font-size: 0.88em;
-  opacity: 0.75;
-  margin-top: 3px;
-}
-
-/* ---- Newsletter section: better visual ---- */
+/* ============ NEWSLETTER ============ */
 .newsletter-section {
-  padding: 70px 0;
-  position: relative;
+  padding: 80px 0 !important;
+  background: var(--sport-dark) !important;
+  color: #fff !important;
 }
 .newsletter-section .h3 {
-  font-size: clamp(20px, 3vw, 30px);
-  margin-bottom: 8px;
-  letter-spacing: 0.04em;
+  font-weight: 900 !important;
+  font-size: clamp(24px, 4vw, 52px) !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase !important;
+  color: #fff !important;
+  line-height: 1 !important;
 }
 .newsletter-section .rte {
-  opacity: 0.7;
-  margin-bottom: 24px;
-  font-size: 0.95em;
+  color: rgba(255,255,255,0.55) !important;
+  font-size: 12px !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
 }
 .newsletter-section .newsletter__input {
-  border-radius: 0;
-  border-bottom-width: 1px;
-  transition: border-color 0.2s ease;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 2px solid rgba(255,255,255,0.25) !important;
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-size: 14px;
+  padding: 12px 0 !important;
+  transition: border-color var(--transition-fast);
+}
+.newsletter-section .newsletter__input::placeholder {
+  color: rgba(255,255,255,0.35) !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 11px;
 }
 .newsletter-section .newsletter__input:focus {
-  border-color: $colorTextBody;
+  border-bottom-color: var(--sport-energy) !important;
   outline: none;
 }
 .newsletter-section .newsletter__submit {
-  letter-spacing: 0.08em;
+  background: var(--sport-energy) !important;
+  color: var(--sport-dark) !important;
+  border: none !important;
+  font-weight: 700 !important;
 }
-
-/* ---- Hero: ensure text is visible on load ---- */
-.hero__text-content {
-  padding-bottom: 40px;
-}
-.hero__title {
-  text-shadow: 0 2px 20px rgba(0,0,0,0.25);
-}
-.hero__subtitle {
-  text-shadow: 0 1px 8px rgba(0,0,0,0.2);
-}
-
-/* ---- Promo grid content: breathing room ---- */
-.promo-grid__content--boxed .promo-grid__text {
-  padding: 28px 32px;
+.newsletter-section .newsletter__submit:hover {
+  background: #fff !important;
 }
 @media only screen and (max-width: 768px) {
-  .promo-grid__content--boxed .promo-grid__text {
-    padding: 20px 20px;
-  }
+  .newsletter-section { padding: 56px 0 !important; }
 }
 
-/* ---- Section divider: subtle ---- */
-.section--divider {
-  border-top: 1px solid rgba(0,0,0,0.06);
-  padding-top: 1px;
+/* ============ IMAGE WITH TEXT ============ */
+.feature-row__text h2.h3 {
+  font-weight: 900 !important;
+  font-size: clamp(22px, 3vw, 38px) !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.05 !important;
+}
+.feature-row__text .h5 {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase !important;
+  color: var(--sport-dark);
+  background: var(--sport-energy);
+  display: inline-block;
+  padding: 4px 10px;
+  margin-bottom: 16px !important;
+}
+.feature-row__text .rte {
+  font-size: 14px;
+  line-height: 1.7;
+  opacity: 0.7;
 }
 
-/* ---- Featured content CTA spacing ---- */
-.featured-content__cta {
-  margin-top: 24px;
+/* ============ FOOTER ============ */
+.site-footer {
+  border-top: 3px solid var(--sport-dark);
 }
-
-
-/* ---- Footer: better link spacing ---- */
 .site-footer a {
-  transition: opacity 0.2s ease;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  transition: opacity var(--transition-fast);
 }
-.site-footer a:hover {
-  opacity: 0.65;
-}
-.site-footer .footer__menu-item {
-  margin-bottom: 8px;
+.site-footer a:hover { opacity: 0.5; }
+.footer__menu-item { margin-bottom: 10px; }
+
+/* ============ SECTION DIVIDER ============ */
+.section--divider {
+  border-top: 3px solid var(--sport-dark);
 }
 
-/* ---- Announcement bar: bold label ---- */
-.announcement-bar__message strong,
-.announcement-bar__message b {
-  letter-spacing: 0.08em;
+/* ============ COLLECTION GRID ============ */
+.collection-grid-item__title {
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
 }
 
-/* ---- Buttons: subtle hover lift ---- */
-.btn:not(.btn--secondary):not(.btn--small) {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn:not(.btn--secondary):not(.btn--small):hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+/* ============ MOBILE ============ */
+@media only screen and (max-width: 768px) {
+  .hero__title { font-size: 42px !important; }
+  .btn { padding: 13px 22px !important; font-size: 10px !important; }
+  .featured-content-section { padding: 36px 0 !important; }
 }
