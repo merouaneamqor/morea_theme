@@ -3,7 +3,13 @@
 <div
   data-section-id="{{ section.id }}"
   data-section-type="featured-content-section"
-  class="text-{{ section.settings.align_text }}">
+  class="text-{{ section.settings.align_text }} featured-content-section">
+
+  {% style %}
+    #shopify-section-{{ section.id }} .featured-content-section {
+      padding: {{ section.settings.padding_vertical }}px 0;
+    }
+  {% endstyle %}
 
   <div class="page-width">
     <div class="grid">
@@ -92,6 +98,16 @@
         "type": "checkbox",
         "id": "narrow_column",
         "label": "Narrow column"
+      },
+      {
+        "type": "range",
+        "id": "padding_vertical",
+        "label": "Vertical padding",
+        "default": 60,
+        "min": 20,
+        "max": 120,
+        "step": 10,
+        "unit": "px"
       },
       {
         "type": "checkbox",

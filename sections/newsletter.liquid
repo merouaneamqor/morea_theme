@@ -4,21 +4,41 @@
     color: {{ section.settings.color_text }};
   }
 
-  .newsletter-{{ section.id }} .newsletter__input::-webkit-input-placeholder { color: {{ section.settings.color_text }}; }
-  .newsletter-{{ section.id }} .newsletter__input::-moz-placeholder { color: {{ section.settings.color_text }}; }
-  .newsletter-{{ section.id }} .newsletter__input::-ms-input-placeholder { color: {{ section.settings.color_text }}; }
+  .newsletter-{{ section.id }} .newsletter__input::-webkit-input-placeholder { color: {{ section.settings.color_text }}; opacity: 0.5; }
+  .newsletter-{{ section.id }} .newsletter__input::-moz-placeholder { color: {{ section.settings.color_text }}; opacity: 0.5; }
+  .newsletter-{{ section.id }} .newsletter__input::-ms-input-placeholder { color: {{ section.settings.color_text }}; opacity: 0.5; }
+
+  {% if section.settings.show_border %}
+    .newsletter-{{ section.id }} .newsletter-inner {
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 4px;
+      padding: 60px 40px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    @media only screen and (max-width: 768px) {
+      .newsletter-{{ section.id }} .newsletter-inner {
+        padding: 40px 24px;
+      }
+    }
+  {% endif %}
 {% endstyle %}
 
 <div class="newsletter-section newsletter-{{ section.id }}{% if section.settings.color_background == settings.color_body_bg %} newsletter-section--with-divider{% endif %}">
   <div class="page-width text-center">
-    {% if section.settings.title != blank %}
-      <p class="h3">{{ section.settings.title | escape }}</p>
-    {% endif %}
-    {% if section.settings.text != blank %}
-      <div class="rte">{{ section.settings.text }}</div>
-    {% endif %}
+    <div class="newsletter-inner">
+      {% if section.settings.eyebrow != blank %}
+        <p class="section-header__subtitle">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      {% if section.settings.title != blank %}
+        <p class="h3">{{ section.settings.title | escape }}</p>
+      {% endif %}
+      {% if section.settings.text != blank %}
+        <div class="rte">{{ section.settings.text }}</div>
+      {% endif %}
 
-    {% include 'newsletter-form', section_id: section.id, snippet_context: 'section' %}
+      {% include 'newsletter-form', section_id: section.id, snippet_context: 'section' %}
+    </div>
   </div>
 </div>
 
@@ -32,9 +52,21 @@
       },
       {
         "type": "text",
+        "id": "eyebrow",
+        "label": "Eyebrow label",
+        "info": "Small uppercase label above the heading"
+      },
+      {
+        "type": "text",
         "id": "title",
         "label": "Heading",
         "default": "Sign up and save"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_border",
+        "label": "Show bordered card",
+        "default": false
       },
       {
         "type": "richtext",

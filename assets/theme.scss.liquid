@@ -11895,3 +11895,159 @@ iframe.zoid-component-frame {
     border-bottom: 2px solid $colorBorder !important;
   }
 }
+
+/*============================================================================
+  Morea Theme Enhancements
+==============================================================================*/
+
+/* ---- Promo Grid: Elegant framed border ---- */
+.promo-grid__container--framed {
+  outline: 1px solid rgba(255, 255, 255, 0.55) !important;
+  outline-offset: -10px;
+}
+.promo-grid__container--framed.promo-grid__container--boxed {
+  outline: none !important;
+}
+
+/* ---- Section: Better headline spacing ---- */
+.section-header__title {
+  letter-spacing: 0.04em;
+}
+
+/* ---- Featured Collection: subtitle ---- */
+.section-header__subtitle {
+  display: block;
+  font-size: 0.85em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 6px;
+  margin-top: 0;
+}
+
+/* ---- Product grid: polished hover ---- */
+.grid-product__content {
+  transition: transform 0.28s ease;
+}
+.grid-product__content:hover {
+  transform: translateY(-3px);
+}
+.grid-product__image-mask {
+  overflow: hidden;
+  border-radius: 2px;
+}
+.grid-product__image {
+  transition: transform 0.5s ease;
+}
+.grid-product__image-mask:hover .grid-product__image {
+  transform: scale(1.04);
+}
+.grid-product__title {
+  margin-top: 10px;
+  font-size: 0.9em;
+  letter-spacing: 0.03em;
+}
+.grid-product__price {
+  font-size: 0.88em;
+  opacity: 0.75;
+  margin-top: 3px;
+}
+
+/* ---- Newsletter section: better visual ---- */
+.newsletter-section {
+  padding: 70px 0;
+  position: relative;
+}
+.newsletter-section .h3 {
+  font-size: clamp(20px, 3vw, 30px);
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.newsletter-section .rte {
+  opacity: 0.7;
+  margin-bottom: 24px;
+  font-size: 0.95em;
+}
+.newsletter-section .newsletter__input {
+  border-radius: 0;
+  border-bottom-width: 1px;
+  transition: border-color 0.2s ease;
+}
+.newsletter-section .newsletter__input:focus {
+  border-color: $colorTextBody;
+  outline: none;
+}
+.newsletter-section .newsletter__submit {
+  letter-spacing: 0.08em;
+}
+
+/* ---- Hero: ensure text is visible on load ---- */
+.hero__text-content {
+  padding-bottom: 40px;
+}
+.hero__title {
+  text-shadow: 0 2px 20px rgba(0,0,0,0.25);
+}
+.hero__subtitle {
+  text-shadow: 0 1px 8px rgba(0,0,0,0.2);
+}
+
+/* ---- Promo grid content: breathing room ---- */
+.promo-grid__content--boxed .promo-grid__text {
+  padding: 28px 32px;
+}
+@media only screen and (max-width: 768px) {
+  .promo-grid__content--boxed .promo-grid__text {
+    padding: 20px 20px;
+  }
+}
+
+/* ---- Section divider: subtle ---- */
+.section--divider {
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding-top: 1px;
+}
+
+/* ---- Featured content CTA spacing ---- */
+.featured-content__cta {
+  margin-top: 24px;
+}
+
+/* ---- Smooth section entrance animations ---- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.index-section {
+  animation: fadeInUp 0.5s ease both;
+  animation-play-state: paused;
+}
+.index-section.aos-animate {
+  animation-play-state: running;
+}
+
+/* ---- Footer: better link spacing ---- */
+.site-footer a {
+  transition: opacity 0.2s ease;
+}
+.site-footer a:hover {
+  opacity: 0.65;
+}
+.site-footer .footer__menu-item {
+  margin-bottom: 8px;
+}
+
+/* ---- Announcement bar: bold label ---- */
+.announcement-bar__message strong,
+.announcement-bar__message b {
+  letter-spacing: 0.08em;
+}
+
+/* ---- Buttons: subtle hover lift ---- */
+.btn:not(.btn--secondary):not(.btn--small) {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:not(.btn--secondary):not(.btn--small):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
