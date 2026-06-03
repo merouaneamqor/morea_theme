@@ -226,6 +226,37 @@
       {% if natural_height %}
         </div>
       {% endif %}
+
+      {% if section.settings.show_scroll_indicator and section.settings.section_height == '100vh' %}
+        <button class="slideshow__scroll-indicator" aria-label="Scroll down" onclick="window.scrollBy({top: window.innerHeight, behavior: 'smooth'})">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="24" height="24"><path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        {% style %}
+          .slideshow__scroll-indicator {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            animation: bounce-indicator 2s infinite;
+            backdrop-filter: blur(4px);
+          }
+          @keyframes bounce-indicator {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(6px); }
+          }
+        {% endstyle %}
+      {% endif %}
     </div>
   {% endif %}
 
@@ -336,6 +367,13 @@
             "label": "Dots"
           }
         ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_scroll_indicator",
+        "label": "Show scroll indicator",
+        "info": "Displays an animated arrow when desktop height is set to Full screen",
+        "default": true
       },
       {
         "type": "checkbox",
