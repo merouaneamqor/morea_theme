@@ -884,6 +884,11 @@
         "type": "shopify://apps/madgic-cod-form/blocks/orichi_cod/f60a6e43-d658-4a23-8ef0-3b9b3d89ab53",
         "disabled": false,
         "settings": {}
+      },
+      "17754088914158789468": {
+        "type": "shopify://apps/easysell-cod-form/blocks/app-embed/7bfd0a95-6839-4f02-b2ee-896832dbe67e",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
