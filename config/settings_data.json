@@ -236,7 +236,10 @@
           "text": "<p>Design starts with movement. If it doesn’t improve performance, it doesn’t belong</p>",
           "align_text": "center",
           "narrow_column": true,
+          "padding_vertical": 0,
           "enlarge_text": true,
+          "button_label": "",
+          "button_link": "",
           "divider": false
         }
       },
@@ -451,7 +454,7 @@
               "link_text_2": "Creators we support ♡",
               "color_accent": "#000000",
               "text_align": "vertical-bottom horizontal-left",
-              "image": "shopify://shop_images/1988_2700_2xs-xl_20.jpg",
+              "image": "shopify://shop_images/ChatGPT_Image_16_juin_2026_23_21_53.png",
               "focal_point": "top center"
             }
           },
@@ -468,7 +471,7 @@
               "link_text_2": "Shop all",
               "color_accent": "#000000",
               "text_align": "vertical-bottom horizontal-left",
-              "image": "shopify://shop_images/899_1175_7.jpg",
+              "image": "shopify://shop_images/sport-modest-wear.png",
               "focal_point": "center center"
             }
           }
@@ -482,6 +485,7 @@
           "mobile_height": "auto",
           "parallax": true,
           "style": "bars",
+          "show_scroll_indicator": true,
           "autoplay": true,
           "autoplay_speed": 9
         }
@@ -556,6 +560,7 @@
         "type": "featured-collection",
         "disabled": true,
         "settings": {
+          "subtitle": "",
           "title": "Featured collection",
           "home_featured_products": "eyewear",
           "per_row": 5,
