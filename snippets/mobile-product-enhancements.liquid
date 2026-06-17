@@ -44,7 +44,7 @@
   .product-single__sku { font-size: 12px; opacity: .55; }
 
   /* ---------- Variant selectors: bigger tap targets ---------- */
-  .variant__label, .product-form__label, .product__quantity label {
+  .variant__label, .product__quantity label {
     font-size: 13px; font-weight: 600; letter-spacing: .04em;
     text-transform: uppercase; margin-bottom: 8px; display: block;
   }
@@ -57,9 +57,9 @@
   /* keep color swatches tappable but circular */
   .variant__button-label.color-swatch { min-height: 38px; min-width: 38px; }
   .variant-input-wrap { gap: 8px; }
+  /* master select (variant-dropdown uses .variant__input-{id}) */
   select.product-single__variants,
-  .selector-wrapper select,
-  .variant__input + .variant__label {
+  select[class^="variant__input-"], select[class*=" variant__input-"] {
     min-height: 48px;
   }
   select {
@@ -68,13 +68,9 @@
 
   /* ---------- Quantity stepper ---------- */
   .product__quantity { margin: 18px 0; }
-  .js-qty__wrapper, .quantity-input { max-width: 140px; }
-  .js-qty__num, .quantity-input__input {
-    min-height: 48px; font-size: 16px;
-  }
-  .js-qty__adjust, .quantity-input__button {
-    min-width: 44px; min-height: 48px;
-  }
+  .js-qty__wrapper { max-width: 140px; }
+  .js-qty__num { min-height: 48px; font-size: 16px; }
+  .js-qty__adjust { min-width: 44px; min-height: 48px; }
 
   /* ---------- Add to cart (in-page) ---------- */
   .add-to-cart, .product-single__form .btn--full {
@@ -89,14 +85,11 @@
   /* ---------- Image gallery polish ---------- */
   .product__photos { border-radius: 14px; overflow: hidden; }
   .product__main-photos { border-radius: 14px; overflow: hidden; }
-  /* swipe dots: larger, clearer */
-  .product__photo-dots .slick-dots li button:before,
-  .flickity-page-dots .dot,
-  .product__photo-dots li button:before { font-size: 9px; }
-  .flickity-page-dots .dot {
-    width: 8px; height: 8px; opacity: .35; background: #111;
+  /* swipe dots: larger, clearer (theme uses Slick: .slick-dots li button:before) */
+  .product__photo-dots .slick-dots li button:before {
+    font-size: 11px; color: #111; opacity: .35;
   }
-  .flickity-page-dots .dot.is-selected { opacity: 1; width: 22px; border-radius: 4px; }
+  .product__photo-dots .slick-dots li.slick-active button:before { opacity: 1; }
 
   /* ---------- Trust image / policies ---------- */
   .product__policies { font-size: 12px; opacity: .7; margin-top: 6px; }
