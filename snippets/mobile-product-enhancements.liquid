@@ -100,6 +100,35 @@
     font-size: 15px; line-height: 1.65;
   }
 
+  /* ---------- Collapsible accordion (description) ---------- */
+  /* Built by JS only at <=768px; uses native <details> for a11y. */
+  details.mpe-accordion {
+    border-top: 1px solid #e8e8e1;
+    margin: 0;
+  }
+  details.mpe-accordion:last-of-type { border-bottom: 1px solid #e8e8e1; }
+  details.mpe-accordion > summary.mpe-accordion__summary {
+    list-style: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 2px; min-height: 24px;
+    font-size: 14px; font-weight: 600; letter-spacing: .04em;
+    text-transform: uppercase; color: #111;
+  }
+  details.mpe-accordion > summary.mpe-accordion__summary::-webkit-details-marker { display: none; }
+  details.mpe-accordion > summary.mpe-accordion__summary::after {
+    content: ''; flex: 0 0 auto; width: 9px; height: 9px; margin-left: 12px;
+    border-right: 2px solid #111; border-bottom: 2px solid #111;
+    transform: rotate(45deg); transition: transform .2s ease;
+  }
+  details.mpe-accordion[open] > summary.mpe-accordion__summary::after { transform: rotate(-135deg); }
+  details.mpe-accordion > summary.mpe-accordion__summary:focus-visible {
+    outline: 2px solid #111; outline-offset: 2px;
+  }
+  details.mpe-accordion .mpe-accordion__body { padding: 0 2px 18px; }
+
+  /* bigger tap targets for the theme's own collapsible tabs (details/shipping) */
+  .collapsibles-wrapper .collapsible-trigger-btn { min-height: 52px; }
+
   /* hr tightening */
   .product-single__meta hr.hr--medium { margin: 18px 0; }
 }
@@ -260,6 +289,52 @@
   window.addEventListener('resize', function () {
     if (window.innerWidth > 768) setVisible(false);
   });
+})();
+</script>
+
+<script>
+/* Mobile-only collapsible description accordion (progressive enhancement). */
+(function () {
+  var sectionId = {{ section_id | json }};
+  var section = document.getElementById('ProductSection-' + sectionId);
+  if (!section) return;
+  var LABEL = {{ 'Description' | json }}; /* identical word in EN/FR */
+  var mq = window.matchMedia('(max-width: 768px)');
+
+  function wrap(el) {
+    if (!el || el.mpeDetails) return;
+    var details = document.createElement('details');
+    details.className = 'mpe-accordion';
+    var summary = document.createElement('summary');
+    summary.className = 'mpe-accordion__summary';
+    summary.textContent = LABEL;
+    var body = document.createElement('div');
+    body.className = 'mpe-accordion__body';
+    el.parentNode.insertBefore(details, el);
+    details.appendChild(summary);
+    details.appendChild(body);
+    body.appendChild(el); /* move original content; no layout shift on rebuild */
+    el.mpeDetails = details;
+  }
+  function unwrap(el) {
+    var details = el && el.mpeDetails;
+    if (!details || !details.parentNode) return;
+    details.parentNode.insertBefore(el, details);
+    details.parentNode.removeChild(details);
+    el.mpeDetails = null;
+  }
+  function apply() {
+    var targets = section.querySelectorAll(
+      '.product-single__description-full, .product-single__description'
+    );
+    for (var i = 0; i < targets.length; i++) {
+      if (mq.matches) wrap(targets[i]);
+      else unwrap(targets[i]); /* keep desktop DOM pristine */
+    }
+  }
+  apply();
+  if (mq.addEventListener) mq.addEventListener('change', apply);
+  else if (mq.addListener) mq.addListener(apply);
 })();
 </script>
 {%- endunless -%}
