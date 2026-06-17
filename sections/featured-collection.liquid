@@ -8,9 +8,12 @@
   id="CollectionSection-{{ section.id }}"
   data-section-id="{{ section.id }}"
   data-section-type="collection-template">
-  {% if section.settings.title != blank %}
+  {% if section.settings.title != blank or section.settings.subtitle != blank %}
     <div class="page-width">
       <div class="section-header{% if section.settings.view_all %}{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}{% endif %}">
+        {% if section.settings.subtitle != blank %}
+          <p class="section-header__subtitle">{{ section.settings.subtitle | escape }}</p>
+        {% endif %}
         <h2 class="section-header__title">
           {{ section.settings.title }}
         </h2>
@@ -110,6 +113,12 @@
     "name": "Featured collection",
     "class": "index-section",
     "settings": [
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subheading",
+        "info": "Small label shown above the heading (e.g. 'New Arrivals')"
+      },
       {
         "type": "text",
         "id": "title",

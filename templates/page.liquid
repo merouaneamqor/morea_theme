@@ -1,19 +1,48 @@
+<div class="page-hero">
+  <div class="page-width">
+    {%- include 'breadcrumbs' -%}
+    <h1 class="page-hero__title">{{ page.title }}</h1>
+  </div>
+</div>
+
 <div class="page-width page-content">
-
-  {%- include 'breadcrumbs' -%}
-
-	<div class="grid">
+  <div class="grid">
     <div class="grid__item medium-up--three-quarters medium-up--push-one-eighth">
-
-      <header class="section-header">
-        <h1 class="section-header__title">{{ page.title }}</h1>
-      </header>
-
-      <div class="rte rte--nomargin">
+      <div class="rte rte--nomargin page-body-content">
         {{ page.content }}
       </div>
-
     </div>
   </div>
-
 </div>
+
+{% style %}
+  .page-hero {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    margin-bottom: 50px;
+    background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0) 100%);
+  }
+  .page-hero__title {
+    margin: 8px 0 0;
+    font-size: clamp(28px, 5vw, 48px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .page-body-content {
+    font-size: 1.05em;
+    line-height: 1.75;
+  }
+  .page-body-content h2 {
+    margin-top: 2em;
+  }
+  .page-body-content p:first-child {
+    font-size: 1.1em;
+    opacity: 0.85;
+  }
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 36px 0 28px;
+      margin-bottom: 32px;
+    }
+  }
+{% endstyle %}

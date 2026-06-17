@@ -3,7 +3,16 @@
 <div
   data-section-id="{{ section.id }}"
   data-section-type="featured-content-section"
-  class="text-{{ section.settings.align_text }}">
+  class="text-{{ section.settings.align_text }} featured-content-section">
+
+  {% if section.settings.padding_vertical > 0 %}
+    {% style %}
+      #shopify-section-{{ section.id }} .featured-content-section {
+        padding-top: {{ section.settings.padding_vertical }}px;
+        padding-bottom: {{ section.settings.padding_vertical }}px;
+      }
+    {% endstyle %}
+  {% endif %}
 
   <div class="page-width">
     <div class="grid">
@@ -17,6 +26,14 @@
             {% if section.settings.enlarge_text %}<div class="enlarge-text">{% endif %}
             {{ section.settings.text }}
             {% if section.settings.enlarge_text %}</div>{% endif %}
+          </div>
+        {% endif %}
+
+        {% if section.settings.button_label != blank %}
+          <div class="featured-content__cta">
+            <a href="{{ section.settings.button_link }}" class="btn">
+              {{ section.settings.button_label }}
+            </a>
           </div>
         {% endif %}
 
@@ -86,10 +103,30 @@
         "label": "Narrow column"
       },
       {
+        "type": "range",
+        "id": "padding_vertical",
+        "label": "Vertical padding",
+        "default": 0,
+        "min": 0,
+        "max": 80,
+        "step": 10,
+        "unit": "px"
+      },
+      {
         "type": "checkbox",
         "id": "enlarge_text",
         "label": "Enlarge text",
         "default": true
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
       },
       {
         "type": "checkbox",
