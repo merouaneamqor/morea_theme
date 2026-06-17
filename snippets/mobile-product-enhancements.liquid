@@ -1,0 +1,238 @@
+{%- comment -%}
+  ============================================================
+  Mobile product page UX/UI enhancements (Morea)
+  ------------------------------------------------------------
+  Self-contained: scoped CSS + a sticky add-to-cart bar.
+  All styles apply ONLY at <= 768px so desktop is untouched.
+  Remove the single {% include 'mobile-product-enhancements' %}
+  line in product-template.liquid to fully revert.
+  Expects: section_id (product.id)
+  ============================================================
+{%- endcomment -%}
+
+{%- unless product.empty? -%}
+{%- assign mpe_img = product.featured_media | img_url: '160x160', crop: 'center' -%}
+
+<style>
+@media (max-width: 768px) {
+  /* ---------- Layout & spacing ---------- */
+  .page-content--product .page-width { padding-left: 16px; padding-right: 16px; }
+  .page-content--product { padding-top: 8px; }
+  /* room so the sticky bar never hides content/footer */
+  body.mpe-has-sticky { padding-bottom: 76px; }
+
+  /* ---------- Title, vendor, price ---------- */
+  .product-single__meta { margin-top: 14px; }
+  .product-single__vendor {
+    font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+    opacity: .6; margin-bottom: 4px;
+  }
+  .product-single__title {
+    font-size: 24px !important; line-height: 1.2 !important;
+    margin: 2px 0 8px !important;
+  }
+  .product__price, .product__price--sale {
+    font-size: 22px !important; font-weight: 600;
+  }
+  .product__price--compare { font-size: 16px !important; opacity: .55; margin-right: 6px; }
+  .product__price-savings {
+    display: inline-block; margin-top: 6px;
+    background: #ff4e4e; color: #fff;
+    font-size: 12px; font-weight: 600; letter-spacing: .03em;
+    padding: 3px 9px; border-radius: 100px;
+  }
+  .product-single__sku { font-size: 12px; opacity: .55; }
+
+  /* ---------- Variant selectors: bigger tap targets ---------- */
+  .variant__label, .product-form__label, .product__quantity label {
+    font-size: 13px; font-weight: 600; letter-spacing: .04em;
+    text-transform: uppercase; margin-bottom: 8px; display: block;
+  }
+  .variant__button-label:not(.color-swatch) {
+    min-height: 44px; min-width: 44px;
+    padding: 11px 16px !important; line-height: 1.1;
+    border-radius: 10px !important; font-size: 15px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  /* keep color swatches tappable but circular */
+  .variant__button-label.color-swatch { min-height: 38px; min-width: 38px; }
+  .variant-input-wrap { gap: 8px; }
+  select.product-single__variants,
+  .selector-wrapper select,
+  .variant__input + .variant__label {
+    min-height: 48px;
+  }
+  select {
+    min-height: 48px; border-radius: 10px; font-size: 16px; /* 16px stops iOS zoom */
+  }
+
+  /* ---------- Quantity stepper ---------- */
+  .product__quantity { margin: 18px 0; }
+  .js-qty__wrapper, .quantity-input { max-width: 140px; }
+  .js-qty__num, .quantity-input__input {
+    min-height: 48px; font-size: 16px;
+  }
+  .js-qty__adjust, .quantity-input__button {
+    min-width: 44px; min-height: 48px;
+  }
+
+  /* ---------- Add to cart (in-page) ---------- */
+  .add-to-cart, .product-single__form .btn--full {
+    min-height: 52px !important; font-size: 16px !important;
+    letter-spacing: .04em; border-radius: 12px !important;
+  }
+  .shopify-payment-button__button {
+    min-height: 52px !important; border-radius: 12px !important;
+  }
+  .payment-buttons { margin-top: 10px; }
+
+  /* ---------- Image gallery polish ---------- */
+  .product__photos { border-radius: 14px; overflow: hidden; }
+  .product__main-photos { border-radius: 14px; overflow: hidden; }
+  /* swipe dots: larger, clearer */
+  .product__photo-dots .slick-dots li button:before,
+  .flickity-page-dots .dot,
+  .product__photo-dots li button:before { font-size: 9px; }
+  .flickity-page-dots .dot {
+    width: 8px; height: 8px; opacity: .35; background: #111;
+  }
+  .flickity-page-dots .dot.is-selected { opacity: 1; width: 22px; border-radius: 4px; }
+
+  /* ---------- Trust image / policies ---------- */
+  .product__policies { font-size: 12px; opacity: .7; margin-top: 6px; }
+  .trust-image { margin: 16px auto; }
+
+  /* ---------- Description readability ---------- */
+  .product-single__description, .product-single__description-full {
+    font-size: 15px; line-height: 1.65;
+  }
+
+  /* hr tightening */
+  .product-single__meta hr.hr--medium { margin: 18px 0; }
+}
+
+/* ===================== Sticky add-to-cart bar ===================== */
+.mpe-sticky-atc {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 15;
+  display: none; align-items: center; gap: 12px;
+  padding: 9px 14px calc(9px + env(safe-area-inset-bottom, 0px));
+  background: rgba(255,255,255,.96);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  backdrop-filter: saturate(180%) blur(8px);
+  border-top: 1px solid #e8e8e1;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+  transform: translateY(100%);
+  transition: transform .28s ease;
+}
+.mpe-sticky-atc.is-visible { transform: translateY(0); }
+.mpe-sticky-atc__img {
+  width: 46px; height: 46px; flex: 0 0 46px;
+  border-radius: 9px; object-fit: cover; background: #f4f4f2;
+}
+.mpe-sticky-atc__info { min-width: 0; flex: 1 1 auto; line-height: 1.2; }
+.mpe-sticky-atc__title {
+  font-size: 13px; font-weight: 600; color: #111;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mpe-sticky-atc__price { font-size: 14px; color: #1c1d1d; margin-top: 2px; }
+.mpe-sticky-atc__price .mpe-compare { opacity: .5; text-decoration: line-through; margin-left: 6px; font-size: 12px; }
+.mpe-sticky-atc__btn {
+  flex: 0 0 auto; border: 0; cursor: pointer;
+  background: #111; color: #fff;
+  font-size: 14px; font-weight: 600; letter-spacing: .03em;
+  padding: 0 22px; min-height: 46px; border-radius: 11px;
+  white-space: nowrap;
+}
+.mpe-sticky-atc__btn:disabled { opacity: .45; cursor: not-allowed; }
+.mpe-sticky-atc__btn:active { transform: scale(.98); }
+@media (min-width: 769px) { .mpe-sticky-atc { display: none !important; } }
+</style>
+
+<div class="mpe-sticky-atc" id="MpeSticky-{{ section_id }}" data-section-id="{{ section_id }}" aria-hidden="true">
+  <img class="mpe-sticky-atc__img" src="{{ mpe_img }}" alt="{{ product.title | escape }}" loading="lazy">
+  <div class="mpe-sticky-atc__info">
+    <div class="mpe-sticky-atc__title">{{ product.title }}</div>
+    <div class="mpe-sticky-atc__price" id="MpeStickyPrice-{{ section_id }}">
+      {%- if current_variant.compare_at_price > current_variant.price -%}
+        {{ current_variant.price | money }}<span class="mpe-compare">{{ current_variant.compare_at_price | money }}</span>
+      {%- else -%}
+        {{ current_variant.price | money }}
+      {%- endif -%}
+    </div>
+  </div>
+  <button type="button" class="mpe-sticky-atc__btn" id="MpeStickyBtn-{{ section_id }}">
+    {{ 'products.product.add_to_cart' | t }}
+  </button>
+</div>
+
+<script>
+(function () {
+  var sectionId = {{ section_id | json }};
+  var bar    = document.getElementById('MpeSticky-' + sectionId);
+  if (!bar) return;
+  var realBtn   = document.getElementById('AddToCart-' + sectionId);
+  var realTxt   = document.getElementById('AddToCartText-' + sectionId);
+  var realPrice = document.getElementById('ProductPrice-' + sectionId);
+  var comparePrice = document.getElementById('ComparePrice-' + sectionId);
+  var stickyBtn   = document.getElementById('MpeStickyBtn-' + sectionId);
+  var stickyPrice = document.getElementById('MpeStickyPrice-' + sectionId);
+  if (!realBtn) return;
+
+  // Sticky button triggers the theme's real add-to-cart (keeps ajax cart + analytics).
+  stickyBtn.addEventListener('click', function () {
+    if (realBtn.disabled) return;
+    realBtn.click();
+  });
+
+  // Mirror price from the live product price element.
+  function syncPrice() {
+    if (!realPrice) return;
+    var html = (realPrice.textContent || '').trim();
+    if (comparePrice && comparePrice.textContent.trim()) {
+      html += '<span class="mpe-compare">' + comparePrice.textContent.trim() + '</span>';
+    }
+    if (stickyPrice) stickyPrice.innerHTML = html;
+  }
+  // Mirror button label + disabled state (sold out / unavailable).
+  function syncButton() {
+    stickyBtn.disabled = realBtn.disabled;
+    if (realTxt) stickyBtn.textContent = realTxt.textContent.trim();
+  }
+
+  var mo = new MutationObserver(function () { syncPrice(); syncButton(); });
+  mo.observe(realBtn, { attributes: true, childList: true, subtree: true });
+  if (realPrice) mo.observe(realPrice, { childList: true, subtree: true, characterData: true });
+  syncPrice(); syncButton();
+
+  // Show the bar once the in-page add-to-cart scrolls out of view (upward).
+  var visible = false;
+  function setVisible(v) {
+    if (v === visible) return;
+    visible = v;
+    bar.classList.toggle('is-visible', v);
+    bar.setAttribute('aria-hidden', v ? 'false' : 'true');
+    document.body.classList.toggle('mpe-has-sticky', v);
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      var e = entries[0];
+      // visible only when the real button is above the viewport (scrolled past)
+      var passed = !e.isIntersecting && e.boundingClientRect.top < 0;
+      // only on mobile widths
+      setVisible(passed && window.innerWidth <= 768);
+    }, { threshold: 0 });
+    io.observe(realBtn);
+  } else {
+    window.addEventListener('scroll', function () {
+      var r = realBtn.getBoundingClientRect();
+      setVisible(r.bottom < 0 && window.innerWidth <= 768);
+    }, { passive: true });
+  }
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768) setVisible(false);
+  });
+})();
+</script>
+{%- endunless -%}

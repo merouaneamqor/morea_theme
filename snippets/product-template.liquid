@@ -287,4 +287,8 @@
 {% comment %}End automatically added Judge.me widget{% endcomment %}
 </div>
   </div>
+
+  {%- unless isModal -%}
+    {% include 'mobile-product-enhancements', section_id: section_id %}
+  {%- endunless -%}
 </div>
