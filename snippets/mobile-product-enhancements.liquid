@@ -169,6 +169,7 @@
   var comparePrice = document.getElementById('ComparePrice-' + sectionId);
   var stickyBtn   = document.getElementById('MpeStickyBtn-' + sectionId);
   var stickyPrice = document.getElementById('MpeStickyPrice-' + sectionId);
+  var stickyImg   = bar.querySelector('.mpe-sticky-atc__img');
   if (!realBtn) return;
 
   // Sticky button triggers the theme's real add-to-cart (keeps ajax cart + analytics).
@@ -192,10 +193,43 @@
     if (realTxt) stickyBtn.textContent = realTxt.textContent.trim();
   }
 
+  // Update the thumbnail to the variant's assigned image (if any).
+  function syncThumb(variant) {
+    if (!stickyImg || !variant || !variant.featured_image || !variant.featured_image.src) return;
+    var src = variant.featured_image.src;
+    try {
+      if (window.theme && theme.Images && theme.Images.getSizedImageUrl) {
+        src = theme.Images.getSizedImageUrl(src, '160x160');
+      }
+    } catch (e) {}
+    if (src) stickyImg.src = src;
+  }
+
   var mo = new MutationObserver(function () { syncPrice(); syncButton(); });
   mo.observe(realBtn, { attributes: true, childList: true, subtree: true });
   if (realPrice) mo.observe(realPrice, { childList: true, subtree: true, characterData: true });
   syncPrice(); syncButton();
+
+  // Hook the theme's variant-change logic so the sticky bar's thumbnail and
+  // price follow the selected variant (not just the featured image). The
+  // Product section triggers a jQuery 'variantChange' event on
+  // #ProductSection-{id} carrying the full variant object.
+  function bindVariantHook() {
+    if (!window.jQuery) return false;
+    var $section = window.jQuery('#ProductSection-' + sectionId);
+    if (!$section.length) return false;
+    $section.on('variantChange', function (evt) {
+      if (evt && evt.variant) syncThumb(evt.variant);
+      // Let the theme update the price/button DOM first, then mirror it.
+      setTimeout(function () { syncPrice(); syncButton(); }, 0);
+    });
+    return true;
+  }
+  if (!bindVariantHook()) {
+    document.addEventListener('DOMContentLoaded', function () {
+      if (!bindVariantHook()) window.addEventListener('load', bindVariantHook);
+    });
+  }
 
   // Show the bar once the in-page add-to-cart scrolls out of view (upward).
   var visible = false;
